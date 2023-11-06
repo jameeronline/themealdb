@@ -26,38 +26,34 @@ import RadioFilter from "./RadioFilter";
 // import CategoryDetails from "./CategoryDetails";
 // import MealDetail from "./MealDetail";
 
+//Utilities
+import {fetchData} from '../utils/dataLayer';
+
 const Home = () => {
   const [meals, setMeals] = useState([]);
   const [categories, setCategories] = useState([]);
   const [area, setArea] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedArea, setSelectedArea] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(new Array(categories.length).fill(false));
+  const [selectedArea, setSelectedArea] = useState(new Array(area.length).fill(false));
   const [layout, setLayout] = useState("grid");
   const [filteredMeals, setFilteredMeals] = useState([]);
   const [pageLength, setPageLength] = useState(6);
   const [activePage, setActivePage] = useState(0);
 
   useEffect(() => {
-    //fetch categories
-    fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        console.log(response);
-        setCategories(response.meals);
-      });
+    
+    //Load Data List categories and areas from API
+    const getAPIData = async () => {
+      const areasData = await fetchData('a');
+      setArea(areasData);
 
-    //fetch area/cusine
-    fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        console.log(response);
-        setArea(response.meals);
-      });
+      const categoriesData = await fetchData('c');
+      setCategories(categoriesData);
+    }
+
+    getAPIData();
+
   }, []);
 
   const selectCategory = (value) => {
@@ -149,13 +145,10 @@ const Home = () => {
   };
 
   return (
-    <Container>
-      <h1>Home Page</h1>
+    <Container fluid>
       <Row>
-        <Col>
-          {area.length}
+        <Col sm={3}>
           {area.length > 0 && (
-            <>
               <CheckboxFilter
                 groups={area}
                 value={selectedArea}
@@ -164,7 +157,6 @@ const Home = () => {
                 itemKey="strArea"
                 widgetHeader="Area"
               />
-            </>
           )}
           {categories != null && (
             <RadioFilter
@@ -177,6 +169,7 @@ const Home = () => {
             />
           )}
         </Col>
+        <Col sm={9}></Col>
       </Row>
     </Container>
   );

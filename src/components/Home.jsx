@@ -1,178 +1,168 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
-//import { Link } from "react-router-dom";
-import ListGroup from "react-bootstrap/ListGroup";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Image from "react-bootstrap/Image";
-import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Alert from "react-bootstrap/Alert";
-// import Pagination from "react-bootstrap/Pagination";
-// import ReactPaginate from "react-paginate";
 
-//Import Components
+//Import Custom Components
 //import ShowMeal from "./components/MealCard";
-import CheckboxFilter from "./CheckboxFilter";
-import RadioFilter from "./RadioFilter";
+// import CheckboxFilter from "./CheckboxFilter";
+// import RadioFilter from "./ListingItems";
+
+import RecipieCard from "./RecipieCard";
 
 //Import Custom Components
 // import CategoryList from "./CategoryList";
 // import CategoryDetails from "./CategoryDetails";
 // import MealDetail from "./MealDetail";
 
-//Utilities
-import {fetchData} from '../utils/dataLayer';
+const Home = ({ categoryDetails }) => {
+  // const [meals, setMeals] = useState([]);
+  // const [selectedCategory, setSelectedCategory] = useState(
+  //   new Array(categories.length).fill(false)
+  // );
+  // const [selectedArea, setSelectedArea] = useState(
+  //   new Array(areas.length).fill(false)
+  // );
+  // const [filteredMeals, setFilteredMeals] = useState([]);
 
-const Home = () => {
-  const [meals, setMeals] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [area, setArea] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(new Array(categories.length).fill(false));
-  const [selectedArea, setSelectedArea] = useState(new Array(area.length).fill(false));
-  const [layout, setLayout] = useState("grid");
-  const [filteredMeals, setFilteredMeals] = useState([]);
-  const [pageLength, setPageLength] = useState(6);
-  const [activePage, setActivePage] = useState(0);
+  // // UI States
+  // const [layout, setLayout] = useState("grid");
+  // const [pageLength, setPageLength] = useState(6);
+  // const [activePage, setActivePage] = useState(0);
 
-  useEffect(() => {
-    
-    //Load Data List categories and areas from API
-    const getAPIData = async () => {
-      const areasData = await fetchData('a');
-      setArea(areasData);
+  // const selectCategory = (value) => {
+  //   this.setState({
+  //     selectedCategory: value,
+  //   });
+  // };
 
-      const categoriesData = await fetchData('c');
-      setCategories(categoriesData);
-    }
+  // const selectArea = (value) => {
+  //   var selectedValue = value;
+  //   var previousValue = selectedArea;
+  //   if (previousValue.includes(selectedValue)) {
+  //     previousValue = previousValue.filter(function (currentValue) {
+  //       return currentValue !== value;
+  //     });
+  //   } else {
+  //     previousValue.push(value);
+  //   }
 
-    getAPIData();
+  //   var filteredList = meals;
+  //   filteredList = filteredList.filter(function (item) {
+  //     console.log(previousValue.toString().toLowerCase());
+  //     return (
+  //       previousValue
+  //         .toString()
+  //         .toLowerCase()
+  //         .search(item.strArea.toLowerCase()) !== -1
+  //     );
+  //   });
 
-  }, []);
+  //   console.log(filteredList.length);
 
-  const selectCategory = (value) => {
-    this.setState({
-      selectedCategory: value,
-    });
-  };
+  //   this.setState({
+  //     selectedArea: previousValue,
+  //     filteredMeals: filteredList,
+  //   });
+  // };
 
-  const selectArea = (value) => {
-    var selectedValue = value;
-    var previousValue = selectedArea;
-    if (previousValue.includes(selectedValue)) {
-      previousValue = previousValue.filter(function (currentValue) {
-        return currentValue !== value;
-      });
-    } else {
-      previousValue.push(value);
-    }
+  // const checkboxFilter = (itemVal, selectedArray) => {
+  //   for (var i = 0; i < selectedArray.length; i++) {
+  //     if (selectedArray[i] === itemVal) {
+  //       return true;
+  //     }
+  //   }
+  // };
 
-    var filteredList = meals;
-    filteredList = filteredList.filter(function (item) {
-      console.log(previousValue.toString().toLowerCase());
-      return (
-        previousValue
-          .toString()
-          .toLowerCase()
-          .search(item.strArea.toLowerCase()) !== -1
-      );
-    });
+  // const resetcheckboxFilter = () => {
+  //   this.setState({
+  //     selectedArea: [],
+  //   });
+  // };
 
-    console.log(filteredList.length);
+  // const changeLayout = (val) => {
+  //   this.setState({
+  //     layout: val,
+  //   });
+  // };
 
-    this.setState({
-      selectedArea: previousValue,
-      filteredMeals: filteredList,
-    });
-  };
+  // const onCategoryChange = (val) => {
+  //   fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=" + val)
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((myJson) => {
+  //       this.setState({
+  //         meals: myJson.meals,
+  //       });
+  //     });
+  // };
 
-  const checkboxFilter = (itemVal, selectedArray) => {
-    for (var i = 0; i < selectedArray.length; i++) {
-      if (selectedArray[i] === itemVal) {
-        return true;
-      }
-    }
-  };
-
-  const resetcheckboxFilter = () => {
-    this.setState({
-      selectedArea: [],
-    });
-  };
-
-  const changeLayout = (val) => {
-    this.setState({
-      layout: val,
-    });
-  };
-
-  const onCategoryChange = (val) => {
-    fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=" + val)
-      .then((response) => {
-        return response.json();
-      })
-      .then((myJson) => {
-        this.setState({
-          meals: myJson.meals,
-        });
-      });
-  };
-
-  const showPagination = () => {
-    var items = [];
-    //var active = active;
-    if (meals !== null) {
-      console.log(meals.length);
-      for (
-        let number = 1;
-        number <= Math.ceil(meals.length / pageLength);
-        number++
-      ) {
-        items.push(
-          <Pagination.Item onClick={console.log(number)} key={number}>
-            {number}
-          </Pagination.Item>
-        );
-      }
-      return items;
-    }
-  };
+  // const showPagination = () => {
+  //   var items = [];
+  //   //var active = active;
+  //   if (meals !== null) {
+  //     console.log(meals.length);
+  //     for (
+  //       let number = 1;
+  //       number <= Math.ceil(meals.length / pageLength);
+  //       number++
+  //     ) {
+  //       items.push(
+  //         <Pagination.Item onClick={console.log(number)} key={number}>
+  //           {number}
+  //         </Pagination.Item>
+  //       );
+  //     }
+  //     return items;
+  //   }
+  // };
 
   return (
     <Container fluid>
       <Row>
-        <Col sm={3}>
-          {area.length > 0 && (
-              <CheckboxFilter
-                groups={area}
-                value={selectedArea}
-                selectChange={selectArea}
-                reset={resetcheckboxFilter}
-                itemKey="strArea"
-                widgetHeader="Area"
-              />
-          )}
-          {categories != null && (
+        <h1>Home Page</h1>
+        <Link to="/category">Category</Link>
+        {categoryDetails.map((item) => {
+          return <RecipieCard item={item} key={item.idCategory} />;
+        })}
+        <Link to="/area">Area Cusine</Link>
+        {/* <Col sm={3}>
+          <Link to="/category">Category</Link>
+          {categories != null && categories.length > 0 && (
             <RadioFilter
-              groups={categories}
-              value={selectedCategory}
-              selectchange={selectCategory}
-              itemKey="strCategory"
-              widgetHeader="Category"
-              filterKey="radio"
+              title="Category"
+              items={categories}
+              // value={selectedCategory}
+              // selectchange={selectCategory}
+              // itemKey="strCategory"
+              // filterKey="radio"
             />
           )}
-        </Col>
+          {areas != null && areas.length > 0 && (
+            <CheckboxFilter
+              title="Area"
+              items={areas}
+              // value={selectedArea}
+              // selectChange={selectArea}
+              // reset={resetcheckboxFilter}
+              // itemKey="strArea"
+            />
+          )}
+        </Col> */}
         <Col sm={9}></Col>
       </Row>
     </Container>
   );
+};
+
+//Prop validation
+Home.propTypes = {
+  categoryDetails: PropTypes.array.isRequired,
 };
 
 export default Home;

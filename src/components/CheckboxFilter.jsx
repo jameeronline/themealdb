@@ -3,62 +3,81 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-const CheckboxFilter = ({
-  groups,
-  selectChange,
-  reset,
-  widgetHeader,
-  itemKey,
-  value,
-}) => {
-  const [searchKey, setSearchkey] = useState("");
-  const [initialItems, setInitialItems] = useState(groups);
-  const [items, setItems] = useState([]);
+import PropTypes from "prop-types";
 
-  // componentWillMount() {
-  //   this.setState({
-  //     items: this.state.initialItems
-  //   });
-  // }
+//Event Handler
+function handleDetails() {
+  console.log("details click");
+}
 
-  const searchChange = (value) => {
-    var updatedList = this.state.initialItems;
-    updatedList = updatedList.filter(function (item) {
-      return item.strArea.toLowerCase().search(value.toLowerCase()) !== -1;
+const CheckboxFilter = ({ title, items }) => {
+  const [search, setSearch] = useState("");
+  const [itemsList, setItemsList] = useState(items);
+
+  const handleSearch = (value) => {
+    setSearch(value);
+
+    const updatedItems = items.filter((item) => {
+      return item.strArea.toLowerCase().includes(value.toLowerCase());
     });
-    this.setState({ items: updatedList });
+
+    setItemsList(updatedItems);
+  };
+
+  const handleReset = () => {
+    setSearch("");
+    setItemsList(items);
   };
 
   return (
     <div>
       <Card>
-        <Card.Header>{widgetHeader}</Card.Header>
+        <Card.Header>{title}</Card.Header>
         <Card.Body>
           <Form.Control
             type="text"
+            value={search}
             placeholder="Search"
-            onChange={(event) => searchChange(event.target.value)}
+            onChange={(event) => handleSearch(event.target.value)}
           />
-          {groups.map((item, index) => {
-            return (
-              <Form.Check
-                key={index}
-                // checked={selectedValues.includes(item.strArea) ? true : false}
-                type="checkbox"
-                label={item.strArea}
-                value={item.strArea}
-                onChange={(event) => selectChange(event.target.value)}
-              />
-            );
-          })}
-          <Button variant="primary">Details</Button>
-          <Button variant="danger" onClick={reset}>
+          <ul className="list-unstyled form-checkbox-group">
+            {itemsList.map((item, index) => {
+              return (
+                <li key={index}>
+                  <Form.Check
+                    name="filterArea"
+                    // checked={selectedValues.includes(item.strArea) ? true : false}
+                    type="checkbox"
+                    id={item.strArea}
+                    label={item.strArea}
+                    value={item.strArea}
+                    // onChange={(event) => selectChange(event.target.value)}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </Card.Body>
+        <Card.Footer className="text-muted">
+          <Button variant="primary" onClick={() => handleDetails()}>
+            Details
+          </Button>
+          <Button variant="link" className="text-danger" onClick={handleReset}>
             Reset
           </Button>
-        </Card.Body>
+        </Card.Footer>
       </Card>
     </div>
   );
+};
+
+CheckboxFilter.propTypes = {
+  items: PropTypes.array.isRequired,
+  // selectChange: PropTypes.func.isRequired,
+  // reset:PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  // itemKey: PropTypes.string.isRequired,
+  // value: PropTypes.string.isRequired
 };
 
 export default CheckboxFilter;

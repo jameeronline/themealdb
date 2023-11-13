@@ -130,15 +130,10 @@ const Home = ({ categoryDetails }) => {
           <header className="max-w-5xl mx-auto text-center">
             <h1 className="text-3xl font-bold mb-8">Categories</h1>
             <p className="text-base text-gray-500 font-sans text-center">
-              Indulge in a diverse array of flavors and culinary delights within
-              our food category. From hearty main courses to delectable
-              desserts, explore a wide range of dishes crafted to suit every
-              palate. Whether you're a fan of comforting classics, adventurous
-              global cuisines, or health-conscious options, our food category
-              offers a delightful journey through the world of gastronomy. Dive
-              into the rich tapestry of tastes, textures, and aromas, and
-              elevate your dining experience with our carefully curated
-              selection of recipes and culinary inspiration.
+              Explore our food category for a delightful collection of recipes.
+              From savory dishes to sweet treats, discover a variety of culinary
+              delights tailored to satisfy every taste. Dive into a world of
+              simple and clean flavors that make every meal a joyous experience.
             </p>
           </header>
 

@@ -69,3 +69,19 @@ export const fetchMealDetails = async (id) => {
 
   return data;
 };
+
+//Search Meals Details based on Keyword
+export const fetchSearch = async (searchKey) => {
+  const data = await fetch(`${API_URL}/${API_KEY}/search.php?s=${searchKey}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => {
+      return response.meals;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+
+  return data;
+};

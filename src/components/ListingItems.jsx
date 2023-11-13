@@ -1,14 +1,16 @@
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
+import ListItemsContainer from "./ListItemsContainer";
+import ListItemsTitle from "./ListItemsTitle";
+import ListItemsBody from "./ListItemsBody";
+
 const ListingItems = ({ title, items, itemKey, itemLabel }) => {
   return (
     <>
-      <div className="overflow-hidden bg-white rounded text-slate-500 border border-slate-200">
-        <h3 className="px-6 py-4 text-lg text-slate-700 font-bold bg-gray-50">
-          {title}
-        </h3>
-        <div className="p-6 border-t border-slate-200">
+      <ListItemsContainer>
+        <ListItemsTitle title={title} />
+        <ListItemsBody>
           <ul>
             {items.map((item, index) => {
               return (
@@ -23,8 +25,8 @@ const ListingItems = ({ title, items, itemKey, itemLabel }) => {
               );
             })}
           </ul>
-        </div>
-      </div>
+        </ListItemsBody>
+      </ListItemsContainer>
     </>
   );
 };

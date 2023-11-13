@@ -20,7 +20,7 @@ export default function RecipieThumb({ item }) {
           />
         </figure>
         {/*  <!-- Body--> */}
-        <div className="absolute -bottom-16 bg-slate-900/80 w-full transition-all group-hover:bg-slate-900/60 group-hover:-bottom-0">
+        <div className="absolute -bottom-16 bg-slate-900/80 w-full transition-all duration-300 ease-in-out group-hover:bg-slate-900/60 group-hover:bottom-0">
           <div className="p-6">
             <header>
               <h3 className="text-xl font-medium text-white line-clamp-1">
@@ -29,7 +29,7 @@ export default function RecipieThumb({ item }) {
             </header>
           </div>
           {/*  <!-- Action base sized basic button --> */}
-          <div className="relative flex justify-end p-6 pt-0">
+          <div className="flex justify-end p-6 pt-0">
             <Link
               to={`/details/${formatToUrlString(item.strMeal)}`}
               state={{ id: item.idMeal }}

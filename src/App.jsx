@@ -39,9 +39,7 @@ function App() {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
     localStorage.setItem("darkMode", newDarkMode);
-    if (darkMode) {
-      document.body.classList.toggle("dark");
-    }
+    document.body.classList.toggle("dark");
   };
 
   useEffect(() => {
@@ -65,8 +63,10 @@ function App() {
 
   //Restore dark mode
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.toggle("dark");
+    console.log("adad");
+    if (JSON.parse(localStorage.getItem("darkMode"))) {
+      document.body.classList.add("dark");
+      setDarkMode(true);
     }
   }, []);
 

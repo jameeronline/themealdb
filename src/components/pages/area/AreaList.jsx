@@ -4,7 +4,6 @@ import { Outlet, useParams } from "react-router-dom";
 import ListingItems from "../../ListingItems";
 
 const AreaList = ({ areas }) => {
-  const { cuisineType } = useParams();
   return (
     <section>
       <div className="container px-6 m-auto">

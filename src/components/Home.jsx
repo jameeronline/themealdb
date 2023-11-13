@@ -126,10 +126,39 @@ const Home = ({ categoryDetails }) => {
     <Container fluid>
       <Row>
         <h1>Home Page</h1>
-        <Link to="/category">Category</Link>
-        {categoryDetails.map((item) => {
-          return <RecipieCard item={item} key={item.idCategory} />;
-        })}
+        <section>
+          <header className="max-w-5xl mx-auto text-center">
+            <h1 className="text-3xl font-bold mb-8">Categories</h1>
+            <p className="text-base text-gray-500 font-sans text-center">
+              Indulge in a diverse array of flavors and culinary delights within
+              our food category. From hearty main courses to delectable
+              desserts, explore a wide range of dishes crafted to suit every
+              palate. Whether you're a fan of comforting classics, adventurous
+              global cuisines, or health-conscious options, our food category
+              offers a delightful journey through the world of gastronomy. Dive
+              into the rich tapestry of tastes, textures, and aromas, and
+              elevate your dining experience with our carefully curated
+              selection of recipes and culinary inspiration.
+            </p>
+          </header>
+
+          {/* Category Grid */}
+          <div className="mt-10">
+            {categoryDetails !== null && categoryDetails.length > 0 && (
+              <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
+                {categoryDetails
+                  .filter((item, index) => index < 12)
+                  .map((item, index) => {
+                    return (
+                      <div className="col-span-2" key={index}>
+                        <RecipieCard item={item} key={item.idCategory} />
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+          </div>
+        </section>
         <Link to="/area">Area Cusine</Link>
         {/* <Col sm={3}>
           <Link to="/category">Category</Link>

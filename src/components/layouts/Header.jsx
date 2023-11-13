@@ -106,13 +106,17 @@ export default function Header({ darkMode, handleDarkMode }) {
             <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
               <a
                 href="#"
-                className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-lg text-emerald-500"
+                className="relative inline-flex h-10 items-center justify-center rounded-full text-lg text-emerald-500"
                 onClick={handleDarkMode}
               >
                 {darkMode ? (
-                  <BiSun className="h-5 w-5" />
+                  <>
+                    <BiSun className="h-5 w-5" />
+                  </>
                 ) : (
-                  <BiMoon className="h-5 w-5" />
+                  <>
+                    <BiMoon className="h-5 w-5" />
+                  </>
                 )}
               </a>
             </div>

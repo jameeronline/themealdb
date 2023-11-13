@@ -7,9 +7,9 @@ import { fetchMealDetails } from "../../../utils/dataLayer";
 
 import { BiCategoryAlt, BiPurchaseTag, BiMap } from "react-icons/bi";
 
-export default function RecipeDetail() {
+export default function RecipeDetail({ mealInfo }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [mealDetail, setMealDetail] = useState(null);
+  const [mealDetail, setMealDetail] = useState(mealInfo !== null || null);
   // const { id } = useParams();
   const { state } = useLocation();
 
@@ -50,7 +50,10 @@ export default function RecipeDetail() {
           {mealDetail.strArea !== null && (
             <li className="inline-flex gap-1 items-center">
               <BiMap />
-              <Link to="/" className="text-emerald-500 hover:underline">
+              <Link
+                to={`/area/${mealDetail.strArea.toLowerCase()}`}
+                className="text-emerald-500 hover:underline"
+              >
                 {mealDetail.strArea}
               </Link>
             </li>

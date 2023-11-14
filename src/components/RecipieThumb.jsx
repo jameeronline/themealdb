@@ -9,7 +9,7 @@ import { formatToUrlString } from "../utils/helperFunc";
 export default function RecipieThumb({ item }) {
   return (
     <>
-      <article className="relative group overflow-hidden transition-all rounded-lg bg-white text-slate-500 shadow-xl shadow-slate-200 hover:shadow-2xl">
+      <article className="relative group overflow-hidden transition-all rounded-lg text-slate-500 shadow-xl shadow-slate-200 hover:shadow-2xl">
         {/*  <!-- Image --> */}
         <figure className="overflow-hidden h-80">
           <LazyLoadImage

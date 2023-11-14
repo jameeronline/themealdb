@@ -39,7 +39,7 @@ function App() {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
     localStorage.setItem("darkMode", newDarkMode);
-    document.body.classList.toggle("dark");
+    document.documentElement.classList.toggle("dark");
   };
 
   useEffect(() => {

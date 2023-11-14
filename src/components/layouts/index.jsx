@@ -13,7 +13,7 @@ export default function Layout({ darkMode, handleDarkMode }) {
           darkMode={darkMode}
           handleDarkMode={handleDarkMode}
         />
-        <main className="container mx-auto auto-rows-auto my-10">
+        <main className="w-full 2xl:container mx-auto auto-rows-auto py-10 px-6">
           <Outlet />
         </main>
         <Footer />

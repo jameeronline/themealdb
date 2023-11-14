@@ -19,9 +19,12 @@ export default function Banner() {
   return (
     <>
       {Array.isArray(items) && items.length > 0 && (
-        <div className="grid w-full overflow-hidden grid-cols-1 my-auto mb-16 bg-primary-50 rounded-tl-[120px] rounded-br-[120px] md:grid-cols-2 xl:gap-14 md:gap-5">
-          {items.map((item) => (
-            <>
+        <>
+          {items.map((item, index) => (
+            <section
+              key={index}
+              className="grid w-full overflow-hidden grid-cols-1 my-auto mb-16 bg-primary-50 md:grid-cols-2 xl:gap-14 md:gap-5"
+            >
               <div className="flex flex-col justify-center col-span-1 p-16 text-center lg:text-start">
                 <div className="flex items-center justify-center mb-4 lg:justify-normal">
                   <img
@@ -52,14 +55,14 @@ export default function Banner() {
               </div>
               <div className="items-center justify-end hidden col-span-1 md:flex">
                 <LazyLoadImage
-                  className="rounded-md"
+                  className="h-full"
                   src={item.strMealThumb}
                   alt="header image"
                 />
               </div>
-            </>
+            </section>
           ))}
-        </div>
+        </>
       )}
     </>
   );

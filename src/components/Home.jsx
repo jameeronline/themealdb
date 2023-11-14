@@ -120,7 +120,7 @@ const Home = ({ categoryDetails }) => {
   // };
 
   return (
-    <div className="container mx-auto">
+    <div className="2xl:container mx-auto">
       <Banner />
       {categoryDetails !== null && categoryDetails.length > 0 && (
         <section>

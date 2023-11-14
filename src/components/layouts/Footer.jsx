@@ -214,7 +214,7 @@ export default function Footer() {
         </div> */}
         {/*      <!-- Sub Footer --> */}
         <div className="py-4 text-sm border-t border-slate-900 bg-slate-700">
-          <div className="container px-6 mx-auto">
+          <div className="w-full 2xl:container px-6 mx-auto">
             <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
               <div className="col-span-2 md:col-span-4 lg:col-span-6">
                 Copyright {new Date().getFullYear()} The Meal DB

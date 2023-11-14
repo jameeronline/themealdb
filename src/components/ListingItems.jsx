@@ -17,7 +17,7 @@ const ListingItems = ({ title, items, itemKey, itemLabel }) => {
                 <li key={index}>
                   <NavLink
                     to={`/${itemLabel}/${item[itemKey].toLowerCase()}`}
-                    className={`flex p-2 px-4 transition-all duration-300 hover:text-emerald-500 hover:bg-emerald-50 aria-[current]:rounded aria-[current]:bg-emerald-500  aria-[current]:text-white`}
+                    className={`flex p-2 px-4 transition-all duration-300 hover:text-primary-500 hover:bg-primary-50 aria-[current]:rounded aria-[current]:bg-primary-500  aria-[current]:text-white`}
                   >
                     {item[itemKey]}
                   </NavLink>

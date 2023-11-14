@@ -65,7 +65,7 @@ function App() {
   useEffect(() => {
     console.log("adad");
     if (JSON.parse(localStorage.getItem("darkMode"))) {
-      document.body.classList.add("dark");
+      document.documentElement.classList.add("dark");
       setDarkMode(true);
     }
   }, []);

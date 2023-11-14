@@ -85,3 +85,19 @@ export const fetchSearch = async (searchKey) => {
 
   return data;
 };
+
+//Random Meals
+export const randomMeal = async () => {
+  const data = await fetch(`${API_URL}/${API_KEY}/random.php`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => {
+      return response.meals;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+
+  return data;
+};

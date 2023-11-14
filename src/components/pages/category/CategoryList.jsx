@@ -1,9 +1,13 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
 
 import ListingItems from "../../ListingItems";
 
 const CategoryList = ({ categories }) => {
+  const navigate = useNavigate();
+
   return (
     <section>
       <div className="container px-6 m-auto">

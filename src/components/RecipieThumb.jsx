@@ -23,7 +23,7 @@ export default function RecipieThumb({ item }) {
         <div className="absolute -bottom-16 bg-slate-900/80 w-full transition-all duration-300 ease-in-out group-hover:bg-slate-900/60 group-hover:bottom-0">
           <div className="p-6">
             <header>
-              <h3 className="text-xl font-medium text-white line-clamp-1">
+              <h3 className="text-base font-medium text-white line-clamp-1">
                 {item.strMeal}
               </h3>
             </header>
@@ -33,7 +33,7 @@ export default function RecipieThumb({ item }) {
             <Link
               to={`/details/${formatToUrlString(item.strMeal)}`}
               state={{ id: item.idMeal }}
-              className="inline-flex h-10 w-full items-center justify-center gap-2 whitespace-nowrap rounded bg-emerald-500 px-5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-emerald-600 focus:bg-emerald-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
+              className="inline-flex h-10 w-full items-center justify-center gap-2 whitespace-nowrap rounded bg-primary-500 px-5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-primary-600 focus:bg-primary-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 disabled:shadow-none"
             >
               <span>View Details</span>
             </Link>

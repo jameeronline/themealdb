@@ -11,7 +11,7 @@ export default function Header({ darkMode, handleDarkMode }) {
 
   return (
     <>
-      <header className="border-b-1 relative z-20 w-full border-b border-slate-200 bg-white/90 shadow-lg shadow-slate-700/5 after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden">
+      <header className="relative z-20 w-full after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden dark:bg-primary-950">
         <div className="relative mx-auto max-w-full px-6 lg:max-w-5xl xl:max-w-7xl 2xl:max-w-[96rem]">
           <nav
             aria-label="main navigation"
@@ -33,7 +33,7 @@ export default function Header({ darkMode, handleDarkMode }) {
                   viewBox="0 0 300 300"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-12 w-12 bg-emerald-500"
+                  className="h-12 w-12 bg-primary-500"
                 >
                   <path
                     fillRule="evenodd"
@@ -95,7 +95,7 @@ export default function Header({ darkMode, handleDarkMode }) {
                     to={item.link}
                     role="menuitem"
                     aria-haspopup="false"
-                    className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8 aria-[current]:underline aria-[current]:text-emerald-500"
+                    className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-primary-500 focus:text-primary-600 focus:outline-none focus-visible:outline-none lg:px-8 aria-[current]:underline aria-[current]:text-primary-500"
                   >
                     <span>{item.label}</span>
                   </NavLink>
@@ -106,7 +106,7 @@ export default function Header({ darkMode, handleDarkMode }) {
             <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
               <a
                 href="#"
-                className="relative inline-flex h-10 items-center justify-center rounded-full text-lg text-emerald-500"
+                className="relative inline-flex h-10 items-center justify-center rounded-full text-lg text-primary-500"
                 onClick={handleDarkMode}
               >
                 {darkMode ? (

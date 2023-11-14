@@ -41,7 +41,7 @@ export default function RecipeDetail({ mealInfo }) {
               <BiCategoryAlt />
               <Link
                 to={`/category/${mealDetail.strCategory.toLowerCase()}`}
-                className="text-emerald-500 hover:underline"
+                className="text-primary-500 hover:underline"
               >
                 {mealDetail.strCategory}
               </Link>
@@ -52,7 +52,7 @@ export default function RecipeDetail({ mealInfo }) {
               <BiMap />
               <Link
                 to={`/area/${mealDetail.strArea.toLowerCase()}`}
-                className="text-emerald-500 hover:underline"
+                className="text-primary-500 hover:underline"
               >
                 {mealDetail.strArea}
               </Link>
@@ -65,7 +65,7 @@ export default function RecipeDetail({ mealInfo }) {
                 <a
                   href="#"
                   key={index}
-                  className="text-emerald-500 hover:underline"
+                  className="text-primary-500 hover:underline"
                 >
                   {item}
                 </a>

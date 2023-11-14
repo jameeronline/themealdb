@@ -2,10 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
-
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Banner from "./Banner";
 
 //Import Custom Components
 //import ShowMeal from "./components/MealCard";
@@ -123,12 +120,12 @@ const Home = ({ categoryDetails }) => {
   // };
 
   return (
-    <Container fluid>
-      <Row>
-        <h1>Home Page</h1>
+    <div className="container mx-auto">
+      <Banner />
+      {categoryDetails !== null && categoryDetails.length > 0 && (
         <section>
-          <header className="max-w-5xl mx-auto text-center">
-            <h1 className="text-3xl font-bold mb-8">Categories</h1>
+          <header className="max-w-5xl mx-auto text-center mb-12">
+            <h2 className="text-3xl font-bold mb-8">Categories</h2>
             <p className="text-base text-gray-500 font-sans text-center">
               Explore our food category for a delightful collection of recipes.
               From savory dishes to sweet treats, discover a variety of culinary
@@ -136,26 +133,21 @@ const Home = ({ categoryDetails }) => {
               simple and clean flavors that make every meal a joyous experience.
             </p>
           </header>
-
-          {/* Category Grid */}
-          <div className="mt-10">
-            {categoryDetails !== null && categoryDetails.length > 0 && (
-              <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-                {categoryDetails
-                  .filter((item, index) => index < 12)
-                  .map((item, index) => {
-                    return (
-                      <div className="col-span-2" key={index}>
-                        <RecipieCard item={item} key={item.idCategory} />
-                      </div>
-                    );
-                  })}
-              </div>
-            )}
+          <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
+            {categoryDetails
+              .filter((item, index) => index < 12)
+              .map((item, index) => {
+                return (
+                  <div className="col-span-2" key={index}>
+                    <RecipieCard item={item} key={item.idCategory} />
+                  </div>
+                );
+              })}
           </div>
         </section>
-        <Link to="/area">Area Cusine</Link>
-        {/* <Col sm={3}>
+      )}
+      <Link to="/area">Area Cusine</Link>
+      {/* <Col sm={3}>
           <Link to="/category">Category</Link>
           {categories != null && categories.length > 0 && (
             <RadioFilter
@@ -178,9 +170,7 @@ const Home = ({ categoryDetails }) => {
             />
           )}
         </Col> */}
-        <Col sm={9}></Col>
-      </Row>
-    </Container>
+    </div>
   );
 };
 

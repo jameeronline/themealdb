@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
+import clsx from "clsx";
+
 import ListItemsContainer from "./ListItemsContainer";
 import ListItemsTitle from "./ListItemsTitle";
 import ListItemsBody from "./ListItemsBody";
@@ -17,7 +19,14 @@ const ListingItems = ({ title, items, itemKey, itemLabel }) => {
                 <li key={index}>
                   <NavLink
                     to={`/${itemLabel}/${item[itemKey].toLowerCase()}`}
-                    className={`flex p-2 px-4 transition-all duration-300 hover:text-primary-500 hover:bg-primary-50 aria-[current]:rounded aria-[current]:bg-primary-500  aria-[current]:text-white`}
+                    className={({ isActive }) =>
+                      clsx(
+                        "flex p-2 px-4 transition-all duration-300 ",
+                        isActive
+                          ? "rounded bg-primary-500 text-white"
+                          : "hover:text-primary-500 hover:bg-primary-50"
+                      )
+                    }
                   >
                     {item[itemKey]}
                   </NavLink>

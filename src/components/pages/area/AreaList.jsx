@@ -1,14 +1,22 @@
+import { useLayoutEffect } from "react";
 import PropTypes from "prop-types";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import ListingItems from "../../ListingItems";
 
 const AreaList = ({ areas }) => {
+  const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    console.log(areas);
+    navigate(`/area/american`);
+  }, []);
+
   return (
     <section>
       <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
         <div className="col-span-3">
-          {areas != null && areas.length > 0 && (
+          {Array.isArray(areas) && areas.length > 0 && (
             <ListingItems
               title="Areas"
               items={areas}

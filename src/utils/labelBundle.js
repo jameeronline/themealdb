@@ -2,10 +2,10 @@ const LABELS = {
   HEADER: {
     LOGO: "The Meal DB",
     NAV: [
-      {
-        label: "Home",
-        link: "/",
-      },
+      // {
+      //   label: "Home",
+      //   link: "/",
+      // },
       {
         label: "Categories",
         link: "/category",
@@ -19,6 +19,10 @@ const LABELS = {
         link: "/ingredients",
       },
       {
+        label: "Favourites",
+        link: "/favourites",
+      },
+      {
         label: "Search",
         link: "/search",
       },
@@ -26,6 +30,12 @@ const LABELS = {
   },
   WIDGET_AREA_TITLE: "Areas",
   WIDGET_CATEGORY_TITLE: "Categories",
+  PAGES: {
+    SEARCH: {
+      SEARCH_TITLE: "Find the Meal you like",
+      SEARCH_INPUT_PLACEHOLDER: "Discover recipes from around the world...",
+    },
+  },
 };
 
 Object.freeze(LABELS);

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
@@ -7,6 +7,11 @@ import ListingItems from "../../ListingItems";
 
 const CategoryList = ({ categories }) => {
   const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    console.log(categories);
+    navigate(`/category/beef`);
+  }, []);
 
   return (
     <section>

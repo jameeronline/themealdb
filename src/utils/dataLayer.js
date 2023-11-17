@@ -1,3 +1,6 @@
+import axios from "axios";
+
+//API parameters
 const API_URL = "https://www.themealdb.com/api/json/v1/";
 const API_KEY = "1";
 
@@ -38,20 +41,33 @@ export const fetchCategoryDetails = async (type) => {
 
 //Fetch Meals based on filter category | area | ingredients
 export const fetchFilteredMeals = async (category, type) => {
-  const data = await fetch(
-    `${API_URL}/${API_KEY}/filter.php?${type}=${category}`
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((response) => {
-      return response.meals;
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+  let data = [];
+  let errorMsg = "";
+  // const data = await fetch(
+  //   `${API_URL}/${API_KEY}/filter.php?${type}=${category}`
+  // )
+  //   .then((response) => {
+  //     return response.json();
+  //   })
+  //   .then((response) => {
+  //     return response.meals;
+  //   })
+  //   .catch((error) => {
+  //     console.log(error.message);
+  //   }).finally(()=>{
+  //     return {data, };
+  //   });
 
-  return data;
+  try {
+    const response = await axios.get(
+      `${API_URL}/${API_KEY}/filter.php?${type}=${category}`
+    );
+    data = response.data.meals;
+  } catch (e) {
+    errorMsg = e.message;
+  }
+
+  return { data, errorMsg };
 };
 
 //Fetch Meals Details based on ID
@@ -87,16 +103,17 @@ export const fetchSearch = async (searchKey) => {
 };
 
 //Random Meals
-export const randomMeal = async () => {
-  const data = await fetch(`${API_URL}/${API_KEY}/random.php`)
+export const fetchRandomMeal = async () => {
+  const data = await axios
+    .get(`${API_URL}/${API_KEY}/random.php`)
     .then((response) => {
-      return response.json();
-    })
-    .then((response) => {
-      return response.meals;
+      return response.data;
     })
     .catch((error) => {
       console.log(error.message);
+    })
+    .finally(() => {
+      //always executed
     });
 
   return data;

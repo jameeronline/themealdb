@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Outlet, Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { BiMoon, BiSun } from "react-icons/bi";
+import { clsx } from "clsx";
 
 //Labels
 import LABELS from "../../utils/labelBundle";
@@ -15,7 +16,7 @@ export default function Header({ darkMode, handleDarkMode }) {
         <div className="relative mx-auto max-w-full px-6 2xl:container">
           <nav
             aria-label="main navigation"
-            className="flex h-[5.5rem] items-stretch justify-between font-medium text-slate-700"
+            className="flex h-[5.5rem] items-stretch justify-between font-medium"
             role="navigation"
           >
             {/*      <!-- Brand logo --> */}
@@ -24,10 +25,10 @@ export default function Header({ darkMode, handleDarkMode }) {
                 id="WindUI"
                 aria-label="WindUI logo"
                 aria-current="page"
-                className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1"
+                className="flex items-center gap-2 whitespace-nowrap py-3 text-lg font-bold focus:outline-none lg:flex-1"
                 href="javascript:void(0)"
               >
-                <svg
+                {/* <svg
                   width="300"
                   height="300"
                   viewBox="0 0 300 300"
@@ -47,7 +48,7 @@ export default function Header({ darkMode, handleDarkMode }) {
                     d="M0 0H300V300H0V0ZM150.026 150.025C121.715 99.731 88.1131 88.1122 88.1131 88.1122L10.6508 165.519C10.6508 165.519 26.143 150.027 150.026 150.027H150.027C150.026 150.027 150.026 150.027 150.026 150.027L150.026 150.027C99.731 178.339 88.1124 211.941 88.1124 211.941L165.52 289.348C165.52 289.348 150.032 273.86 150.027 150.027H150.029C178.341 200.323 211.944 211.942 211.944 211.942L289.352 134.535C289.352 134.535 273.864 150.023 150.027 150.027V150.027L150.027 150.027C200.322 121.715 211.941 88.1125 211.941 88.1125L134.534 10.651C134.534 10.651 150.026 26.1431 150.026 150.025ZM150.027 150.027L150.026 150.027C150.026 150.026 150.026 150.026 150.026 150.025C150.026 150.025 150.027 150.026 150.027 150.027ZM150.027 150.027L150.027 150.026L150.027 150.027C150.027 150.027 150.027 150.027 150.027 150.027L150.027 150.027ZM150.027 150.027C150.027 150.027 150.027 150.027 150.027 150.027H150.027L150.027 150.027Z"
                     fill="rgba(255,255,255,.2)"
                   />
-                </svg>
+                </svg> */}
                 {LABELS.HEADER.LOGO}
               </a>
             </LinkContainer>
@@ -95,7 +96,12 @@ export default function Header({ darkMode, handleDarkMode }) {
                     to={item.link}
                     role="menuitem"
                     aria-haspopup="false"
-                    className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-primary-500 focus:text-primary-600 focus:outline-none focus-visible:outline-none lg:px-8 aria-[current]:underline aria-[current]:text-primary-500"
+                    className={({ isActive }) =>
+                      clsx(
+                        "flex items-center gap-2 py-4 transition-colors duration-300 hover:text-primary-500 focus:text-primary-600 focus:outline-none focus-visible:outline-none lg:px-8",
+                        isActive ? "underline text-primary-500" : ""
+                      )
+                    }
                   >
                     <span>{item.label}</span>
                   </NavLink>

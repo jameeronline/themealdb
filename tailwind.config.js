@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         primary: colors.emerald,
+        secondary: colors.pink,
       },
     },
   },

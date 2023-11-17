@@ -2,21 +2,27 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
-import Banner from "./Banner";
+import Banner from "./HomeBanner";
 
 //Import Custom Components
 //import ShowMeal from "./components/MealCard";
 // import CheckboxFilter from "./CheckboxFilter";
 // import RadioFilter from "./ListingItems";
 
-import RecipieCard from "./RecipieCard";
+import HomeCategoryList from "./HomeCategoryList";
+
+//custom Hooks
+import useFetchData from "../../hooks/use-fetch-data";
 
 //Import Custom Components
 // import CategoryList from "./CategoryList";
 // import CategoryDetails from "./CategoryDetails";
 // import MealDetail from "./MealDetail";
 
-const Home = ({ categoryDetails }) => {
+const Home = ({ categoryDetails, randomMeal, getRandomMeals }) => {
+  // const { data, loading, showError } = useFetchData(
+  //   "https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772"
+  // );
   // const [meals, setMeals] = useState([]);
   // const [selectedCategory, setSelectedCategory] = useState(
   //   new Array(categories.length).fill(false)
@@ -119,33 +125,16 @@ const Home = ({ categoryDetails }) => {
   //   }
   // };
 
+  // if (data) {
+  //   console.log(data);
+  // } else {
+  //   console.log("no data");
+  // }
+
   return (
     <div className="2xl:container mx-auto">
-      <Banner />
-      {categoryDetails !== null && categoryDetails.length > 0 && (
-        <section>
-          <header className="max-w-5xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-8">Categories</h2>
-            <p className="text-base text-gray-500 font-sans text-center">
-              Explore our food category for a delightful collection of recipes.
-              From savory dishes to sweet treats, discover a variety of culinary
-              delights tailored to satisfy every taste. Dive into a world of
-              simple and clean flavors that make every meal a joyous experience.
-            </p>
-          </header>
-          <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-            {categoryDetails
-              .filter((item, index) => index < 12)
-              .map((item, index) => {
-                return (
-                  <div className="col-span-2" key={index}>
-                    <RecipieCard item={item} key={item.idCategory} />
-                  </div>
-                );
-              })}
-          </div>
-        </section>
-      )}
+      <Banner items={randomMeal} getRandomMeals={getRandomMeals} />
+      <HomeCategoryList categoryDetails={categoryDetails} />
       <Link to="/area">Area Cusine</Link>
       {/* <Col sm={3}>
           <Link to="/category">Category</Link>
@@ -176,7 +165,9 @@ const Home = ({ categoryDetails }) => {
 
 //Prop validation
 Home.propTypes = {
+  randomMeal: PropTypes.array.isRequired,
   categoryDetails: PropTypes.array.isRequired,
+  getRandomMeals: PropTypes.func.isRequired,
 };
 
 export default Home;

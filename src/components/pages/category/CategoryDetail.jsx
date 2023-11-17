@@ -10,20 +10,24 @@ import { fetchFilteredMeals } from "../../../utils/dataLayer";
 
 //Helper functions
 import { capitalizeString } from "../../../utils/helperFunc";
+import Alert from "../../AlertError";
 
 export default function CategoryDetail() {
   const navigate = useNavigate();
   const { categoryType } = useParams();
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isGird, setIsGrid] = useState(false);
+  const [isGird, setIsGrid] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showError, setShowError] = useState("");
 
   useEffect(() => {
     //Load Data from API
     const getAPIData = async () => {
-      const filteredMeals = await fetchFilteredMeals(categoryType, "c");
+      setIsLoading(true);
+      const { data, errorMsg } = await fetchFilteredMeals(categoryType, "c");
       setIsLoading(false);
-      setItems(filteredMeals);
+      setShowError(errorMsg);
+      setItems(data);
     };
 
     getAPIData();
@@ -40,32 +44,55 @@ export default function CategoryDetail() {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold ">
-          {categoryType !== "" &&
-            categoryType != undefined &&
-            capitalizeString(categoryType)}
-        </h1>
+      {showError !== "" && <Alert message={showError} />}
+      {!Array.isArray(items) && (
+        <Alert message="There is no meals available on this category" />
+      )}
+      {items !== null && (
+        <>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-bold ">
+              {categoryType !== "" &&
+                categoryType != undefined &&
+                capitalizeString(categoryType)}
+            </h1>
 
-        <button onClick={handleGridChange}>
-          {isGird ? (
-            <BiListUl className="w-6 h-6" />
-          ) : (
-            <BiGridAlt className="w-6 h-6" />
-          )}
-        </button>
-      </div>
+            <button onClick={handleGridChange}>
+              {isGird ? (
+                <BiListUl className="w-8 h-8" />
+              ) : (
+                <BiGridAlt className="w-8 h-8" />
+              )}
+            </button>
+          </div>
 
-      <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-        {items.map((item) => {
-          return (
-            <div className="col-span-4" key={item.idMeal}>
-              <RecipieThumb item={item} />
-            </div>
-          );
-        })}
-      </div>
-      <button onClick={() => navigate(-1)}>Back</button>
+          <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
+            {items.map((item) => {
+              return (
+                <div
+                  className={`${isGird ? "col-span-4" : "col-span-6"} `}
+                  key={item.idMeal}
+                >
+                  <RecipieThumb item={item} />
+                </div>
+              );
+            })}
+          </div>
+          <button onClick={() => navigate(-1)}>Back</button>
+        </>
+      )}
     </>
   );
 }
+
+// export const categoryDetailLoader = async ({ params }) => {
+//   const { categoryType } = params;
+//   try {
+//     const response = await fetch(
+//       `www.themealdb.com/api/json/v1/1/filter.php?c=${categoryType}`
+//     );
+//     return await response.json();
+//   } catch (e) {
+//     console.log(e.message);
+//   }
+// };

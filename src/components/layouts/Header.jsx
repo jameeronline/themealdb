@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { NavLink } from "react-router-dom";
 import { BiMoon, BiSun } from "react-icons/bi";
@@ -6,9 +6,11 @@ import { clsx } from "clsx";
 
 //Labels
 import LABELS from "../../utils/labelBundle";
+import { ThemeContext } from "../context/ThemeContext";
 
-export default function Header({ darkMode, handleDarkMode }) {
+export default function Header() {
   const [isToggleOpen, setIsToggleOpen] = useState(true);
+  const { darkMode, handleDarkMode } = useContext(ThemeContext);
 
   return (
     <>

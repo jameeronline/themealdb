@@ -1,34 +1,65 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, Fragment } from "react";
 import { useLocation, Link } from "react-router-dom";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import Spinner from "../../Spinner";
 import Alert from "../../AlertError";
+import Missing from "../404";
 
 import { fetchMealDetails } from "../../../utils/dataLayer";
 
-import { BiCategoryAlt, BiPurchaseTag, BiMap } from "react-icons/bi";
-import { BiBookmark, BiBookmarkHeart, BiBookmarkPlus } from "react-icons/bi";
+//consume contextAPI
+import { ThemeContext } from "../../context/ThemeContext";
 
-export default function RecipeDetail({ mealInfo }) {
+import { BiCategoryAlt, BiPurchaseTag, BiMap } from "react-icons/bi";
+import { BiBookmark, BiBookmarkHeart, BiShareAlt } from "react-icons/bi";
+
+export default function RecipeDetail() {
   const [isLoading, setIsLoading] = useState(false);
   const [mealDetail, setMealDetail] = useState(null);
-  // const { id } = useParams();
+  const [showError, setShowError] = useState("");
   const { state } = useLocation();
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  const { favourites, handleFavourite } = useContext(ThemeContext);
 
   useEffect(() => {
     //Load Data from API
     const getAPIData = async () => {
       setIsLoading(true);
 
-      const mealDetails = await fetchMealDetails(state.id);
-      setIsLoading(false);
-      setMealDetail(mealDetails);
+      console.log(state);
+
+      if (state === null) {
+        setIsLoading(false);
+        setShowError("Please check your meals information");
+        return;
+      }
+
+      const { data, loading, showError } = await fetchMealDetails(state.id);
+      setIsLoading(loading);
+      setMealDetail(data);
+      setShowError(showError);
     };
 
     getAPIData();
-  }, []);
+  }, [state]);
+
+  useEffect(() => {
+    if (state === null) {
+      return;
+    }
+    setIsFavourite(JSON.stringify(favourites).includes(state.id));
+  }, [favourites]);
+
+  // const handleFavourite = () => {
+  //   console.log("fav");
+  // };
+
+  const handleShare = () => {
+    console.log("share");
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -36,7 +67,10 @@ export default function RecipeDetail({ mealInfo }) {
 
   return (
     <>
-      {!Array.isArray(mealDetail) && <Alert />}
+      {!Array.isArray(mealDetail) && showError !== "" && (
+        //<Alert message={showError} />
+        <Missing />
+      )}
       {Array.isArray(mealDetail) && (
         <>
           {mealDetail.map((item, index) => (
@@ -48,13 +82,14 @@ export default function RecipeDetail({ mealInfo }) {
                 {item.strTags !== null && (
                   <div className="inline-flex gap-2 items-center justify-center text-primary-500">
                     {item.strTags.split(",").map((item, index) => (
-                      <span
-                        key={index}
-                        className="inline-flex font-sans items-center justify-center gap-1 rounded bg-secondary-500 px-2 text-sm text-white"
-                      >
-                        <BiPurchaseTag />
-                        {item}
-                        <span className="sr-only"> new emails</span>
+                      <span key={index}>
+                        {item !== "" && (
+                          <span className="inline-flex font-sans items-center justify-center gap-1 rounded-full bg-secondary-500 px-2 py-1 text-sm text-white">
+                            <BiPurchaseTag />
+                            {item}
+                            <span className="sr-only"> new emails</span>
+                          </span>
+                        )}
                       </span>
                     ))}
                   </div>
@@ -85,10 +120,42 @@ export default function RecipeDetail({ mealInfo }) {
                       </Link>
                     </li>
                   )}
+                  <li>
+                    <button
+                      onClick={() =>
+                        handleFavourite({
+                          idMeal: item.idMeal,
+                          strMeal: item.strMeal,
+                          strMealThumb: item.strMealThumb,
+                        })
+                      }
+                      className={`inline-flex gap-2 ${
+                        isFavourite
+                          ? "text-secondary-600"
+                          : "text-primary-500 hover:text-slate-800"
+                      }  transition-colors duration-300`}
+                    >
+                      {isFavourite ? (
+                        <BiBookmarkHeart className="w-6 h-6" />
+                      ) : (
+                        <BiBookmark className="w-6 h-6" />
+                      )}
+                      Add to Favourite
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleShare}
+                      className="inline-flex gap-2 text-primary-500 hover:text-slate-800 transition-colors duration-300"
+                    >
+                      <BiShareAlt className="w-6 h-6" />
+                      Share it
+                    </button>
+                  </li>
                 </ul>
               </div>
 
-              <div className="flex justify-center mb-10">
+              <div className="flex justify-center mb-10 relative">
                 <LazyLoadImage
                   src={item.strMealThumb}
                   alt={item.strMeal}
@@ -100,18 +167,22 @@ export default function RecipeDetail({ mealInfo }) {
                 {item.strInstructions != null && (
                   <>
                     <h4 className="text-lg font-bold mb-6">Instuctions:</h4>
-                    <ol className="list-decimal space-y-4">
+                    <ol className="list-decimal space-y-4 list-inside">
                       {item.strInstructions.split("\r\n").map((item, index) => (
-                        <li key={index}>
-                          <p>{item}</p>
-                        </li>
+                        <Fragment key={index}>
+                          {item.length > 6 && (
+                            <li>
+                              <p>{item}</p>
+                            </li>
+                          )}
+                        </Fragment>
                       ))}
                     </ol>
                   </>
                 )}
               </div>
 
-              {item.strYoutube !== "" && (
+              {/* {item.strYoutube !== "" && (
                 <div className="m-10">
                   <h4 className="text-lg font-bold mb-4">Preview:</h4>
                   <div className="mb-10">
@@ -121,7 +192,7 @@ export default function RecipeDetail({ mealInfo }) {
                     ></iframe>
                   </div>
                 </div>
-              )}
+              )} */}
             </article>
           ))}
         </>

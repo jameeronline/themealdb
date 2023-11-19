@@ -26,6 +26,12 @@ import Favourites from "./components/pages/favourites";
 
 import Search from "./components/pages/search";
 
+//Import Context
+import { ThemeContext } from "./components/context/ThemeContext";
+import { useLocalStorage } from "@uidotdev/usehooks";
+
+import useFetch from "use-http";
+
 //API Utilities
 import {
   fetchLists,
@@ -35,23 +41,45 @@ import {
 
 function App() {
   const [areas, setAreas] = useState([]);
-  const [randomMeal, setRandomMeal] = useState([]);
-  const [categoryDetails, setCategoryDetails] = useState([]);
   const [categories, setCategories] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [darkMode, setDarkMode] = useState(
-    JSON.parse(localStorage.getItem("darkMode")) || false
-  );
+  const [categoryDetails, setCategoryDetails] = useState([]);
+
+  const [randomMeal, setRandomMeal] = useState([]);
+  const [darkMode, setDarkMode] = useLocalStorage("darkMode", false);
+
+  const [favourites, setFavourites] = useLocalStorage("favList", []);
+
   const [showError, setShowError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [posts, setPosts] = useState(null);
+
+  // const options = {};
+  // const {
+  //   loading,
+  //   error,
+  //   data = [],
+  // } = useFetch("https://jsonplaceholder.typicode.com/posts", options, []);
+
+  // console.log(data);
+  // console.log(error);
+
+  // const { error, data } = useFetch(
+  //   `https://jsonplaceholder.typicode.com/posts/`
+  // );
+
+  // console.log(error);
+  // console.log(data);
 
   // console(responseData);
 
   const handleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem("darkMode", newDarkMode);
+    //const newDarkMode = !darkMode;
+    setDarkMode(!darkMode);
+    //localStorage.setItem("darkMode", !darkMode);
     document.documentElement.classList.toggle("dark");
+    //setThemeMode(themeMode === "dark" ? "light" : "dark");
   };
 
   useEffect(() => {
@@ -75,22 +103,6 @@ function App() {
         console.log(e.message);
         setShowError(e.message);
       }
-
-      // const areasData = await fetchLists("list", "a", "list");
-      // setAreas(areasData);
-
-      // const categoriesData = await fetchLists("list", "c", "list");
-      // setCategories(categoriesData);
-
-      // const ingredientsData = await fetchLists("list", "i", "list");
-      // setIngredients(ingredientsData);
-
-      // const categoriesDetailsData = await fetchCategoryDetails("categories");
-      // setCategoryDetails(categoriesDetailsData);
-
-      //Load Data List categories and areas from API
-      // const mealInfo = await fetchRandomMeal();
-      // setRandomMeal(mealInfo.meals);
     };
 
     getAPIData();
@@ -98,7 +110,7 @@ function App() {
 
   //Restore dark mode
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("darkMode"))) {
+    if (JSON.parse(darkMode)) {
       document.documentElement.classList.add("dark");
       setDarkMode(true);
     }
@@ -116,44 +128,54 @@ function App() {
     }
   };
 
+  const handleFavourite = (obj) => {
+    let newfavList = [];
+    if (JSON.stringify(favourites).includes(obj.idMeal)) {
+      newfavList = favourites.filter((item) => item.idMeal !== obj.idMeal);
+    } else {
+      newfavList = [...favourites, obj];
+    }
+
+    setFavourites(newfavList);
+  };
+
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout darkMode={darkMode} handleDarkMode={handleDarkMode} />
-          }
-        >
-          <Route
-            index
-            element={
-              <Home
-                categoryDetails={categoryDetails}
-                randomMeal={randomMeal}
-                getRandomMeals={getRandomMeals}
-              />
-            }
-          />
-          <Route
-            path="category"
-            element={<CategoryList categories={categories} />}
-          >
-            <Route path=":categoryType" element={<CategoryDetail />} />
+      <ThemeContext.Provider
+        value={{ darkMode, handleDarkMode, favourites, handleFavourite }}
+      >
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route
+              index
+              element={
+                <Home
+                  categoryDetails={categoryDetails}
+                  randomMeal={randomMeal}
+                  getRandomMeals={getRandomMeals}
+                />
+              }
+            />
+            <Route
+              path="category"
+              element={<CategoryList categories={categories} />}
+            >
+              <Route path=":categoryType" element={<CategoryDetail />} />
+            </Route>
+            <Route path="area" element={<AreaList areas={areas} />}>
+              <Route path=":cuisineType" element={<AreaDetail />} />
+            </Route>
+            <Route
+              path="ingredients"
+              element={<Ingredients ingredients={ingredients} />}
+            ></Route>
+            <Route path="details/:id" element={<RecipeDetail />} />
+            <Route path="favourites" element={<Favourites />} />
+            <Route path="search" element={<Search />} />
+            <Route path="*" element={<Missing />} />
           </Route>
-          <Route path="area" element={<AreaList areas={areas} />}>
-            <Route path=":cuisineType" element={<AreaDetail />} />
-          </Route>
-          <Route
-            path="ingredients"
-            element={<Ingredients ingredients={ingredients} />}
-          ></Route>
-          <Route path="details/:id" element={<RecipeDetail />} />
-          <Route path="favourites" element={<Favourites />} />
-          <Route path="search" element={<Search />} />
-          <Route path="*" element={<Missing />} />
-        </Route>
-      </Routes>
+        </Routes>
+      </ThemeContext.Provider>
     </>
   );
 }

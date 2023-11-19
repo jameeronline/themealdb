@@ -8,11 +8,6 @@ import ListingItems from "../../ListingItems";
 const CategoryList = ({ categories }) => {
   const navigate = useNavigate();
 
-  useLayoutEffect(() => {
-    console.log(categories);
-    navigate(`/category/beef`);
-  }, []);
-
   return (
     <section>
       <div className="grid grid-cols-4 gap-8 md:grid-cols-8 lg:grid-cols-12">

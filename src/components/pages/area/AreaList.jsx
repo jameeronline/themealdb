@@ -7,11 +7,6 @@ import ListingItems from "../../ListingItems";
 const AreaList = ({ areas }) => {
   const navigate = useNavigate();
 
-  useLayoutEffect(() => {
-    console.log(areas);
-    navigate(`/area/american`);
-  }, []);
-
   return (
     <section>
       <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">

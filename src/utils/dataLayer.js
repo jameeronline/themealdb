@@ -72,34 +72,62 @@ export const fetchFilteredMeals = async (category, type) => {
 
 //Fetch Meals Details based on ID
 export const fetchMealDetails = async (id) => {
-  const data = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${id}`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((response) => {
-      return response.meals;
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+  // const data = await fetch(`${API_URL}/${API_KEY}/lookup.php?i=${id}`)
+  //   .then((response) => {
+  //     return response.json();
+  //   })
+  //   .then((response) => {
+  //     return response.meals;
+  //   })
+  //   .catch((error) => {
+  //     console.log(error.message);
+  //   });
 
-  return data;
+  //return data;
+
+  let data = [];
+  let errorMsg = "";
+
+  try {
+    const response = await axios.get(
+      `${API_URL}/${API_KEY}/lookup.php?i=${id}`
+    );
+    data = response.data.meals;
+  } catch (e) {
+    errorMsg = e.message;
+  }
+
+  return { data, errorMsg };
 };
 
 //Search Meals Details based on Keyword
 export const fetchSearch = async (searchKey) => {
-  const data = await fetch(`${API_URL}/${API_KEY}/search.php?s=${searchKey}`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((response) => {
-      return response.meals;
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+  // const data = await fetch(`${API_URL}/${API_KEY}/search.php?s=${searchKey}`)
+  //   .then((response) => {
+  //     return response.json();
+  //   })
+  //   .then((response) => {
+  //     return response.meals;
+  //   })
+  //   .catch((error) => {
+  //     console.log(error.message);
+  //   });
 
-  return data;
+  // return data;
+
+  let data = [];
+  let errorMsg = "";
+
+  try {
+    const response = await axios.get(
+      `${API_URL}/${API_KEY}/search.php?s=${searchKey}`
+    );
+    data = response.data.meals;
+  } catch (e) {
+    errorMsg = e.message;
+  }
+
+  return { data, errorMsg };
 };
 
 //Random Meals

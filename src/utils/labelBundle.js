@@ -32,8 +32,18 @@ const LABELS = {
   WIDGET_CATEGORY_TITLE: "Categories",
   PAGES: {
     SEARCH: {
-      SEARCH_TITLE: "Find the Meal you like",
-      SEARCH_INPUT_PLACEHOLDER: "Discover recipes from around the world...",
+      TITLE: "Find the Meal you like",
+      INPUT_PLACEHOLDER: "Discover recipes...",
+      INPUT_HELP_TEXT:
+        "Please input your search term/key and ENTER key to continue the search",
+    },
+    MISSING: {
+      TITLE: "404 Error",
+      SUB_TITLE: "Page not found",
+      DESCRIPTION:
+        "Sorry, the page you are looking for doesn't exist. Here are some helpful links:",
+      BUTTON_LABEL_1: "Go Back",
+      BUTTON_LABEL_2: "Take me Home",
     },
   },
 };

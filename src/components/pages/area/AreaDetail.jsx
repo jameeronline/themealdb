@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Spinner from "../../Spinner";
-import RecipieThumb from "../../RecipieThumb";
+import Thumbnail from "../../Thumbnail";
 import Alert from "../../AlertError";
 
 import { fetchFilteredMeals } from "../../../utils/dataLayer";
@@ -51,7 +51,7 @@ export default function AreaDetail() {
             {items.map((item) => {
               return (
                 <div className="col-span-4" key={item.idMeal}>
-                  <RecipieThumb item={item} />
+                  <Thumbnail item={item} />
                 </div>
               );
             })}

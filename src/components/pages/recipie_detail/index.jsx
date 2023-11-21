@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, Fragment } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -14,6 +14,10 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 import { BiCategoryAlt, BiPurchaseTag, BiMap } from "react-icons/bi";
 import { BiBookmark, BiBookmarkHeart, BiShareAlt } from "react-icons/bi";
+import { useDocumentTitle } from "@uidotdev/usehooks";
+import { TwitterShareButton } from "react-share";
+
+import { capitalizeString } from "../../../utils/helperFunc";
 
 export default function RecipeDetail() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,15 +25,20 @@ export default function RecipeDetail() {
   const [showError, setShowError] = useState("");
   const { state } = useLocation();
   const [isFavourite, setIsFavourite] = useState(false);
+  const { id } = useParams();
 
+  const location = useLocation();
   const { favourites, handleFavourite } = useContext(ThemeContext);
+
+  //update document title
+  useDocumentTitle(
+    `${capitalizeString(id).replaceAll("-", " ")} | The Meal DB`
+  );
 
   useEffect(() => {
     //Load Data from API
     const getAPIData = async () => {
       setIsLoading(true);
-
-      console.log(state);
 
       if (state === null) {
         setIsLoading(false);
@@ -51,7 +60,7 @@ export default function RecipeDetail() {
       return;
     }
     setIsFavourite(JSON.stringify(favourites).includes(state.id));
-  }, [favourites]);
+  }, [favourites, state]);
 
   // const handleFavourite = () => {
   //   console.log("fav");
@@ -76,7 +85,9 @@ export default function RecipeDetail() {
           {mealDetail.map((item, index) => (
             <article className="grid max-w-5xl mx-auto font-mono" key={index}>
               <header className=" mb-10 text-center  ">
-                <h1 className="text-6xl font-semibold mb-6">{item.strMeal}</h1>
+                <h1 className="text-6xl font-semibold mb-6 leading-tight">
+                  {item.strMeal}
+                </h1>
 
                 {/* Tags */}
                 {item.strTags !== null && (
@@ -151,6 +162,15 @@ export default function RecipeDetail() {
                       <BiShareAlt className="w-6 h-6" />
                       Share it
                     </button>
+                  </li>
+                  <li>
+                    <TwitterShareButton
+                      title={item.strMeal}
+                      url={`${document.location.origin}${location.pathname}`}
+                      hashtags={["meals", "recipies"]}
+                    >
+                      Share on Twitter
+                    </TwitterShareButton>
                   </li>
                 </ul>
               </div>

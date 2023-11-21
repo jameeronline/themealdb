@@ -8,9 +8,12 @@ import { BiBookmark, BiBookmarkHeart, BiBookmarkPlus } from "react-icons/bi";
 //import helper functions
 import { formatToUrlString } from "../utils/helperFunc";
 
-export default function RecipieThumb({ item }) {
+export default function Thumbnail({ item }) {
   return (
-    <>
+    <article className="relative">
+      <button className="absolute right-4 top-4 flex items-center justify-center z-10 w-10 h-10 bg-secondary-500 rounded-full">
+        <BiBookmark className="w-6 h-6 text-white" />
+      </button>
       <Link
         to={`/details/${formatToUrlString(item.strMeal)}`}
         state={{ id: item.idMeal }}
@@ -31,14 +34,13 @@ export default function RecipieThumb({ item }) {
             <h3 className="text-base font-medium text-white line-clamp-1">
               {item.strMeal}
             </h3>
-            <BiBookmark className="w-6 h-6 text-white" />
           </header>
         </div>
       </Link>
-    </>
+    </article>
   );
 }
 
-RecipieThumb.propTypes = {
+Thumbnail.propTypes = {
   item: PropTypes.object.isRequired,
 };

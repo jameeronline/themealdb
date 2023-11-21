@@ -6,7 +6,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { formatToUrlString } from "../utils/helperFunc";
 
-const RecipieCard = ({ item }) => {
+const Card = ({ item }) => {
   return (
     <Link
       className="relative group overflow-hidden"
@@ -30,8 +30,8 @@ const RecipieCard = ({ item }) => {
   );
 };
 
-RecipieCard.propTypes = {
+Card.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default RecipieCard;
+export default Card;

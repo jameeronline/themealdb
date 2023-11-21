@@ -1,13 +1,13 @@
-import { useEffect, useLayoutEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
+import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 
 import ListingItems from "../../ListingItems";
 
-const CategoryList = ({ categories }) => {
-  const navigate = useNavigate();
+//context
+import { DataContext } from "../../context/DataContext";
 
+const CategoryList = () => {
+  const { categories } = useContext(DataContext);
   return (
     <section>
       <div className="grid grid-cols-4 gap-8 md:grid-cols-8 lg:grid-cols-12">
@@ -27,10 +27,6 @@ const CategoryList = ({ categories }) => {
       </div>
     </section>
   );
-};
-
-CategoryList.propTypes = {
-  categories: PropTypes.array.isRequired,
 };
 
 export default CategoryList;

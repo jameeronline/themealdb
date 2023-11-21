@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import RecipieThumb from "../../RecipieThumb";
+import Thumbnail from "../../Thumbnail";
 
 //Context
 import { ThemeContext } from "../../context/ThemeContext";
@@ -22,7 +22,7 @@ export default function Favourites() {
             {favourites.map((item) => {
               return (
                 <div className="col-span-4 lg:col-span-3" key={item.idMeal}>
-                  <RecipieThumb item={item} />
+                  <Thumbnail item={item} />
                 </div>
               );
             })}

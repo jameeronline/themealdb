@@ -13,13 +13,20 @@ import HomeCategoryList from "./HomeCategoryList";
 
 //custom Hooks
 import useFetchData from "../../hooks/use-fetch-data";
+import { useDocumentTitle } from "@uidotdev/usehooks";
 
 //Import Custom Components
 // import CategoryList from "./CategoryList";
 // import CategoryDetails from "./CategoryDetails";
 // import MealDetail from "./MealDetail";
 
-const Home = ({ categoryDetails, randomMeal, getRandomMeals }) => {
+const Home = ({ categoryDetails, getRandomMeals }) => {
+  //update document title
+  useDocumentTitle("The Meal DB | The recipie archieve");
+  //const geoState = useGeolocation();
+
+  //console.log(geoState);
+
   // const { data, loading, showError } = useFetchData(
   //   "https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772"
   // );
@@ -133,7 +140,7 @@ const Home = ({ categoryDetails, randomMeal, getRandomMeals }) => {
 
   return (
     <div className="2xl:container mx-auto">
-      <Banner items={randomMeal} getRandomMeals={getRandomMeals} />
+      <Banner />
       <HomeCategoryList categoryDetails={categoryDetails} />
       <Link to="/area">Area Cusine</Link>
       {/* <Col sm={3}>
@@ -165,9 +172,7 @@ const Home = ({ categoryDetails, randomMeal, getRandomMeals }) => {
 
 //Prop validation
 Home.propTypes = {
-  randomMeal: PropTypes.array.isRequired,
   categoryDetails: PropTypes.array.isRequired,
-  getRandomMeals: PropTypes.func.isRequired,
 };
 
 export default Home;

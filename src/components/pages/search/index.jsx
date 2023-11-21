@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { BiSearch } from "react-icons/bi";
 import Spinner from "../../Spinner";
-import RecipieThumb from "../../RecipieThumb";
+import Thumbnail from "../../Thumbnail";
 import Alert from "../../AlertError";
 
 import { BiX } from "react-icons/bi";
@@ -101,7 +101,7 @@ export default function Search() {
             {items.map((item) => {
               return (
                 <div className="col-span-4 lg:col-span-3" key={item.idMeal}>
-                  <RecipieThumb item={item} />
+                  <Thumbnail item={item} />
                 </div>
               );
             })}

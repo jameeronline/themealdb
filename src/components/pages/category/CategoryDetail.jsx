@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Spinner from "../../Spinner";
-import RecipieThumb from "../../RecipieThumb";
+import RecipieThumb from "../../Thumbnail";
 
 import { BiGridAlt, BiListUl } from "react-icons/bi";
 

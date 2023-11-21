@@ -1,4 +1,4 @@
-import RecipieCard from "../../RecipieCard";
+import Card from "../../Card";
 
 export default function HomeCategoryList({ categoryDetails }) {
   return (
@@ -20,7 +20,7 @@ export default function HomeCategoryList({ categoryDetails }) {
               .map((item, index) => {
                 return (
                   <div className="col-span-2" key={index}>
-                    <RecipieCard item={item} key={item.idCategory} />
+                    <Card item={item} key={item.idCategory} />
                   </div>
                 );
               })}

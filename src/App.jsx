@@ -28,7 +28,8 @@ import Search from "./components/pages/search";
 
 //Import Context
 import { ThemeContext } from "./components/context/ThemeContext";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import DataProvider, { DataContext } from "./components/context/DataContext";
+import { useLocalStorage, useGeolocation } from "@uidotdev/usehooks";
 
 import useFetch from "use-http";
 
@@ -40,46 +41,20 @@ import {
 } from "./utils/dataLayer";
 
 function App() {
-  const [areas, setAreas] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
+  //const [areas, setAreas] = useState([]);
+  //const [categories, setCategories] = useState([]);
+  //const [ingredients, setIngredients] = useState([]);
   const [categoryDetails, setCategoryDetails] = useState([]);
 
-  const [randomMeal, setRandomMeal] = useState([]);
   const [darkMode, setDarkMode] = useLocalStorage("darkMode", false);
-
   const [favourites, setFavourites] = useLocalStorage("favList", []);
 
   const [showError, setShowError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const [posts, setPosts] = useState(null);
-
-  // const options = {};
-  // const {
-  //   loading,
-  //   error,
-  //   data = [],
-  // } = useFetch("https://jsonplaceholder.typicode.com/posts", options, []);
-
-  // console.log(data);
-  // console.log(error);
-
-  // const { error, data } = useFetch(
-  //   `https://jsonplaceholder.typicode.com/posts/`
-  // );
-
-  // console.log(error);
-  // console.log(data);
-
-  // console(responseData);
-
   const handleDarkMode = () => {
-    //const newDarkMode = !darkMode;
     setDarkMode(!darkMode);
-    //localStorage.setItem("darkMode", !darkMode);
     document.documentElement.classList.toggle("dark");
-    //setThemeMode(themeMode === "dark" ? "light" : "dark");
   };
 
   useEffect(() => {
@@ -87,18 +62,19 @@ function App() {
     const getAPIData = async () => {
       try {
         const response = await axios.all([
-          axios.get("https://www.themealdb.com/api/json/v1/1/list.php?c=list"),
-          axios.get("https://www.themealdb.com/api/json/v1/1/list.php?a=list"),
-          axios.get("https://www.themealdb.com/api/json/v1/1/list.php?i=list"),
+          //axios.get("https://www.themealdb.com/api/json/v1/1/list.php?c=list"),
+          //axios.get("https://www.themealdb.com/api/json/v1/1/list.php?a=list"),
+          //axios.get("https://www.themealdb.com/api/json/v1/1/list.php?i=list"),
           axios.get("https://www.themealdb.com/api/json/v1/1/categories.php"),
-          axios.get("https://www.themealdb.com/api/json/v1/1/random.php"),
+          //axios.get("https://www.themealdb.com/api/json/v1/1/random.php"),
         ]);
 
-        setCategories(response[0].data.meals);
-        setAreas(response[1].data.meals);
-        setIngredients(response[2].data.meals);
-        setCategoryDetails(response[3].data.categories);
-        setRandomMeal(response[4].data.meals);
+        //setCategories(response[0].data.meals);
+        //setAreas(response[1].data.meals);
+        //setIngredients(response[2].data.meals);
+        setCategoryDetails(response[0].data.categories);
+        //setRandomMeal(response[1].data.meals);
+        console.log("print");
       } catch (e) {
         console.log(e.message);
         setShowError(e.message);
@@ -116,18 +92,6 @@ function App() {
     }
   }, []);
 
-  //get Random Meals
-  const getRandomMeals = async () => {
-    try {
-      const response = await axios.get(
-        "https://www.themealdb.com/api/json/v1/1/random.php"
-      );
-      setRandomMeal(response.data.meals);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
   const handleFavourite = (obj) => {
     let newfavList = [];
     if (JSON.stringify(favourites).includes(obj.idMeal)) {
@@ -144,37 +108,27 @@ function App() {
       <ThemeContext.Provider
         value={{ darkMode, handleDarkMode, favourites, handleFavourite }}
       >
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route
-              index
-              element={
-                <Home
-                  categoryDetails={categoryDetails}
-                  randomMeal={randomMeal}
-                  getRandomMeals={getRandomMeals}
-                />
-              }
-            />
-            <Route
-              path="category"
-              element={<CategoryList categories={categories} />}
-            >
-              <Route path=":categoryType" element={<CategoryDetail />} />
+        <DataProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route
+                index
+                element={<Home categoryDetails={categoryDetails} />}
+              />
+              <Route path="category" element={<CategoryList />}>
+                <Route path=":categoryType" element={<CategoryDetail />} />
+              </Route>
+              <Route path="area" element={<AreaList />}>
+                <Route path=":cuisineType" element={<AreaDetail />} />
+              </Route>
+              <Route path="ingredients" element={<Ingredients />}></Route>
+              <Route path="details/:id" element={<RecipeDetail />} />
+              <Route path="favourites" element={<Favourites />} />
+              <Route path="search" element={<Search />} />
+              <Route path="*" element={<Missing />} />
             </Route>
-            <Route path="area" element={<AreaList areas={areas} />}>
-              <Route path=":cuisineType" element={<AreaDetail />} />
-            </Route>
-            <Route
-              path="ingredients"
-              element={<Ingredients ingredients={ingredients} />}
-            ></Route>
-            <Route path="details/:id" element={<RecipeDetail />} />
-            <Route path="favourites" element={<Favourites />} />
-            <Route path="search" element={<Search />} />
-            <Route path="*" element={<Missing />} />
-          </Route>
-        </Routes>
+          </Routes>
+        </DataProvider>
       </ThemeContext.Provider>
     </>
   );

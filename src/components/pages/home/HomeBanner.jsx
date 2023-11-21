@@ -1,17 +1,31 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import axios from "axios";
 
 import { BiRefresh } from "react-icons/bi";
 
 //heler function
 import { formatToUrlString } from "../../../utils/helperFunc";
 
-export default function Banner({ items, getRandomMeals }) {
+//hooks
+import useApi from "../../hooks/useAPI";
+
+export default function Banner() {
+  const API_URL = "https://www.themealdb.com/api/json/v1/1/random.php";
+  const { data, error, isLoading, updateUrl } = useApi(`${API_URL}`);
+
+  //get Random Meals
+  const getRandomMeals = () => {
+    updateUrl(`${API_URL}?${Math.random()}`);
+  };
+
   return (
     <>
-      {Array.isArray(items) && (
+      {error && <p>There is an error</p>}
+      {data !== null && Array.isArray(data.meals) && (
         <>
-          {items.map((item, index) => (
+          {data.meals.map((item, index) => (
             <section
               key={index}
               className="grid w-full overflow-hidden grid-cols-1 my-auto mb-16 bg-primary-50 md:grid-cols-2 xl:gap-14 md:gap-5"

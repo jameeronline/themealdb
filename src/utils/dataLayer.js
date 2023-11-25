@@ -92,7 +92,7 @@ export const fetchMealDetails = async (id) => {
     const response = await axios.get(
       `${API_URL}/${API_KEY}/lookup.php?i=${id}`
     );
-    data = response.data.meals;
+    data = response.data;
   } catch (e) {
     errorMsg = e.message;
   }

@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useId } from "react";
 import { BiSearch } from "react-icons/bi";
 import Spinner from "../../Spinner";
 import Thumbnail from "../../Thumbnail";
-import Alert from "../../AlertError";
+import Alert from "../../Alert";
 
 import { BiX } from "react-icons/bi";
 
@@ -17,6 +17,7 @@ export default function Search() {
   const [isLoading, setIsLoading] = useState(false);
   const [showError, setShowError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const id = useId();
 
   const searchInput = useRef(null);
 
@@ -56,12 +57,15 @@ export default function Search() {
 
         <div className="relative my-6">
           <form onSubmit={handleSubmit}>
+            <label htmlFor={`search-${id}`} className="sr-only">
+              Search input
+            </label>
             <input
               autoFocus
               ref={searchInput}
-              id="id-l11"
+              id={`search-${id}`}
               type="text"
-              name="id-l11"
+              name={`search-${id}`}
               value={searchTerm}
               placeholder={labels.INPUT_PLACEHOLDER}
               className="peer relative h-12 w-full rounded border border-slate-200 px-4 pl-12 text-slate-500 outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-primary-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"

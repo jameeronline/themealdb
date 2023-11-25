@@ -1,5 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import { HelmetProvider } from "react-helmet-async";
+
 import axios from "axios";
 
 //vendor imports
@@ -26,12 +28,15 @@ import Favourites from "./components/pages/favourites";
 
 import Search from "./components/pages/search";
 
+import Login from "./components/pages/auth/login";
+import SingUp from "./components/pages/auth/signup";
+
 //Import Context
 import { ThemeContext } from "./components/context/ThemeContext";
 import DataProvider, { DataContext } from "./components/context/DataContext";
 import { useLocalStorage, useGeolocation } from "@uidotdev/usehooks";
 
-import useFetch from "use-http";
+//import useFetch from "use-http";
 
 //API Utilities
 import {
@@ -105,31 +110,40 @@ function App() {
 
   return (
     <>
-      <ThemeContext.Provider
-        value={{ darkMode, handleDarkMode, favourites, handleFavourite }}
-      >
-        <DataProvider>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route
-                index
-                element={<Home categoryDetails={categoryDetails} />}
-              />
-              <Route path="category" element={<CategoryList />}>
-                <Route path=":categoryType" element={<CategoryDetail />} />
+      <HelmetProvider>
+        <ThemeContext.Provider
+          value={{ darkMode, handleDarkMode, favourites, handleFavourite }}
+        >
+          <DataProvider>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route path="signup" element={<SingUp />}></Route>
+                <Route path="login" element={<Login />}></Route>
+                <Route
+                  index
+                  element={<Home categoryDetails={categoryDetails} />}
+                />
+                <Route path="category" element={<CategoryList />}>
+                  {/* <Route index path="beef" element={<CategoryDetail />} /> */}
+                  <Route
+                    index
+                    path=":categoryType"
+                    element={<CategoryDetail />}
+                  />
+                </Route>
+                <Route path="area" element={<AreaList />}>
+                  <Route path=":cuisineType" element={<AreaDetail />} />
+                </Route>
+                <Route path="ingredients" element={<Ingredients />}></Route>
+                <Route path="details/:id" element={<RecipeDetail />} />
+                <Route path="favourites" element={<Favourites />} />
+                <Route path="search" element={<Search />} />
+                <Route path="*" element={<Missing />} />
               </Route>
-              <Route path="area" element={<AreaList />}>
-                <Route path=":cuisineType" element={<AreaDetail />} />
-              </Route>
-              <Route path="ingredients" element={<Ingredients />}></Route>
-              <Route path="details/:id" element={<RecipeDetail />} />
-              <Route path="favourites" element={<Favourites />} />
-              <Route path="search" element={<Search />} />
-              <Route path="*" element={<Missing />} />
-            </Route>
-          </Routes>
-        </DataProvider>
-      </ThemeContext.Provider>
+            </Routes>
+          </DataProvider>
+        </ThemeContext.Provider>
+      </HelmetProvider>
     </>
   );
 }

@@ -1,10 +1,10 @@
-import { useState, useEffect, useContext, Fragment } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, Link, useParams } from "react-router-dom";
-
+import { Helmet } from "react-helmet-async";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import Spinner from "../../Spinner";
-import Alert from "../../AlertError";
+import Alert from "../../Alert";
 import Missing from "../404";
 
 import { fetchMealDetails } from "../../../utils/dataLayer";
@@ -15,9 +15,12 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { BiCategoryAlt, BiPurchaseTag, BiMap } from "react-icons/bi";
 import { BiBookmark, BiBookmarkHeart, BiShareAlt } from "react-icons/bi";
 import { useDocumentTitle } from "@uidotdev/usehooks";
-import { TwitterShareButton } from "react-share";
 
-import { capitalizeString } from "../../../utils/helperFunc";
+//Page level components
+import Share from "./Share";
+import Instructions from "./Instructions";
+import Ingredients from "./Ingredients";
+import Video from "./Video";
 
 export default function RecipeDetail() {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,14 +29,15 @@ export default function RecipeDetail() {
   const { state } = useLocation();
   const [isFavourite, setIsFavourite] = useState(false);
   const { id } = useParams();
+  let ingredientLists = [];
 
   const location = useLocation();
   const { favourites, handleFavourite } = useContext(ThemeContext);
 
   //update document title
-  useDocumentTitle(
-    `${capitalizeString(id).replaceAll("-", " ")} | The Meal DB`
-  );
+  // useDocumentTitle(
+  //   `${capitalizeString(id).replaceAll("-", " ")} | The Meal DB`
+  // );
 
   useEffect(() => {
     //Load Data from API
@@ -66,6 +70,10 @@ export default function RecipeDetail() {
   //   console.log("fav");
   // };
 
+  // if (mealDetail !== null) {
+  //   ingredientLists = mapIngredientsAndMeasures(JSON.stringify(mealDetail));
+  // }
+
   const handleShare = () => {
     console.log("share");
   };
@@ -76,15 +84,30 @@ export default function RecipeDetail() {
 
   return (
     <>
-      {!Array.isArray(mealDetail) && showError !== "" && (
+      {/* {!Array.isArray(mealDetail) && showError !== "" && (
         //<Alert message={showError} />
         <Missing />
-      )}
-      {Array.isArray(mealDetail) && (
+      )} */}
+      {mealDetail !== null && Array.isArray(mealDetail.meals) && (
         <>
-          {mealDetail.map((item, index) => (
+          {mealDetail.meals.map((item, index) => (
             <article className="grid max-w-5xl mx-auto font-mono" key={index}>
-              <header className=" mb-10 text-center  ">
+              <Helmet>
+                <title>{item.strMeal} | The Meal DB</title>
+                <meta
+                  name="description"
+                  content="Beginner friendly page for learning React Helmet."
+                />
+                <meta property="og:title" content={item.strMeal} />
+                <meta property="og:type" content="article" />
+                <meta
+                  property="og:url"
+                  content={`${document.location.origin}${location.pathname}`}
+                />
+                <meta property="og:image" content={item.strMealThumb} />
+              </Helmet>
+
+              <header className=" mb-10 text-center">
                 <h1 className="text-6xl font-semibold mb-6 leading-tight">
                   {item.strMeal}
                 </h1>
@@ -98,7 +121,6 @@ export default function RecipeDetail() {
                           <span className="inline-flex font-sans items-center justify-center gap-1 rounded-full bg-secondary-500 px-2 py-1 text-sm text-white">
                             <BiPurchaseTag />
                             {item}
-                            <span className="sr-only"> new emails</span>
                           </span>
                         )}
                       </span>
@@ -147,11 +169,15 @@ export default function RecipeDetail() {
                       }  transition-colors duration-300`}
                     >
                       {isFavourite ? (
-                        <BiBookmarkHeart className="w-6 h-6" />
+                        <>
+                          <BiBookmarkHeart className="w-6 h-6" /> Remove from
+                          Favourite
+                        </>
                       ) : (
-                        <BiBookmark className="w-6 h-6" />
+                        <>
+                          <BiBookmark className="w-6 h-6" /> Add To Favourite
+                        </>
                       )}
-                      Add to Favourite
                     </button>
                   </li>
                   <li>
@@ -163,18 +189,18 @@ export default function RecipeDetail() {
                       Share it
                     </button>
                   </li>
-                  <li>
-                    <TwitterShareButton
-                      title={item.strMeal}
-                      url={`${document.location.origin}${location.pathname}`}
-                      hashtags={["meals", "recipies"]}
-                    >
-                      Share on Twitter
-                    </TwitterShareButton>
-                  </li>
                 </ul>
               </div>
 
+              <div className="mb-6">
+                <Share
+                  title={item.strMeal}
+                  url={`${document.location.origin}${location.pathname}`}
+                  hashtags={["meals", "recipies"]}
+                />
+              </div>
+
+              {/* Thimbnail - Big Image */}
               <div className="flex justify-center mb-10 relative">
                 <LazyLoadImage
                   src={item.strMealThumb}
@@ -183,35 +209,19 @@ export default function RecipeDetail() {
                 />
               </div>
 
-              <div>
-                {item.strInstructions != null && (
-                  <>
-                    <h4 className="text-lg font-bold mb-6">Instuctions:</h4>
-                    <ol className="list-decimal space-y-4 list-inside">
-                      {item.strInstructions.split("\r\n").map((item, index) => (
-                        <Fragment key={index}>
-                          {item.length > 6 && (
-                            <li>
-                              <p>{item}</p>
-                            </li>
-                          )}
-                        </Fragment>
-                      ))}
-                    </ol>
-                  </>
-                )}
-              </div>
-
-              {/* {item.strYoutube !== "" && (
-                <div className="m-10">
-                  <h4 className="text-lg font-bold mb-4">Preview:</h4>
-                  <div className="mb-10">
-                    <iframe
-                      className="w-full aspect-video"
-                      src={item.strYoutube.replace("/watch", "/embed")}
-                    ></iframe>
-                  </div>
+              <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
+                <div className="col-span-4 lg:col-span-8">
+                  {/* Instructions List */}
+                  <Instructions instructions={item.strInstructions} />
                 </div>
+                <div className="col-span-4 lg:col-span-4">
+                  {/* Ingredients Table */}
+                  <Ingredients detail={JSON.stringify(mealDetail)} />
+                </div>
+              </div>
+              {/* Youtube Preview */}
+              {/* {item.strYoutube !== "" && (
+                <Video url={item.strYoutube.replace("/watch", "/embed")} />
               )} */}
             </article>
           ))}

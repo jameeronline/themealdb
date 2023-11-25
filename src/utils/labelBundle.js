@@ -12,12 +12,12 @@ const LABELS = {
       },
       {
         label: "Cuisine Type",
-        link: "/area",
+        link: "/area/american",
       },
-      {
-        label: "Ingredients",
-        link: "/ingredients",
-      },
+      // {
+      //   label: "Ingredients",
+      //   link: "/ingredients",
+      // },
       {
         label: "Favourites",
         link: "/favourites",

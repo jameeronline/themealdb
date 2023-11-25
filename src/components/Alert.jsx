@@ -8,7 +8,7 @@ export default function Alert({ message }) {
         <p className="flex-1">
           {message
             ? message
-            : "Danger! There is no meals available at the moment with search key"}
+            : "There is no meals available at the moment with search key"}
         </p>
       </div>
     </>

@@ -2,7 +2,10 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
+
+//Home page components
 import Banner from "./HomeBanner";
+import Newsletter from "./Newsletter";
 
 //Import Custom Components
 //import ShowMeal from "./components/MealCard";
@@ -14,6 +17,9 @@ import HomeCategoryList from "./HomeCategoryList";
 //custom Hooks
 import useFetchData from "../../hooks/use-fetch-data";
 import { useDocumentTitle } from "@uidotdev/usehooks";
+
+//public components
+import { Container } from "../../public";
 
 //Import Custom Components
 // import CategoryList from "./CategoryList";
@@ -139,10 +145,11 @@ const Home = ({ categoryDetails, getRandomMeals }) => {
   // }
 
   return (
-    <div className="2xl:container mx-auto">
+    <Container>
       <Banner />
       <HomeCategoryList categoryDetails={categoryDetails} />
       <Link to="/area">Area Cusine</Link>
+      <Newsletter />
       {/* <Col sm={3}>
           <Link to="/category">Category</Link>
           {categories != null && categories.length > 0 && (
@@ -166,7 +173,7 @@ const Home = ({ categoryDetails, getRandomMeals }) => {
             />
           )}
         </Col> */}
-    </div>
+    </Container>
   );
 };
 

@@ -1,37 +1,46 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 
 import Spinner from "../../Spinner";
 import RecipieThumb from "../../Thumbnail";
 
 import { BiGridAlt, BiListUl } from "react-icons/bi";
 
-import { fetchFilteredMeals } from "../../../utils/dataLayer";
-
 //Helper functions
 import { capitalizeString } from "../../../utils/helperFunc";
-import Alert from "../../AlertError";
+import Alert from "../../Alert";
+
+import Select from "react-select";
+
+//hooks
+import useApi from "../../hooks/useAPI";
+
+//Context
+import { DataContext } from "../../context/DataContext";
+
+const options = [
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" },
+];
 
 export default function CategoryDetail() {
   const navigate = useNavigate();
+  const { ingredients } = useContext(DataContext);
+
   const { categoryType } = useParams();
-  const [items, setItems] = useState([]);
   const [isGird, setIsGrid] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showError, setShowError] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const API_URL = `${
+    import.meta.env.VITE_API_URL
+  }/filter.php?c=${categoryType}`;
+
+  const { data, error, isLoading, updateUrl } = useApi(API_URL);
 
   useEffect(() => {
-    //Load Data from API
-    const getAPIData = async () => {
-      setIsLoading(true);
-      const { data, errorMsg } = await fetchFilteredMeals(categoryType, "c");
-      setIsLoading(false);
-      setShowError(errorMsg);
-      setItems(data);
-    };
-
-    getAPIData();
-  }, [categoryType]);
+    updateUrl(API_URL);
+  }, [updateUrl]);
 
   if (isLoading) {
     return <Spinner />;
@@ -42,13 +51,21 @@ export default function CategoryDetail() {
     setIsGrid(updateGrid);
   };
 
+  let options = ingredients.map(function (ingredient) {
+    return { value: ingredient.strIngredient, label: ingredient.strIngredient };
+  });
+
+  //check data is empty
+  const isEmpty =
+    data !== null && !Array.isArray(data.meals) && data.meals.length < 0;
+
   return (
     <>
-      {showError !== "" && <Alert message={showError} />}
-      {!Array.isArray(items) && (
+      {error !== null && <Alert message={error.message} />}
+      {isEmpty && (
         <Alert message="There is no meals available on this category" />
       )}
-      {items !== null && (
+      {!isEmpty && (
         <>
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold ">
@@ -57,6 +74,11 @@ export default function CategoryDetail() {
                 capitalizeString(categoryType)}
             </h1>
 
+            <Select
+              options={options}
+              defaultValue={selectedOption}
+              onChange={setSelectedOption}
+            />
             <button onClick={handleGridChange}>
               {isGird ? (
                 <BiListUl className="w-8 h-8" />
@@ -67,7 +89,7 @@ export default function CategoryDetail() {
           </div>
 
           <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-            {items.map((item) => {
+            {data.meals.map((item) => {
               return (
                 <div
                   className={`${isGird ? "col-span-4" : "col-span-6"} `}

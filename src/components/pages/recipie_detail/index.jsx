@@ -180,25 +180,29 @@ export default function RecipeDetail() {
                       )}
                     </button>
                   </li>
-                  <li>
-                    <button
-                      onClick={handleShare}
-                      className="inline-flex gap-2 text-primary-500 hover:text-slate-800 transition-colors duration-300"
-                    >
-                      <BiShareAlt className="w-6 h-6" />
-                      Share it
-                    </button>
-                  </li>
+                  {navigator.canShare() && (
+                    <li>
+                      <button
+                        onClick={handleShare}
+                        className="inline-flex gap-2 text-primary-500 hover:text-slate-800 transition-colors duration-300"
+                      >
+                        <BiShareAlt className="w-6 h-6" />
+                        Share it
+                      </button>
+                    </li>
+                  )}
                 </ul>
               </div>
 
-              <div className="mb-6">
-                <Share
-                  title={item.strMeal}
-                  url={`${document.location.origin}${location.pathname}`}
-                  hashtags={["meals", "recipies"]}
-                />
-              </div>
+              {!navigator.canShare() && (
+                <div className="mb-6">
+                  <Share
+                    title={item.strMeal}
+                    url={`${document.location.origin}${location.pathname}`}
+                    hashtags={["meals", "recipies"]}
+                  />
+                </div>
+              )}
 
               {/* Thimbnail - Big Image */}
               <div className="flex justify-center mb-10 relative">

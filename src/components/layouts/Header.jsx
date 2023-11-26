@@ -32,7 +32,7 @@ export default function Header() {
               </a>
             </LinkContainer>
             {/*      <!-- Mobile trigger --> */}
-            {/* <button
+            <button
               className={`relative order-10 block h-10 w-10 self-center lg:hidden
                 ${
                   isToggleOpen
@@ -58,7 +58,7 @@ export default function Header() {
                   className="absolute block h-0.5 w-1/2 origin-top-left translate-y-2 transform rounded-full bg-slate-900 transition-all duration-300"
                 ></span>
               </div>
-            </button> */}
+            </button>
             {/*      <!-- Navigation links --> */}
             <ul
               role="menubar"

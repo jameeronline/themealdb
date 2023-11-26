@@ -180,7 +180,7 @@ export default function RecipeDetail() {
                       )}
                     </button>
                   </li>
-                  {navigator.canShare() && (
+                  {Navigator.canShare() && (
                     <li>
                       <button
                         onClick={handleShare}
@@ -194,7 +194,7 @@ export default function RecipeDetail() {
                 </ul>
               </div>
 
-              {!navigator.canShare() && (
+              {!Navigator.canShare() && (
                 <div className="mb-6">
                   <Share
                     title={item.strMeal}

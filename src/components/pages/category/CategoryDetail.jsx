@@ -1,22 +1,23 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 
-import Spinner from "../../Spinner";
-import RecipieThumb from "../../Thumbnail";
+import Spinner from "components/Spinner";
+import Alert from "components/Alert";
+import RecipieThumb from "components/Thumbnail";
 
+// Icons
 import { BiGridAlt, BiListUl } from "react-icons/bi";
 
 //Helper functions
-import { capitalizeString } from "../../../utils/helperFunc";
-import Alert from "../../Alert";
+import { capitalizeString } from "src/utils/helperFunc";
 
 import Select from "react-select";
 
 //hooks
-import useApi from "../../hooks/useAPI";
+import useApi from "components/hooks/useAPI";
 
 //Context
-import { DataContext } from "../../context/DataContext";
+import { DataContext } from "components/context/DataContext";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },

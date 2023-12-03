@@ -1,16 +1,20 @@
 import { useState, useContext } from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { BiMoon, BiSun } from "react-icons/bi";
 import { clsx } from "clsx";
 
 //Labels
-import LABELS from "../../utils/labelBundle";
-import { ThemeContext } from "../context/ThemeContext";
+import { GLOBAL_LBL, HEADER_LBL } from "src/labels";
+
+//Theme
+import { ThemeContext } from "components/context/ThemeContext";
 
 export default function Header() {
-  const [isToggleOpen, setIsToggleOpen] = useState(true);
+  const [isToggleOpen, setIsToggleOpen] = useState(false);
   const { darkMode, handleDarkMode } = useContext(ThemeContext);
+
+  const LOGO = GLOBAL_LBL.LOGO;
+  const NAV = HEADER_LBL.NAV;
 
   return (
     <>
@@ -21,16 +25,14 @@ export default function Header() {
             className="flex h-[5.5rem] items-stretch justify-between font-medium"
             role="navigation"
           >
-            {/*      <!-- Brand logo --> */}
-            <LinkContainer to="/">
-              <a
-                aria-label={LABELS.HEADER.LOGO}
-                className="flex items-center gap-2 whitespace-nowrap py-3 text-lg font-bold focus:outline-none lg:flex-1"
-                href="javascript:void(0)"
-              >
-                {LABELS.HEADER.LOGO}
-              </a>
-            </LinkContainer>
+            {/* !-- Brand logo --> */}
+            <Link
+              to="/"
+              aria-label={LOGO}
+              className="flex items-center gap-2 whitespace-nowrap py-3 text-lg font-bold focus:outline-none lg:flex-1"
+            >
+              {LOGO}
+            </Link>
             {/*      <!-- Mobile trigger --> */}
             <button
               className={`relative order-10 block h-10 w-10 self-center lg:hidden
@@ -69,10 +71,11 @@ export default function Header() {
                   : "invisible opacity-0"
               }`}
             >
-              {LABELS.HEADER.NAV.map((item, index) => (
+              {NAV.map(({ LABEL, URL }, index) => (
                 <li role="none" className="flex items-stretch" key={index}>
                   <NavLink
-                    to={item.link}
+                    to={URL}
+                    onClick={() => setIsToggleOpen(false)}
                     role="menuitem"
                     aria-haspopup="false"
                     className={({ isActive }) =>
@@ -82,7 +85,7 @@ export default function Header() {
                       )
                     }
                   >
-                    <span>{item.label}</span>
+                    <span>{LABEL}</span>
                   </NavLink>
                 </li>
               ))}

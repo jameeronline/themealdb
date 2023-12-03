@@ -1,4 +1,3 @@
-import React from "react";
 import PropTyes from "prop-types";
 
 const ListItemsContainer = ({ children }) => {
@@ -10,12 +9,5 @@ const ListItemsContainer = ({ children }) => {
     </>
   );
 };
-// Props Validation
-// ListItemsContainer.propTypes = {
-//   children: PropTypes.string.isRequired,
-//   itemKey: PropTypes.string.isRequired,
-//   title: PropTypes.string.isRequired,
-//   items: PropTypes.array.isRequired,
-// };
 
 export default ListItemsContainer;

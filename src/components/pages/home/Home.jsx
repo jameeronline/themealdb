@@ -19,14 +19,14 @@ import useFetchData from "../../hooks/use-fetch-data";
 import { useDocumentTitle } from "@uidotdev/usehooks";
 
 //public components
-import { Container } from "../../public";
+import { Container } from "components/public";
 
 //Import Custom Components
 // import CategoryList from "./CategoryList";
 // import CategoryDetails from "./CategoryDetails";
 // import MealDetail from "./MealDetail";
 
-const Home = ({ categoryDetails, getRandomMeals }) => {
+const Home = ({ categoryDetails }) => {
   //update document title
   useDocumentTitle("The Meal DB | The recipie archieve");
   //const geoState = useGeolocation();
@@ -148,7 +148,7 @@ const Home = ({ categoryDetails, getRandomMeals }) => {
     <Container>
       <Banner />
       <HomeCategoryList categoryDetails={categoryDetails} />
-      <Link to="/area">Area Cusine</Link>
+      {/* <Link to="/area">Area Cusine</Link> */}
       <Newsletter />
       {/* <Col sm={3}>
           <Link to="/category">Category</Link>

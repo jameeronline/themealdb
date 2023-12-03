@@ -1,16 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { useLocation, Link, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import Spinner from "../../Spinner";
-import Alert from "../../Alert";
-import Missing from "../404";
+import Spinner from "components/Spinner";
+import Alert from "components/Alert";
+import Missing from "components/pages/404";
+import SEO from "components/common/SEO";
 
-import { fetchMealDetails } from "../../../utils/dataLayer";
+import { fetchMealDetails } from "src/utils/dataLayer";
 
 //consume contextAPI
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "components/context/ThemeContext";
 
 import { BiCategoryAlt, BiPurchaseTag, BiMap } from "react-icons/bi";
 import { BiBookmark, BiBookmarkHeart, BiShareAlt } from "react-icons/bi";
@@ -29,15 +29,9 @@ export default function RecipeDetail() {
   const { state } = useLocation();
   const [isFavourite, setIsFavourite] = useState(false);
   const { id } = useParams();
-  let ingredientLists = [];
 
   const location = useLocation();
   const { favourites, handleFavourite } = useContext(ThemeContext);
-
-  //update document title
-  // useDocumentTitle(
-  //   `${capitalizeString(id).replaceAll("-", " ")} | The Meal DB`
-  // );
 
   useEffect(() => {
     //Load Data from API
@@ -66,14 +60,6 @@ export default function RecipeDetail() {
     setIsFavourite(JSON.stringify(favourites).includes(state.id));
   }, [favourites, state]);
 
-  // const handleFavourite = () => {
-  //   console.log("fav");
-  // };
-
-  // if (mealDetail !== null) {
-  //   ingredientLists = mapIngredientsAndMeasures(JSON.stringify(mealDetail));
-  // }
-
   const handleShare = () => {
     console.log("share");
   };
@@ -91,24 +77,16 @@ export default function RecipeDetail() {
       {mealDetail !== null && Array.isArray(mealDetail.meals) && (
         <>
           {mealDetail.meals.map((item, index) => (
-            <article className="grid max-w-5xl mx-auto font-mono" key={index}>
-              <Helmet>
-                <title>{item.strMeal} | The Meal DB</title>
-                <meta
-                  name="description"
-                  content="Beginner friendly page for learning React Helmet."
-                />
-                <meta property="og:title" content={item.strMeal} />
-                <meta property="og:type" content="article" />
-                <meta
-                  property="og:url"
-                  content={`${document.location.origin}${location.pathname}`}
-                />
-                <meta property="og:image" content={item.strMealThumb} />
-              </Helmet>
+            <article className="grid max-w-5xl mx-auto" key={index}>
+              {/* <SEO
+                title={item.strMeal}
+                description=""
+                name={item.strMeal}
+                img={item.strMealThumb}
+              /> */}
 
               <header className=" mb-10 text-center">
-                <h1 className="text-6xl font-semibold mb-6 leading-tight">
+                <h1 className="text-6xl font-serif font-semibold mb-6 leading-tight">
                   {item.strMeal}
                 </h1>
 
@@ -180,6 +158,7 @@ export default function RecipeDetail() {
                       )}
                     </button>
                   </li>
+                  {/* Share - native */}
                   {navigator.canShare() && (
                     <li>
                       <button
@@ -194,6 +173,7 @@ export default function RecipeDetail() {
                 </ul>
               </div>
 
+              {/* Share - custom */}
               {!navigator.canShare() && (
                 <div className="mb-6">
                   <Share

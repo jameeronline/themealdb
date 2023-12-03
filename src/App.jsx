@@ -8,42 +8,37 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 
 //Layouts
-import Layout from "./components/layouts";
+import Layout from "components/layouts";
 
 //Pages
-import Home from "./components/pages/home/Home";
+import Home from "components/pages/home/Home";
 
-import CategoryList from "./components/pages/category/CategoryList";
-import CategoryDetail from "./components/pages/category/CategoryDetail";
+import CategoryList from "components/pages/category/CategoryList";
+import CategoryDetail from "components/pages/category/CategoryDetail";
 
-import AreaList from "./components/pages/area/AreaList";
-import AreaDetail from "./components/pages/area/AreaDetail";
+import AreaList from "components/pages/area/AreaList";
+import AreaDetail from "components/pages/area/AreaDetail";
 
-import Ingredients from "./components/pages/ingredients";
+import Ingredients from "components/pages/ingredients";
 
-import RecipeDetail from "./components/pages/recipie_detail";
-import Missing from "./components/pages/404";
+import RecipeDetail from "components/pages/recipie_detail";
 
-import Favourites from "./components/pages/favourites";
+import Missing from "components/pages/404";
+import Favourites from "components/pages/favourites";
+import Search from "components/pages/search";
+import Contact from "./components/pages/contact";
+import About from "./components/pages/about";
 
-import Search from "./components/pages/search";
-
-import Login from "./components/pages/auth/login";
-import SingUp from "./components/pages/auth/signup";
+//Users
+import Login from "components/pages/auth/login";
+import SingUp from "components/pages/auth/signup";
 
 //Import Context
-import { ThemeContext } from "./components/context/ThemeContext";
-import DataProvider, { DataContext } from "./components/context/DataContext";
+import { ThemeContext } from "components/context/ThemeContext";
+import DataProvider, { DataContext } from "components/context/DataContext";
 import { useLocalStorage, useGeolocation } from "@uidotdev/usehooks";
 
 //import useFetch from "use-http";
-
-//API Utilities
-import {
-  fetchLists,
-  fetchCategoryDetails,
-  fetchRandomMeal,
-} from "./utils/dataLayer";
 
 function App() {
   //const [areas, setAreas] = useState([]);
@@ -137,6 +132,8 @@ function App() {
                 <Route path="ingredients" element={<Ingredients />}></Route>
                 <Route path="details/:id" element={<RecipeDetail />} />
                 <Route path="favourites" element={<Favourites />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="about" element={<About />} />
                 <Route path="search" element={<Search />} />
                 <Route path="*" element={<Missing />} />
               </Route>

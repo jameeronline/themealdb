@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 
-import ListingItems from "../../ListingItems";
+//components
+import ListingItems from "components/ListingItems";
 
 //context
-import { DataContext } from "../../context/DataContext";
+import { DataContext } from "components/context/DataContext";
 
 const CategoryList = () => {
   const { categories } = useContext(DataContext);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { mapIngredientsAndMeasures } from "../../../utils/helperFunc";
+import { mapIngredientsAndMeasures } from "src/utils/helperFunc";
 
 export default function Ingredients({ detail }) {
   const [ingredientList, setIngredientList] = useState(null);

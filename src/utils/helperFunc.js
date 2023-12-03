@@ -53,7 +53,14 @@ export function mapIngredientsAndMeasures(recipeJSON) {
       const measure = firstMeal[measureKey]?.trim();
 
       // Check if either ingredient or measure is not empty
-      if (ingredient !== "" || measure !== "") {
+      if (
+        ingredient !== "" &&
+        measure !== "" &&
+        ingredient !== undefined &&
+        measure !== undefined &&
+        ingredient !== null &&
+        measure !== null
+      ) {
         const mappingObject = {};
         mappingObject["strIngredient"] = ingredient;
         mappingObject["strMeasure"] = measure;
@@ -72,4 +79,12 @@ export function mapIngredientsAndMeasures(recipeJSON) {
   });
 
   return resultArray;
+}
+
+export function validateEmail(email) {
+  // Define a regular expression for validating email addresses
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  // Test if the email matches the regular expression
+  return emailRegex.test(email);
 }

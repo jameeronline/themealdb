@@ -1,15 +1,17 @@
 import { useState, useRef, useId } from "react";
 import { BiSearch } from "react-icons/bi";
-import Spinner from "../../Spinner";
-import Thumbnail from "../../Thumbnail";
-import Alert from "../../Alert";
+
+//components
+import InlineSpinner from "components/InlineSpinner";
+import Thumbnail from "components/Thumbnail";
+import Alert from "components/Alert";
 
 import { BiX } from "react-icons/bi";
 
-import { fetchSearch } from "../../../utils/dataLayer";
+import { fetchSearch } from "src/utils/dataLayer";
 
 //label bundle
-import LABELS from "../../../utils/labelBundle";
+import LABELS from "src/utils/labelBundle";
 
 export default function Search() {
   const labels = LABELS.PAGES.SEARCH;
@@ -52,7 +54,7 @@ export default function Search() {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">{labels.TITLE}</h1>
           {/* loadding */}
-          {isLoading && <Spinner className="w-6 h-6" />}
+          {isLoading && <InlineSpinner className="w-6 h-6" />}
         </div>
 
         <div className="relative my-6">

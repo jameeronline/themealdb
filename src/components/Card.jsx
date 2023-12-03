@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import { formatToUrlString } from "../utils/helperFunc";
+import { formatToUrlString } from "src/utils/helperFunc";
 
 const Card = ({ item }) => {
   return (

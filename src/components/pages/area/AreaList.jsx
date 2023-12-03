@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 
 //Components
-import ListingItems from "../../ListingItems";
+import ListingItems from "components/ListingItems";
 
 //Context
-import { DataContext } from "../../context/DataContext";
+import { DataContext } from "components/context/DataContext";
 
 const AreaList = () => {
   const { areas } = useContext(DataContext);

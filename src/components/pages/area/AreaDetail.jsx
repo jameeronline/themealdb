@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
 
-import Spinner from "../../Spinner";
-import Thumbnail from "../../Thumbnail";
-import Alert from "../../Alert";
+import Spinner from "components/Spinner";
+import Thumbnail from "components/Thumbnail";
+import Alert from "components/Alert";
 
 //Helper functions
-import { capitalizeString } from "../../../utils/helperFunc";
+import { capitalizeString } from "src/utils/helperFunc";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 

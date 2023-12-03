@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 //import 404 from "../../../../public/illustration.svg"
 
 //labels
-import LABELS from "../../../utils/labelBundle";
+import LABELS from "src/utils/labelBundle";
 
 export default function Missing() {
   let navigate = useNavigate();

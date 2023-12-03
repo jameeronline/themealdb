@@ -2,29 +2,81 @@ const LABELS = {
   HEADER: {
     LOGO: "The Meal DB",
     NAV: [
-      // {
-      //   label: "Home",
-      //   link: "/",
-      // },
       {
-        label: "Categories",
-        link: "/category",
+        LABEL: "Categories",
+        URL: "/category",
       },
       {
-        label: "Cuisine Type",
-        link: "/area/american",
+        LABEL: "Cuisine Type",
+        URL: "/area/american",
       },
       // {
-      //   label: "Ingredients",
-      //   link: "/ingredients",
+      //   LABEL: "Ingredients",
+      //   URL: "/ingredients",
       // },
       {
-        label: "Favourites",
-        link: "/favourites",
+        LABEL: "Favourites",
+        URL: "/favourites",
       },
       {
-        label: "Search",
-        link: "/search",
+        LABEL: "Search",
+        URL: "/search",
+      },
+      {
+        LABEL: "Contact",
+        URL: "/contact",
+      },
+      {
+        LABEL: "About",
+        URL: "/about",
+      },
+    ],
+  },
+  FOOTER: {
+    MAIN_FOOTER: {
+      SOCIAL: {
+        TITLE: "Follow Us",
+        LINKS: [
+          {
+            ICON: "Facebook",
+            LABEL: "Facebook",
+            URL: "https://facebook.com/themealdb",
+          },
+          {
+            ICON: "Instagram",
+            LABEL: "Instagram",
+            URL: "https://instagram.com/themealdb",
+          },
+          {
+            ICON: "X",
+            LABEL: "X",
+            URL: "https://twitter.com/themealdb",
+          },
+          {
+            ICON: "Linkedin",
+            LABEL: "LinkedIN",
+            URL: "https://linkedin.com/themealdb",
+          },
+          {
+            ICON: "Youtube",
+            LABEL: "Youtube",
+            URL: "https://youtube.com/themealdb",
+          },
+        ],
+      },
+    },
+    SUB_FOOTER: [
+      {
+        LABEL: "Privacy Policy",
+        URL: "/privacy-policy",
+      },
+      {
+        LABEL: "Terms of Service",
+        URL: "/terms-of-service",
+      },
+      {
+        LABEL: "Cookies Settings",
+        URL: "/cookies-settings",
       },
     ],
   },

@@ -8,32 +8,32 @@ import ListItemsTitle from "./ListItemsTitle";
 import ListItemsBody from "./ListItemsBody";
 
 const ListingItems = ({ title, items, itemKey, itemLabel }) => {
+  const listItemsArray = items.map((item, index) => {
+    return (
+      <li key={index}>
+        <NavLink
+          to={`/${itemLabel}/${item[itemKey].toLowerCase()}`}
+          className={({ isActive }) =>
+            clsx(
+              "flex p-2 px-4 transition-all duration-300 ",
+              isActive
+                ? "rounded bg-primary-500 text-white"
+                : "hover:text-primary-500 hover:bg-primary-50"
+            )
+          }
+        >
+          {item[itemKey]}
+        </NavLink>
+      </li>
+    );
+  });
+
   return (
     <>
       <ListItemsContainer>
         <ListItemsTitle title={title} />
         <ListItemsBody>
-          <ul>
-            {items.map((item, index) => {
-              return (
-                <li key={index}>
-                  <NavLink
-                    to={`/${itemLabel}/${item[itemKey].toLowerCase()}`}
-                    className={({ isActive }) =>
-                      clsx(
-                        "flex p-2 px-4 transition-all duration-300 ",
-                        isActive
-                          ? "rounded bg-primary-500 text-white"
-                          : "hover:text-primary-500 hover:bg-primary-50"
-                      )
-                    }
-                  >
-                    {item[itemKey]}
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
+          <ul className="space-y-1">{listItemsArray}</ul>
         </ListItemsBody>
       </ListItemsContainer>
     </>

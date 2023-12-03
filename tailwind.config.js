@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require("tailwindcss/colors");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -9,6 +10,9 @@ export default {
       colors: {
         primary: colors.emerald,
         secondary: colors.pink,
+      },
+      fontFamily: {
+        sans: ['"Inter"', ...defaultTheme.fontFamily.sans],
       },
     },
   },

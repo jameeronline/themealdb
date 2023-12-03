@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import Thumbnail from "../../Thumbnail";
+import Thumbnail from "components/Thumbnail";
 
 //Context
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "components/context/ThemeContext";
 
 export default function Favourites() {
   const { favourites } = useContext(ThemeContext);

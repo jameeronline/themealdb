@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="relative z-20 w-full after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden dark:bg-primary-950">
+      <header className="bg-primary-50 sticky top-0 z-20 w-full after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden dark:bg-primary-950">
         <div className="relative mx-auto max-w-full px-6 2xl:container">
           <nav
             aria-label="main navigation"

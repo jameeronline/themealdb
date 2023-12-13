@@ -24,7 +24,7 @@ export default function Blog() {
         setPosts(response);
         setIsLoading(false);
 
-        console.log("All of your products:", response);
+        //console.log("All of your products:", response);
         //console.log(Object.keys(response));
       } catch (error) {
         // handle any errors

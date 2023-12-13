@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 
-import InlineSpinner from "src/components/InlineSpinner";
+import InlineSpinner from "src/components/common/InlineSpinner";
 import SimpleModal from "src/components/SimpleModal";
 
 //help functions
@@ -67,6 +67,7 @@ export default function NewsletterForm() {
           {LABELS.INPUT_LBL}
         </label>
         <input
+          autoComplete="off"
           type="email"
           ref={emailRef}
           id="newsletter-email"

@@ -1,50 +1,36 @@
-import { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams, Navigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useSWR from "swr";
 
-import Spinner from "components/Spinner";
+import Spinner from "src/components/common/Spinner";
 import Alert from "components/Alert";
-import RecipieThumb from "components/Thumbnail";
+import Thumbnail from "components/Thumbnail";
 
 // Icons
 import { BiGridAlt, BiListUl } from "react-icons/bi";
 
 //Helper functions
 import { capitalizeString } from "src/utils/helperFunc";
-
-import Select from "react-select";
-
-//hooks
-import useApi from "components/hooks/useAPI";
-
-//Context
-import { DataContext } from "components/context/DataContext";
-
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
+import { fetcher } from "src/utils/helperFunc";
 
 export default function CategoryDetail() {
   const navigate = useNavigate();
-  const { ingredients } = useContext(DataContext);
 
   const { categoryType } = useParams();
   const [isGird, setIsGrid] = useState(true);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const API_URL = `${
     import.meta.env.VITE_API_URL
   }/filter.php?c=${categoryType}`;
 
-  const { data, error, isLoading, updateUrl } = useApi(API_URL);
-
-  useEffect(() => {
-    updateUrl(API_URL);
-  }, [updateUrl]);
+  const { data, error, isLoading } = useSWR(API_URL, fetcher);
 
   if (isLoading) {
     return <Spinner />;
+  }
+
+  if (error) {
+    return <Alert />;
   }
 
   const handleGridChange = () => {
@@ -52,34 +38,26 @@ export default function CategoryDetail() {
     setIsGrid(updateGrid);
   };
 
-  let options = ingredients.map(function (ingredient) {
-    return { value: ingredient.strIngredient, label: ingredient.strIngredient };
-  });
-
   //check data is empty
-  const isEmpty =
-    data !== null && !Array.isArray(data.meals) && data.meals.length < 0;
+  const isEmpty = !Array.isArray(data.meals) || data.meals.length < 1;
 
   return (
     <>
-      {error !== null && <Alert message={error.message} />}
       {isEmpty && (
         <Alert message="There is no meals available on this category" />
       )}
       {!isEmpty && (
         <>
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold ">
+            <h1 className="text-3xl font-bold inline-flex items-baseline gap-2">
               {categoryType !== "" &&
                 categoryType != undefined &&
                 capitalizeString(categoryType)}
+              <span className="text-sm font-normal">
+                ({data.meals.length} meals found)
+              </span>
             </h1>
 
-            <Select
-              options={options}
-              defaultValue={selectedOption}
-              onChange={setSelectedOption}
-            />
             <button onClick={handleGridChange}>
               {isGird ? (
                 <BiListUl className="w-8 h-8" />
@@ -96,7 +74,7 @@ export default function CategoryDetail() {
                   className={`${isGird ? "col-span-4" : "col-span-6"} `}
                   key={item.idMeal}
                 >
-                  <RecipieThumb item={item} />
+                  <Thumbnail item={item} />
                 </div>
               );
             })}

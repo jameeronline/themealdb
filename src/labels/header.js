@@ -21,6 +21,10 @@ const HEADER = {
       URL: "/search",
     },
     {
+      LABEL: "Blog",
+      URL: "/blog",
+    },
+    {
       LABEL: "Contact",
       URL: "/contact",
     },

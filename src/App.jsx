@@ -33,6 +33,13 @@ import About from "./components/pages/about";
 import Login from "components/pages/auth/login";
 import SingUp from "components/pages/auth/signup";
 
+//Blog
+import Blog from "components/pages/blog";
+import Post from "components/pages/post";
+
+//Footer Pages
+import Terms from "components/pages/guidelines/Terms";
+
 //Import Context
 import { ThemeContext } from "components/context/ThemeContext";
 import DataProvider, { DataContext } from "components/context/DataContext";
@@ -112,14 +119,11 @@ function App() {
           <DataProvider>
             <Routes>
               <Route path="/" element={<Layout />}>
-                <Route path="signup" element={<SingUp />}></Route>
-                <Route path="login" element={<Login />}></Route>
                 <Route
                   index
                   element={<Home categoryDetails={categoryDetails} />}
                 />
                 <Route path="category" element={<CategoryList />}>
-                  {/* <Route index path="beef" element={<CategoryDetail />} /> */}
                   <Route
                     index
                     path=":categoryType"
@@ -129,14 +133,23 @@ function App() {
                 <Route path="area" element={<AreaList />}>
                   <Route path=":cuisineType" element={<AreaDetail />} />
                 </Route>
-                <Route path="ingredients" element={<Ingredients />}></Route>
+                <Route path="ingredients/:id" element={<Ingredients />}></Route>
                 <Route path="details/:id" element={<RecipeDetail />} />
                 <Route path="favourites" element={<Favourites />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="about" element={<About />} />
                 <Route path="search" element={<Search />} />
+
+                <Route path="blog">
+                  <Route index element={<Blog />} />
+                  <Route path=":postID" element={<Post />} />
+                </Route>
+
                 <Route path="*" element={<Missing />} />
+                <Route path="terms" element={<Terms />}></Route>
               </Route>
+              <Route path="signup" element={<SingUp />}></Route>
+              <Route path="login" element={<Login />}></Route>
             </Routes>
           </DataProvider>
         </ThemeContext.Provider>

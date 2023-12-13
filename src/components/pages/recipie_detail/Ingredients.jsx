@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+
+//import helper functions
 import { mapIngredientsAndMeasures } from "src/utils/helperFunc";
 
 export default function Ingredients({ detail }) {
@@ -13,7 +16,6 @@ export default function Ingredients({ detail }) {
       {ingredientList !== null && ingredientList.length > 0 && (
         <>
           <h4 className="text-lg font-bold mb-6">Ingredients:</h4>
-
           <table
             className="w-full text-left border border-separate rounded border-slate-200"
             cellSpacing="0"
@@ -44,7 +46,20 @@ export default function Ingredients({ detail }) {
                     data-th="Name"
                     className="before:w-24 before:inline-block before:font-medium before:text-slate-700 before:content-[attr(data-th)':'] sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 "
                   >
-                    {item.strIngredient}
+                    {/* <img
+                      src={`http://www.themealdb.com/images/ingredients/${capitalizeString(
+                        item.strIngredient.replaceAll(" ", "-").toLowerCase()
+                      )}-small.png`}
+                    /> */}
+                    <Link
+                      title={`Find other meals using the ingredients ${item.strIngredient}`}
+                      to={`/ingredients/${item.strIngredient
+                        .replaceAll(" ", "_")
+                        .toLowerCase()}`}
+                      className="hover:underline"
+                    >
+                      {item.strIngredient}
+                    </Link>
                   </td>
                   <td
                     data-th="Title"

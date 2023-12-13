@@ -2,7 +2,10 @@ import { useState, useEffect, useContext } from "react";
 import { useLocation, Link, useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import Spinner from "components/Spinner";
+import useSWR from "swr";
+import { fetcher } from "src/utils/helperFunc";
+
+import Spinner from "src/components/common/Spinner";
 import Alert from "components/Alert";
 import Missing from "components/pages/404";
 import SEO from "components/common/SEO";
@@ -12,9 +15,15 @@ import { fetchMealDetails } from "src/utils/dataLayer";
 //consume contextAPI
 import { ThemeContext } from "components/context/ThemeContext";
 
-import { BiCategoryAlt, BiPurchaseTag, BiMap } from "react-icons/bi";
-import { BiBookmark, BiBookmarkHeart, BiShareAlt } from "react-icons/bi";
-import { useDocumentTitle } from "@uidotdev/usehooks";
+//Icons
+import {
+  BiCategoryAlt,
+  BiPurchaseTag,
+  BiMap,
+  BiBookmark,
+  BiBookmarkHeart,
+  BiShareAlt,
+} from "react-icons/bi";
 
 //Page level components
 import Share from "./Share";
@@ -23,38 +32,45 @@ import Ingredients from "./Ingredients";
 import Video from "./Video";
 
 export default function RecipeDetail() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [mealDetail, setMealDetail] = useState(null);
-  const [showError, setShowError] = useState("");
-  const { state } = useLocation();
+  //const [isLoading, setIsLoading] = useState(false);
+  //const [mealDetail, setMealDetail] = useState(null);
+  //const [showError, setShowError] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
-  const { id } = useParams();
 
+  const { id } = useParams();
+  const { state } = useLocation();
   const location = useLocation();
+
   const { favourites, handleFavourite } = useContext(ThemeContext);
 
-  useEffect(() => {
-    //Load Data from API
-    const getAPIData = async () => {
-      setIsLoading(true);
+  const API_URL = `${import.meta.env.VITE_API_URL}/lookup.php?i=${state.id}`;
 
-      if (state === null) {
-        setIsLoading(false);
-        setShowError("Please check your meals information");
-        return;
-      }
+  const { data, error, isLoading } = useSWR(API_URL, fetcher);
 
-      const { data, loading, showError } = await fetchMealDetails(state.id);
-      setIsLoading(loading);
-      setMealDetail(data);
-      setShowError(showError);
-    };
+  // useEffect(() => {
+  //   //Load Data from API
+  //   const getAPIData = async () => {
+  //     setIsLoading(true);
 
-    getAPIData();
-  }, [state]);
+  //     if (state === null) {
+  //       setIsLoading(false);
+  //       setShowError("Please check your meals information");
+  //       return;
+  //     }
+
+  //     const { data, loading, showError } = await fetchMealDetails(state.id);
+  //     setIsLoading(loading);
+  //     setMealDetail(data);
+  //     setShowError(showError);
+  //     console.log(data);
+  //   };
+
+  //   getAPIData();
+  // }, [state]);
 
   useEffect(() => {
     if (state === null) {
+      console.log("no state");
       return;
     }
     setIsFavourite(JSON.stringify(favourites).includes(state.id));
@@ -68,15 +84,20 @@ export default function RecipeDetail() {
     return <Spinner />;
   }
 
+  if (error) {
+    return <Alert />;
+  }
+
+  const isEmpty = !Array.isArray(data.meals) || data.meals.length < 1;
+
   return (
     <>
-      {/* {!Array.isArray(mealDetail) && showError !== "" && (
-        //<Alert message={showError} />
-        <Missing />
-      )} */}
-      {mealDetail !== null && Array.isArray(mealDetail.meals) && (
+      {isEmpty && (
+        <Alert message="There is no meals available on this category" />
+      )}
+      {!isEmpty && (
         <>
-          {mealDetail.meals.map((item, index) => (
+          {data.meals.map((item, index) => (
             <article className="grid max-w-5xl mx-auto" key={index}>
               {/* <SEO
                 title={item.strMeal}
@@ -85,31 +106,31 @@ export default function RecipeDetail() {
                 img={item.strMealThumb}
               /> */}
 
-              <header className=" mb-10 text-center">
-                <h1 className="text-6xl font-serif font-semibold mb-6 leading-tight">
+              <header className="mb-10 text-center">
+                <h1 className="text-6xl font-serif font-semibold leading-tight">
                   {item.strMeal}
                 </h1>
-
-                {/* Tags */}
-                {item.strTags !== null && (
-                  <div className="inline-flex gap-2 items-center justify-center text-primary-500">
-                    {item.strTags.split(",").map((item, index) => (
-                      <span key={index}>
-                        {item !== "" && (
-                          <span className="inline-flex font-sans items-center justify-center gap-1 rounded-full bg-secondary-500 px-2 py-1 text-sm text-white">
-                            <BiPurchaseTag />
-                            {item}
-                          </span>
-                        )}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </header>
+
+              {/* Tags */}
+              {item.strTags !== null && (
+                <div className="inline-flex gap-2 items-center justify-center text-primary-500 mb-10">
+                  {item.strTags.split(",").map((item, index) => (
+                    <span key={index}>
+                      {item !== "" && (
+                        <span className="inline-flex font-sans items-center justify-center gap-1 rounded-full bg-secondary-500 px-2 py-1 text-sm text-white">
+                          <BiPurchaseTag />
+                          {item}
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              )}
 
               <div className="mb-10">
                 <ul className="flex items-center justify-center gap-10">
-                  {mealDetail.strCategory !== null && (
+                  {data.meals.strCategory !== null && (
                     <li className="">
                       <Link
                         to={`/category/${item.strCategory.toLowerCase()}`}
@@ -200,7 +221,7 @@ export default function RecipeDetail() {
                 </div>
                 <div className="col-span-4 lg:col-span-4">
                   {/* Ingredients Table */}
-                  <Ingredients detail={JSON.stringify(mealDetail)} />
+                  <Ingredients detail={JSON.stringify(data)} />
                 </div>
               </div>
               {/* Youtube Preview */}

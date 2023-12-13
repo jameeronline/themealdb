@@ -1,12 +1,17 @@
 import { useState, useRef, useId } from "react";
+import useSWR from "swr";
 import { BiSearch } from "react-icons/bi";
 
 //components
-import InlineSpinner from "components/InlineSpinner";
+import InlineSpinner from "src/components/common/InlineSpinner";
 import Thumbnail from "components/Thumbnail";
 import Alert from "components/Alert";
 
 import { BiX } from "react-icons/bi";
+
+//Helper functions
+import { capitalizeString } from "src/utils/helperFunc";
+import { fetcher } from "src/utils/helperFunc";
 
 import { fetchSearch } from "src/utils/dataLayer";
 
@@ -22,6 +27,17 @@ export default function Search() {
   const id = useId();
 
   const searchInput = useRef(null);
+
+  const API_URL = `${import.meta.env.VITE_API_URL}/search.php?s=${searchTerm}`;
+
+  // const { data, error, isLoadingSWR } = useSWR(
+  //   searchTerm !== "" ? API_URL : null,
+  //   fetcher
+  // );
+  // console.log("sdsd");
+  // console.log(data);
+
+  //${API_URL}/${API_KEY}/search.php?s=${searchKey}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,6 +119,14 @@ export default function Search() {
       {/* Meal Grid */}
       {Array.isArray(items) && items.length > 0 && (
         <div className="mt-10">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-bold inline-flex items-baseline gap-2">
+              Search Results
+              <span className="text-sm font-normal">
+                ({items.length} meals found)
+              </span>
+            </h1>
+          </div>
           <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
             {items.map((item) => {
               return (

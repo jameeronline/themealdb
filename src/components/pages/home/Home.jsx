@@ -26,6 +26,8 @@ import { Container } from "components/public";
 // import CategoryDetails from "./CategoryDetails";
 // import MealDetail from "./MealDetail";
 
+//import PrimaryButton from "src/components/PrimaryButton";
+
 const Home = ({ categoryDetails }) => {
   //update document title
   useDocumentTitle("The Meal DB | The recipie archieve");
@@ -149,6 +151,11 @@ const Home = ({ categoryDetails }) => {
       <Banner />
       <HomeCategoryList categoryDetails={categoryDetails} />
       {/* <Link to="/area">Area Cusine</Link> */}
+      {/* <PrimaryButton>Submit & Continue</PrimaryButton> */}
+      {/* <PrimaryButton type="danger">Submit & Continue</PrimaryButton>
+      <PrimaryButton type="info">Submit & Continue</PrimaryButton>
+      <PrimaryButton type="success">Submit & Continue</PrimaryButton>
+      <PrimaryButton type="warning">Submit & Continue</PrimaryButton> */}
       <Newsletter />
       {/* <Col sm={3}>
           <Link to="/category">Category</Link>

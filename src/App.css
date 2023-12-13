@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base{
+    /* html{
+        --color-primary: #4285f4;
+        --color-secondary: #34a853;
+        --color-buttons: #fbbc05;
+        --color-typography: #ea4335;
+    }
+    @import url("themes/theme1.css");
+    @import url("themes/theme2.css");
+    @import url("themes/theme3.css"); */
+}

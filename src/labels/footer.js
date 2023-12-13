@@ -40,7 +40,7 @@ const FOOTER = {
       },
       {
         LABEL: "Terms of Service",
-        URL: "/terms-of-service",
+        URL: "/terms",
       },
       {
         LABEL: "Cookies Settings",

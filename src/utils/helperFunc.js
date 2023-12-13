@@ -88,3 +88,13 @@ export function validateEmail(email) {
   // Test if the email matches the regular expression
   return emailRegex.test(email);
 }
+
+//SWR fetcher function
+export const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+//Convert the String to HTML
+export function convertStringToHTML(htmlString) {
+  const parser = new DOMParser();
+  const parsedDocument = parser.parseFromString(htmlString, "text/html");
+  return parsedDocument.body;
+}

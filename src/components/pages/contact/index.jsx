@@ -8,7 +8,7 @@ export default function Contact() {
   const messageRef = useRef(); //{{message}}
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => emailjs.init("VXTHC019o49w3ab6L"), []);
+  useEffect(() => emailjs.init(`${import.meta.env.VITE_VERCEL_EMAIL_JS}`), []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -55,11 +55,7 @@ export default function Blog() {
       {postRender.map((item) => (
         <article className="prose max-w-5xl mb-16" key={item.id}>
           <header>
-            <h1>
-              <Link to={item.slug} state={{ details: item }}>
-                {item.title}
-              </Link>
-            </h1>
+            <h1>{item.title}</h1>
             <p className="mb-0">Author: {item.author}</p>
             <p className="mt-0">
               Published Date: {format(new Date(item.date), "MM/dd/yyyy")}

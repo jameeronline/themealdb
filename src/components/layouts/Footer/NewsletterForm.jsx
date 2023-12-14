@@ -18,7 +18,7 @@ export default function NewsletterForm() {
 
   const LABELS = FOOTER_LBL.NEWSLETTER;
 
-  useEffect(() => emailjs.init("VXTHC019o49w3ab6L"), []);
+  useEffect(() => emailjs.init(`${import.meta.env.VITE_VERCEL_EMAIL_JS}`), []);
 
   const handleNewsLetter = async (e) => {
     e.preventDefault();

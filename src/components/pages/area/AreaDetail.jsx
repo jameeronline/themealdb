@@ -18,7 +18,9 @@ export default function AreaDetail() {
   const { cuisineType } = useParams();
   const [isGird, setIsGrid] = useState(true);
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/filter.php?a=${cuisineType}`;
+  const API_URL = `${
+    import.meta.env.VITE_VERCEL_API_URL
+  }/filter.php?a=${cuisineType}`;
 
   const { data, error, isLoading } = useSWR(API_URL, fetcher);
 

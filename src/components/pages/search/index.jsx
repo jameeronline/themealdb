@@ -28,7 +28,9 @@ export default function Search() {
 
   const searchInput = useRef(null);
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/search.php?s=${searchTerm}`;
+  const API_URL = `${
+    import.meta.env.VITE_VERCEL_API_URL
+  }/search.php?s=${searchTerm}`;
 
   // const { data, error, isLoadingSWR } = useSWR(
   //   searchTerm !== "" ? API_URL : null,

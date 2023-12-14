@@ -20,7 +20,7 @@ export default function CategoryDetail() {
   const [isGird, setIsGrid] = useState(true);
 
   const API_URL = `${
-    import.meta.env.VITE_API_URL
+    import.meta.env.VITE_VERCEL_API_URL
   }/filter.php?c=${categoryType}`;
 
   const { data, error, isLoading } = useSWR(API_URL, fetcher);

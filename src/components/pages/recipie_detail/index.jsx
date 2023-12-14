@@ -43,7 +43,9 @@ export default function RecipeDetail() {
 
   const { favourites, handleFavourite } = useContext(ThemeContext);
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/lookup.php?i=${state.id}`;
+  const API_URL = `${import.meta.env.VITE_VERCEL_API_URL}/lookup.php?i=${
+    state.id
+  }`;
 
   const { data, error, isLoading } = useSWR(API_URL, fetcher);
 

@@ -22,7 +22,7 @@ const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-export { firebaseApp };
+//export { firebaseApp };
 
 const appFlamelink = flamelink({
   firebaseApp,

@@ -92,8 +92,7 @@ export default function Header() {
             </ul>
             {/*      <!-- Actions --> */}
             <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
-              <a
-                href="#"
+              <button
                 className="relative inline-flex h-10 items-center justify-center rounded-full text-lg text-primary-500"
                 onClick={handleDarkMode}
               >
@@ -106,7 +105,7 @@ export default function Header() {
                     <BiMoon className="h-5 w-5" />
                   </>
                 )}
-              </a>
+              </button>
             </div>
           </nav>
         </div>

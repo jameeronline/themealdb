@@ -43,14 +43,13 @@ import Terms from "components/pages/guidelines/Terms";
 //Import Context
 import { ThemeContext } from "components/context/ThemeContext";
 import DataProvider, { DataContext } from "components/context/DataContext";
+
+//Hooks
 import { useLocalStorage, useGeolocation } from "@uidotdev/usehooks";
 
 //import useFetch from "use-http";
 
 function App() {
-  //const [areas, setAreas] = useState([]);
-  //const [categories, setCategories] = useState([]);
-  //const [ingredients, setIngredients] = useState([]);
   const [categoryDetails, setCategoryDetails] = useState([]);
 
   const [darkMode, setDarkMode] = useLocalStorage("darkMode", false);
@@ -58,11 +57,6 @@ function App() {
 
   const [showError, setShowError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
-  };
 
   useEffect(() => {
     //Load Data List categories and areas from API
@@ -98,6 +92,11 @@ function App() {
       setDarkMode(true);
     }
   }, []);
+
+  const handleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark");
+  };
 
   const handleFavourite = (obj) => {
     let newfavList = [];

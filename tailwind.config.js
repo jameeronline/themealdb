@@ -18,6 +18,7 @@ export default {
       },
       fontFamily: {
         sans: ['"Inter"', ...defaultTheme.fontFamily.sans],
+        display: ["Playfair Display", "sans-serif"],
       },
     },
   },

@@ -37,7 +37,7 @@ export default function RecipeDetail() {
   //const [showError, setShowError] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
 
-  const { id } = useParams();
+  //const { id } = useParams();
   const { state } = useLocation();
   const location = useLocation();
 
@@ -48,6 +48,14 @@ export default function RecipeDetail() {
   }`;
 
   const { data, error, isLoading } = useSWR(API_URL, fetcher);
+
+  useEffect(() => {
+    if (state === null) {
+      console.log("no state");
+      return;
+    }
+    setIsFavourite(JSON.stringify(favourites).includes(state.id));
+  }, [favourites, state]);
 
   // useEffect(() => {
   //   //Load Data from API
@@ -69,14 +77,6 @@ export default function RecipeDetail() {
 
   //   getAPIData();
   // }, [state]);
-
-  useEffect(() => {
-    if (state === null) {
-      console.log("no state");
-      return;
-    }
-    setIsFavourite(JSON.stringify(favourites).includes(state.id));
-  }, [favourites, state]);
 
   const handleShare = () => {
     console.log("share");
@@ -109,7 +109,7 @@ export default function RecipeDetail() {
               /> */}
 
               <header className="mb-10 text-center">
-                <h1 className="text-6xl font-serif font-semibold leading-tight">
+                <h1 className="text-6xl font-display font-semibold leading-tight">
                   {item.strMeal}
                 </h1>
               </header>

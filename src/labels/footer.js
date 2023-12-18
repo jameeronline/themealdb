@@ -1,5 +1,53 @@
 const FOOTER = {
   MAIN_FOOTER: {
+    LINKGROUP: {
+      GROUP1: {
+        TITLE: "Product",
+        LINKS: [
+          {
+            LABEL: "Features",
+            URL: "/features",
+          },
+          {
+            LABEL: "Customers",
+            URL: "/customers",
+          },
+          {
+            LABEL: "Why us?",
+            URL: "/why-us",
+          },
+          {
+            LABEL: "Pricing",
+            URL: "/pricing",
+          },
+        ],
+      },
+      GROUP2: {
+        TITLE: "About us",
+        LINKS: [
+          {
+            LABEL: "About us",
+            URL: "/about",
+          },
+          {
+            LABEL: "Careers",
+            URL: "/careers",
+          },
+          {
+            LABEL: "Leadership",
+            URL: "/leaership",
+          },
+          {
+            LABEL: "Blog",
+            URL: "/blog",
+          },
+          {
+            LABEL: "Events",
+            URL: "/events",
+          },
+        ],
+      },
+    },
     SOCIAL: {
       TITLE: "Follow Us",
       LINKS: [

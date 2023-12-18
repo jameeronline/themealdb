@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
+import useSWR from "swr";
+import { fetcher } from "src/utils/helperFunc";
+
 import { BiRefresh } from "react-icons/bi";
 
 //heler function
-import { formatToUrlString } from "../../../utils/helperFunc";
+import { formatToUrlString } from "src/utils/helperFunc";
 
 //hooks
 import useApi from "../../hooks/useAPI";

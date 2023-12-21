@@ -101,12 +101,12 @@ export default function RecipeDetail() {
         <>
           {data.meals.map((item, index) => (
             <article className="grid max-w-5xl mx-auto" key={index}>
-              {/* <SEO
+              <SEO
                 title={item.strMeal}
                 description=""
                 name={item.strMeal}
                 img={item.strMealThumb}
-              /> */}
+              />
 
               <header className="mb-10 text-center">
                 <h1 className="text-6xl font-display font-semibold leading-tight">

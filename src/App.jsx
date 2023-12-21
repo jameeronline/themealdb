@@ -39,6 +39,7 @@ import Post from "components/pages/post";
 
 //Footer Pages
 import Terms from "components/pages/guidelines/Terms";
+import Privacy from "./components/pages/guidelines/Privacy";
 
 //Import Context
 import { ThemeContext } from "components/context/ThemeContext";
@@ -132,7 +133,7 @@ function App() {
                 <Route path="area" element={<AreaList />}>
                   <Route path=":cuisineType" element={<AreaDetail />} />
                 </Route>
-                <Route path="ingredients/:id" element={<Ingredients />}></Route>
+                <Route path="ingredients/:id" element={<Ingredients />} />
                 <Route path="details/:id" element={<RecipeDetail />} />
                 <Route path="favourites" element={<Favourites />} />
                 <Route path="contact" element={<Contact />} />
@@ -145,10 +146,11 @@ function App() {
                 </Route>
 
                 <Route path="*" element={<Missing />} />
-                <Route path="terms" element={<Terms />}></Route>
+                <Route path="terms" element={<Terms />} />
+                <Route path="privacy" element={<Privacy />} />
               </Route>
-              <Route path="signup" element={<SingUp />}></Route>
-              <Route path="login" element={<Login />}></Route>
+              <Route path="signup" element={<SingUp />} />
+              <Route path="login" element={<Login />} />
             </Routes>
           </DataProvider>
         </ThemeContext.Provider>

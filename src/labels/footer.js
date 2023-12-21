@@ -84,7 +84,7 @@ const FOOTER = {
     LINKS: [
       {
         LABEL: "Privacy Policy",
-        URL: "/privacy-policy",
+        URL: "/privacy",
       },
       {
         LABEL: "Terms of Service",

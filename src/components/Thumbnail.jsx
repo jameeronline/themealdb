@@ -33,7 +33,7 @@ export default function Thumbnail({ item }) {
             strMealThumb: item.strMealThumb,
           })
         }
-        className={`absolute right-4 top-4 flex items-center justify-center z-10 w-10 h-10 bg-${activeClasses}-500 hover:bg-${activeClasses}-700 rounded-full`}
+        className={`absolute right-4 top-4 flex items-center justify-center z-[1] w-10 h-10 bg-${activeClasses}-500 hover:bg-${activeClasses}-700 rounded-full`}
       >
         {isFavourite ? (
           <BiBookmarkHeart className="w-6 h-6 text-white" />

@@ -47,7 +47,6 @@ export default function Ingredients() {
           </div>
         </>
       )}
-      <div>Ingredients {id}</div>
     </>
   );
 }

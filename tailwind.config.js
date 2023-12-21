@@ -4,7 +4,11 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 // const { createThemes } = require("tw-colors");
 
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-tailwindcss-select/dist/index.esm.js",
+  ],
   darkMode: "class",
   theme: {
     extend: {

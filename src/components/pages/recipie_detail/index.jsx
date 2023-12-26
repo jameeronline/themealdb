@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { useLocation, Link, useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
+import { motion } from "framer-motion";
+
 import useSWR from "swr";
 import { fetcher } from "src/utils/helperFunc";
 
@@ -23,6 +25,8 @@ import {
   BiBookmark,
   BiBookmarkHeart,
   BiShareAlt,
+  BiHeart,
+  BiSolidHeart,
 } from "react-icons/bi";
 
 //Page level components
@@ -30,6 +34,8 @@ import Share from "./Share";
 import Instructions from "./Instructions";
 import Ingredients from "./Ingredients";
 import Video from "./Video";
+import ShareDropdown from "./ShareDropdown";
+import DropdownBasic from "./DropdownBasic";
 
 export default function RecipeDetail() {
   //const [isLoading, setIsLoading] = useState(false);
@@ -108,6 +114,14 @@ export default function RecipeDetail() {
                 img={item.strMealThumb}
               />
 
+              {/* <DropdownBasic />
+
+              <ShareDropdown
+                title={item.strMeal}
+                url={`${document.location.origin}${location.pathname}`}
+                hashtags={["meals", "recipies"]}
+              /> */}
+
               <header className="mb-10 text-center">
                 <h1 className="text-6xl font-display font-semibold leading-tight">
                   {item.strMeal}
@@ -132,28 +146,33 @@ export default function RecipeDetail() {
 
               <div className="mb-10">
                 <ul className="flex items-center justify-center gap-10">
+                  {/* Category */}
                   {data.meals.strCategory !== null && (
                     <li className="">
                       <Link
                         to={`/category/${item.strCategory.toLowerCase()}`}
-                        className="inline-flex gap-2 text-primary-500 hover:text-slate-800 transition-colors duration-300"
+                        className="inline-flex gap-2 text-primary-500 hover:underline transition-colors duration-300"
                       >
                         <BiCategoryAlt className="w-6 h-6" />
                         {item.strCategory}
                       </Link>
                     </li>
                   )}
+
+                  {/* Cusion Type */}
                   {item.strArea !== null && (
                     <li className="">
                       <Link
                         to={`/area/${item.strArea.toLowerCase()}`}
-                        className="inline-flex gap-2 text-primary-500 hover:text-slate-800 transition-colors duration-300"
+                        className="inline-flex gap-2 text-primary-500 hover:underline transition-colors duration-300"
                       >
                         <BiMap className="w-6 h-6" />
                         {item.strArea}
                       </Link>
                     </li>
                   )}
+
+                  {/* Favourite */}
                   <li>
                     <button
                       onClick={() =>
@@ -166,23 +185,24 @@ export default function RecipeDetail() {
                       className={`inline-flex gap-2 ${
                         isFavourite
                           ? "text-secondary-600"
-                          : "text-primary-500 hover:text-slate-800"
+                          : "text-primary-500 hover:underline"
                       }  transition-colors duration-300`}
                     >
                       {isFavourite ? (
                         <>
-                          <BiBookmarkHeart className="w-6 h-6" /> Remove from
+                          <BiSolidHeart className="w-6 h-6" /> Remove from
                           Favourite
                         </>
                       ) : (
                         <>
-                          <BiBookmark className="w-6 h-6" /> Add To Favourite
+                          <BiHeart className="w-6 h-6" /> Add To Favourite
                         </>
                       )}
                     </button>
                   </li>
+
                   {/* Share - native */}
-                  {navigator.canShare() && (
+                  {navigator.share && (
                     <li>
                       <button
                         onClick={handleShare}
@@ -197,7 +217,7 @@ export default function RecipeDetail() {
               </div>
 
               {/* Share - custom */}
-              {!navigator.canShare() && (
+              {!navigator.share && (
                 <div className="mb-6">
                   <Share
                     title={item.strMeal}

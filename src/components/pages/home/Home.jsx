@@ -1,185 +1,51 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
-
 import { Link } from "react-router-dom";
 
 //Home page components
+import SEO from "src/components/common/SEO";
 import Banner from "./HomeBanner";
-import Newsletter from "./Newsletter";
-
-//Import Custom Components
-//import ShowMeal from "./components/MealCard";
-// import CheckboxFilter from "./CheckboxFilter";
-// import RadioFilter from "./ListingItems";
-
 import HomeCategoryList from "./HomeCategoryList";
-
-//custom Hooks
-import useFetchData from "../../hooks/use-fetch-data";
-import { useDocumentTitle } from "@uidotdev/usehooks";
 
 //public components
 import { Container } from "components/public";
 
-//Import Custom Components
-// import CategoryList from "./CategoryList";
-// import CategoryDetails from "./CategoryDetails";
-// import MealDetail from "./MealDetail";
-
-//import PrimaryButton from "src/components/PrimaryButton";
-
 const Home = ({ categoryDetails }) => {
-  //update document title
-  useDocumentTitle("The Meal DB | The recipie archieve");
-  //const geoState = useGeolocation();
-
-  //console.log(geoState);
-
-  // const { data, loading, showError } = useFetchData(
-  //   "https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772"
-  // );
-  // const [meals, setMeals] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState(
-  //   new Array(categories.length).fill(false)
-  // );
-  // const [selectedArea, setSelectedArea] = useState(
-  //   new Array(areas.length).fill(false)
-  // );
-  // const [filteredMeals, setFilteredMeals] = useState([]);
-
-  // // UI States
-  // const [layout, setLayout] = useState("grid");
-  // const [pageLength, setPageLength] = useState(6);
-  // const [activePage, setActivePage] = useState(0);
-
-  // const selectCategory = (value) => {
-  //   this.setState({
-  //     selectedCategory: value,
-  //   });
-  // };
-
-  // const selectArea = (value) => {
-  //   var selectedValue = value;
-  //   var previousValue = selectedArea;
-  //   if (previousValue.includes(selectedValue)) {
-  //     previousValue = previousValue.filter(function (currentValue) {
-  //       return currentValue !== value;
-  //     });
-  //   } else {
-  //     previousValue.push(value);
-  //   }
-
-  //   var filteredList = meals;
-  //   filteredList = filteredList.filter(function (item) {
-  //     console.log(previousValue.toString().toLowerCase());
-  //     return (
-  //       previousValue
-  //         .toString()
-  //         .toLowerCase()
-  //         .search(item.strArea.toLowerCase()) !== -1
-  //     );
-  //   });
-
-  //   console.log(filteredList.length);
-
-  //   this.setState({
-  //     selectedArea: previousValue,
-  //     filteredMeals: filteredList,
-  //   });
-  // };
-
-  // const checkboxFilter = (itemVal, selectedArray) => {
-  //   for (var i = 0; i < selectedArray.length; i++) {
-  //     if (selectedArray[i] === itemVal) {
-  //       return true;
-  //     }
-  //   }
-  // };
-
-  // const resetcheckboxFilter = () => {
-  //   this.setState({
-  //     selectedArea: [],
-  //   });
-  // };
-
-  // const changeLayout = (val) => {
-  //   this.setState({
-  //     layout: val,
-  //   });
-  // };
-
-  // const onCategoryChange = (val) => {
-  //   fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=" + val)
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((myJson) => {
-  //       this.setState({
-  //         meals: myJson.meals,
-  //       });
-  //     });
-  // };
-
-  // const showPagination = () => {
-  //   var items = [];
-  //   //var active = active;
-  //   if (meals !== null) {
-  //     console.log(meals.length);
-  //     for (
-  //       let number = 1;
-  //       number <= Math.ceil(meals.length / pageLength);
-  //       number++
-  //     ) {
-  //       items.push(
-  //         <Pagination.Item onClick={console.log(number)} key={number}>
-  //           {number}
-  //         </Pagination.Item>
-  //       );
-  //     }
-  //     return items;
-  //   }
-  // };
-
-  // if (data) {
-  //   console.log(data);
-  // } else {
-  //   console.log("no data");
-  // }
-
   return (
     <Container>
+      <SEO
+        title="The Meal DB | Explore the foods around the world"
+        description=""
+        name=""
+        img=""
+      />
+      <header className="text-center max-w-3xl mx-auto">
+        <h1 className="text-5xl font-bold leading-snug text-slate-900 mb-6">
+          Discover <span className="text-primary-500">Delicious Meals</span>{" "}
+          That Satisfy Your Cravings
+        </h1>
+
+        <p className="text-base text-slate-400 mb-12">
+          Explore a wide range of mouthwatering dishes and find your next
+          favorite recipe.
+        </p>
+
+        <div className="flex flex-col items-center justify-center gap-4 lg:flex-row">
+          <Link
+            to="/"
+            className="flex items-center py-4 text-md font-medium text-white px-8 bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:ring-primary-100 transition duration-300 rounded"
+          >
+            Meal Details
+          </Link>
+          <Link
+            to="search"
+            className="flex items-center py-4 text-md font-medium px-8 border border-primary-500 text-dark-grey-700 hover:text-dark-grey-900 transition duration-300 rounded"
+          >
+            Find Meals
+          </Link>
+        </div>
+      </header>
       <Banner />
       <HomeCategoryList categoryDetails={categoryDetails} />
-      {/* <Link to="/area">Area Cusine</Link> */}
-      {/* <PrimaryButton>Submit & Continue</PrimaryButton> */}
-      {/* <PrimaryButton type="danger">Submit & Continue</PrimaryButton>
-      <PrimaryButton type="info">Submit & Continue</PrimaryButton>
-      <PrimaryButton type="success">Submit & Continue</PrimaryButton>
-      <PrimaryButton type="warning">Submit & Continue</PrimaryButton> */}
-      <Newsletter />
-      {/* <Col sm={3}>
-          <Link to="/category">Category</Link>
-          {categories != null && categories.length > 0 && (
-            <RadioFilter
-              title="Category"
-              items={categories}
-              // value={selectedCategory}
-              // selectchange={selectCategory}
-              // itemKey="strCategory"
-              // filterKey="radio"
-            />
-          )}
-          {areas != null && areas.length > 0 && (
-            <CheckboxFilter
-              title="Area"
-              items={areas}
-              // value={selectedArea}
-              // selectChange={selectArea}
-              // reset={resetcheckboxFilter}
-              // itemKey="strArea"
-            />
-          )}
-        </Col> */}
     </Container>
   );
 };

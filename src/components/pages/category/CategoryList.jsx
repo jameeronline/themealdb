@@ -9,11 +9,12 @@ import { DataContext } from "components/context/DataContext";
 
 const CategoryList = () => {
   const { categories } = useContext(DataContext);
+
   return (
     <section>
       <div className="grid grid-cols-4 gap-8 md:grid-cols-8 lg:grid-cols-12">
-        <div className="col-span-4 lg:col-span-3">
-          {categories != null && categories.length > 0 && (
+        <div className="col-span-4 md:col-span-2 lg:col-span-2">
+          {Array.isArray(categories) && categories.length > 0 && (
             <ListingItems
               title="Category"
               items={categories}
@@ -22,7 +23,7 @@ const CategoryList = () => {
             />
           )}
         </div>
-        <div className="col-span-4 lg:col-span-9">
+        <div className="col-span-4 md:col-span-6 lg:col-span-10">
           <Outlet />
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { BiMoon, BiSun } from "react-icons/bi";
+import { BiMoon, BiSun, BiSearch } from "react-icons/bi";
 import { clsx } from "clsx";
 
 //Labels
@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-primary-50 sticky top-0 z-20 w-full after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden dark:bg-primary-950">
+      <header className=" sticky top-0 z-20 w-full after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden dark:bg-primary-950">
         <div className="relative mx-auto max-w-full px-6 2xl:container">
           <nav
             aria-label="main navigation"
@@ -91,18 +91,25 @@ export default function Header() {
               ))}
             </ul>
             {/*      <!-- Actions --> */}
-            <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
+            <div className="ml-auto flex items-center justify-end px-6 gap-4 lg:ml-0 lg:flex-1 lg:p-0">
+              <Link
+                to="search"
+                className="relative inline-flex h-10 items-center justify-center rounded-full text-lg text-primary-500"
+              >
+                <BiSearch className="h-6 w-6" />
+              </Link>
+
               <button
                 className="relative inline-flex h-10 items-center justify-center rounded-full text-lg text-primary-500"
                 onClick={handleDarkMode}
               >
                 {darkMode ? (
                   <>
-                    <BiSun className="h-5 w-5" />
+                    <BiSun className="h-6 w-6" />
                   </>
                 ) : (
                   <>
-                    <BiMoon className="h-5 w-5" />
+                    <BiMoon className="h-6 w-6" />
                   </>
                 )}
               </button>

@@ -12,6 +12,9 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      backgroundImage: {
+        "hero-pattern": "url('src/assets/bg.svg')",
+      },
       colors: {
         // abprimary: "var(--color-primary)",
         // absecondary: "var(--color-secondary)",

@@ -124,17 +124,13 @@ function App() {
                   element={<Home categoryDetails={categoryDetails} />}
                 />
                 <Route path="category" element={<CategoryList />}>
-                  <Route
-                    index
-                    path=":categoryType"
-                    element={<CategoryDetail />}
-                  />
+                  <Route path=":categoryType" element={<CategoryDetail />} />
                 </Route>
                 <Route path="area" element={<AreaList />}>
                   <Route path=":cuisineType" element={<AreaDetail />} />
                 </Route>
                 <Route path="ingredients/:id" element={<Ingredients />} />
-                <Route path="details/:id" element={<RecipeDetail />} />
+                <Route path="recipe-details/:id" element={<RecipeDetail />} />
                 <Route path="favourites" element={<Favourites />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="about" element={<About />} />

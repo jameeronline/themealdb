@@ -5,7 +5,10 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 
 //icons
-import { BiBookmark, BiBookmarkHeart } from "react-icons/bi";
+//import { BiBookmark, BiBookmarkHeart } from "react-icons/bi";
+
+//Icons
+import { BiHeart, BiSolidHeart } from "react-icons/bi";
 
 //content
 import { ThemeContext } from "components/context/ThemeContext";
@@ -36,13 +39,13 @@ export default function Thumbnail({ item }) {
         className={`absolute right-4 top-4 flex items-center justify-center z-[1] w-10 h-10 bg-${activeClasses}-500 hover:bg-${activeClasses}-700 rounded-full`}
       >
         {isFavourite ? (
-          <BiBookmarkHeart className="w-6 h-6 text-white" />
+          <BiSolidHeart className="w-6 h-6 text-white" />
         ) : (
-          <BiBookmark className="w-6 h-6 text-white" />
+          <BiHeart className="w-6 h-6 text-white" />
         )}
       </button>
       <Link
-        to={`/details/${formatToUrlString(item.strMeal)}`}
+        to={`/recipe-details/${formatToUrlString(item.strMeal)}`}
         state={{ id: item.idMeal }}
         className="block relative group overflow-hidden transition-all rounded-lg  shadow-xl shadow-slate-200 hover:shadow-2xl dark:shadow-primary-900/0"
       >

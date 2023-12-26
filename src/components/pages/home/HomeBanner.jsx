@@ -53,7 +53,7 @@ export default function Banner() {
                 </p>
                 <div className="flex flex-col items-center gap-4 lg:flex-row">
                   <Link
-                    to={`/details/${formatToUrlString(item.strMeal)}`}
+                    to={`/recipe-details/${formatToUrlString(item.strMeal)}`}
                     state={{ id: item.idMeal }}
                     className="flex items-center py-4 text-sm font-bold text-white px-7 bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:ring-primary-100 transition duration-300 rounded"
                   >

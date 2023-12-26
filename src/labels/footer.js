@@ -30,8 +30,8 @@ const FOOTER = {
             URL: "/about",
           },
           {
-            LABEL: "Careers",
-            URL: "/careers",
+            LABEL: "Contact",
+            URL: "/contact",
           },
           {
             LABEL: "Leadership",

@@ -1,37 +1,37 @@
 const HEADER = {
   NAV: [
     {
-      LABEL: "Categories",
+      LABEL: "Explore Categories",
       URL: "/category",
     },
     {
-      LABEL: "Cuisine Type",
-      URL: "/area/american",
+      LABEL: "Discover Cuisines",
+      URL: "/area",
     },
-    // {
-    //   LABEL: "Ingredients",
-    //   URL: "/ingredients",
-    // },
+    {
+      LABEL: "Find Ingredients",
+      URL: "/ingredients",
+    },
     {
       LABEL: "Favourites",
       URL: "/favourites",
     },
-    {
-      LABEL: "Search",
-      URL: "/search",
-    },
-    {
-      LABEL: "Blog",
-      URL: "/blog",
-    },
-    {
-      LABEL: "Contact",
-      URL: "/contact",
-    },
-    {
-      LABEL: "About",
-      URL: "/about",
-    },
+    // {
+    //   LABEL: "Search",
+    //   URL: "/search",
+    // },
+    // {
+    //   LABEL: "Blog",
+    //   URL: "/blog",
+    // },
+    // {
+    //   LABEL: "Contact",
+    //   URL: "/contact",
+    // },
+    // {
+    //   LABEL: "About",
+    //   URL: "/about",
+    // },
   ],
 };
 

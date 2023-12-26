@@ -1,13 +1,20 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
+import sortBy from "sort-by";
 
 import Spinner from "src/components/common/Spinner";
 import Alert from "components/Alert";
 import Thumbnail from "components/Thumbnail";
 
 // Icons
-import { BiGridAlt, BiListUl } from "react-icons/bi";
+import {
+  BiGridAlt,
+  BiListUl,
+  BiArrowBack,
+  BiSortAZ,
+  BiSortZA,
+} from "react-icons/bi";
 
 //Helper functions
 import { capitalizeString } from "src/utils/helperFunc";
@@ -18,6 +25,7 @@ export default function CategoryDetail() {
 
   const { categoryType } = useParams();
   const [isGird, setIsGrid] = useState(true);
+  const [isSort, setIsSort] = useState(true);
 
   const API_URL = `${
     import.meta.env.VITE_VERCEL_API_URL
@@ -38,6 +46,16 @@ export default function CategoryDetail() {
     setIsGrid(updateGrid);
   };
 
+  const handleSort = () => {
+    setIsSort((prevVal) => !prevVal);
+
+    if (!isSort) {
+      return data.meals.sort(sortBy("-strMeal"));
+    } else {
+      data.meals.sort(sortBy("strMeal"));
+    }
+  };
+
   //check data is empty
   const isEmpty = !Array.isArray(data.meals) || data.meals.length < 1;
 
@@ -48,30 +66,67 @@ export default function CategoryDetail() {
       )}
       {!isEmpty && (
         <>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between mb-6">
             <h1 className="text-3xl font-bold inline-flex items-baseline gap-2">
-              {categoryType !== "" &&
-                categoryType != undefined &&
-                capitalizeString(categoryType)}
-              <span className="text-sm font-normal">
-                ({data.meals.length} meals found)
+              <button
+                onClick={() => navigate(-1)}
+                className="group inline-flex shrink-0 w-10 h-10 items-center justify-center rounded-full transition-colors duration-300 hover:bg-primary-50"
+              >
+                <BiArrowBack className="w-6 h-6 transition-colors duration-300 group-hover:fill-primary-500" />
+              </button>
+              <span className="flex flex-col lg:flex-row items-baseline lg:gap-2">
+                {categoryType !== "" &&
+                  categoryType != undefined &&
+                  capitalizeString(categoryType)}
+                <em className="text-sm font-normal not-italic">
+                  ({data.meals.length} meals found)
+                </em>
               </span>
             </h1>
 
-            <button onClick={handleGridChange}>
-              {isGird ? (
-                <BiListUl className="w-8 h-8" />
-              ) : (
-                <BiGridAlt className="w-8 h-8" />
-              )}
-            </button>
+            <div className="flex justify-between md:inline-flex gap-4 items-center">
+              <button
+                onClick={handleGridChange}
+                className="flex flex-1 items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 hover:border-primary-600 hover:text-primary-600 focus:border-primary-700 focus:text-primary-700"
+              >
+                {isGird ? (
+                  <>
+                    <span className="order-2">List</span>
+                    <BiListUl className="w-6 h-6" />
+                  </>
+                ) : (
+                  <>
+                    <span className="order-2">Grid</span>
+                    <BiGridAlt className="w-6 h-6" />
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={handleSort}
+                className="flex flex-1 items-center justify-center h-10 gap-2 px-5 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 hover:border-primary-600 hover:text-primary-600 focus:border-primary-700 focus:text-primary-700"
+              >
+                <span className="order-2">Sort</span>
+                <span className="relative only:-mx-5">
+                  {isSort ? (
+                    <BiSortAZ className="w-6 h-6" />
+                  ) : (
+                    <BiSortZA className="w-6 h-6" />
+                  )}
+                </span>
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
             {data.meals.map((item) => {
               return (
                 <div
-                  className={`${isGird ? "col-span-4" : "col-span-6"} `}
+                  className={`${
+                    isGird
+                      ? "col-span-4 md:col-span-4 lg:col-span-3"
+                      : "col-span-4 md:col-span-8 lg:col-span-6"
+                  } `}
                   key={item.idMeal}
                 >
                   <Thumbnail item={item} />
@@ -79,7 +134,6 @@ export default function CategoryDetail() {
               );
             })}
           </div>
-          <button onClick={() => navigate(-1)}>Back</button>
         </>
       )}
     </>

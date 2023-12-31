@@ -17,13 +17,12 @@ import {
 } from "react-icons/bi";
 
 //Helper functions
-import { capitalizeString } from "src/utils/helperFunc";
-import { fetcher } from "src/utils/helperFunc";
+import { capitalizeString, fetcher } from "src/utils/helperFunc";
 
 export default function CategoryDetail() {
   const navigate = useNavigate();
-
   const { categoryType } = useParams();
+
   const [isGird, setIsGrid] = useState(true);
   const [isSort, setIsSort] = useState(true);
 

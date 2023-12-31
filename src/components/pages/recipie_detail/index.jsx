@@ -50,7 +50,7 @@ export default function RecipeDetail() {
   const { favourites, handleFavourite } = useContext(ThemeContext);
 
   const API_URL = `${import.meta.env.VITE_VERCEL_API_URL}/lookup.php?i=${
-    state.id
+    state?.id
   }`;
 
   const { data, error, isLoading } = useSWR(API_URL, fetcher);
@@ -62,27 +62,6 @@ export default function RecipeDetail() {
     }
     setIsFavourite(JSON.stringify(favourites).includes(state.id));
   }, [favourites, state]);
-
-  // useEffect(() => {
-  //   //Load Data from API
-  //   const getAPIData = async () => {
-  //     setIsLoading(true);
-
-  //     if (state === null) {
-  //       setIsLoading(false);
-  //       setShowError("Please check your meals information");
-  //       return;
-  //     }
-
-  //     const { data, loading, showError } = await fetchMealDetails(state.id);
-  //     setIsLoading(loading);
-  //     setMealDetail(data);
-  //     setShowError(showError);
-  //     console.log(data);
-  //   };
-
-  //   getAPIData();
-  // }, [state]);
 
   const handleShare = () => {
     console.log("share");

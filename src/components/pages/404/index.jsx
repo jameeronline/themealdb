@@ -1,12 +1,13 @@
 import { BiArrowBack } from "react-icons/bi";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useRouteError } from "react-router-dom";
 //import 404 from "../../../../public/illustration.svg"
 
 //labels
 import LABELS from "src/utils/labelBundle";
 
 export default function Missing() {
-  let navigate = useNavigate();
+  //let navigate = useNavigate();
+  //const error = useRouteError();
   const labels = LABELS.PAGES.MISSING;
 
   return (
@@ -21,6 +22,7 @@ export default function Missing() {
         <p className="mt-12 text-gray-500 dark:text-gray-400">
           {labels.DESCRIPTION}
         </p>
+        {/* <p>{error.statusText || error.message}</p> */}
 
         <div className="flex items-center justify-center mt-4 gap-x-6">
           {/* <button

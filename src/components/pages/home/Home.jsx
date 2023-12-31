@@ -1,5 +1,6 @@
-import PropTypes from "prop-types";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 //Home page components
 import SEO from "src/components/common/SEO";
@@ -9,7 +10,11 @@ import HomeCategoryList from "./HomeCategoryList";
 //public components
 import { Container } from "components/public";
 
-const Home = ({ categoryDetails }) => {
+//context
+import { DataContext } from "src/components/context/DataContext";
+
+const Home = () => {
+  const { categoryDetails } = useContext(DataContext);
   return (
     <Container>
       <SEO
@@ -51,8 +56,8 @@ const Home = ({ categoryDetails }) => {
 };
 
 //Prop validation
-Home.propTypes = {
-  categoryDetails: PropTypes.array.isRequired,
-};
+// Home.propTypes = {
+//   categoryDetails: PropTypes.array.isRequired,
+// };
 
 export default Home;

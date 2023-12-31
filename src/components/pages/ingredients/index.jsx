@@ -13,6 +13,7 @@ import { fetcher, capitalizeString } from "src/utils/helperFunc";
 export default function Ingredients() {
   const { id } = useParams();
   const API_URL = `${import.meta.env.VITE_VERCEL_API_URL}/filter.php?i=${id}`;
+  console.log(id);
 
   const { data, error, isLoading } = useSWR(API_URL, fetcher);
 
@@ -20,7 +21,7 @@ export default function Ingredients() {
     return <Spinner />;
   }
 
-  if (error) {
+  if (error || !id) {
     return <Alert />;
   }
 

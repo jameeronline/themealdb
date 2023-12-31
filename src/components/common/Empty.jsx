@@ -1,8 +1,4 @@
 import { BiArrowBack, BiSolidInbox } from "react-icons/bi";
-import { useNavigate, Link } from "react-router-dom";
-
-//labels
-import LABELS from "src/utils/labelBundle";
 
 export default function Empty() {
   //   let navigate = useNavigate();

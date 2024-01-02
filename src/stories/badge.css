@@ -1,0 +1,24 @@
+.badge{
+    display: flex;
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    border-radius: 0.5rem;
+    color: #fff;
+    background-color: rgb(234, 234, 234);
+}
+
+.badge-primary{
+    background-color: green;
+}
+
+.badge-warning{
+    background-color: rgb(161, 148, 30);
+}
+
+.badge-danger{
+    background-color: rgb(185, 8, 8);
+}
+
+.badge-info{
+    background-color: rgb(134, 162, 234);
+}

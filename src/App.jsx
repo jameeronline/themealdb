@@ -15,9 +15,13 @@ import Layout from "components/layouts";
 //Pages
 import Home from "components/pages/home/Home";
 
+import CategoryIndex, {
+  loader as categoryLoader,
+} from "src/components/pages/category/Index";
 import CategoryList from "components/pages/category/CategoryList";
 import CategoryDetail from "components/pages/category/CategoryDetail";
 
+import AreaIndex, { loader as areaLoader } from "components/pages/area";
 import AreaList from "components/pages/area/AreaList";
 import AreaDetail from "components/pages/area/AreaDetail";
 
@@ -56,9 +60,11 @@ const router = createBrowserRouter(
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="category" element={<CategoryList />}>
+          <Route index element={<CategoryIndex />} loader={categoryLoader} />
           <Route path=":categoryType" element={<CategoryDetail />} />
         </Route>
         <Route path="area" element={<AreaList />}>
+          <Route index element={<AreaIndex />} loader={areaLoader} />
           <Route path=":cuisineType" element={<AreaDetail />} />
         </Route>
         <Route path="ingredients/:id" element={<Ingredients />} />

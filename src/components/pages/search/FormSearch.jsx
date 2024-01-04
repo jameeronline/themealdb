@@ -1,9 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useId } from "react";
 import PropTypes from "prop-types";
+import { Form, useSubmit } from "react-router-dom";
 
 //components
 import InlineSpinner from "src/components/common/InlineSpinner";
-import Alert from "components/Alert";
+//import Alert from "components/Alert";
 
 //Icons
 import { BiX, BiSearch } from "react-icons/bi";
@@ -11,12 +12,18 @@ import { BiX, BiSearch } from "react-icons/bi";
 //label bundle
 import LABELS from "src/utils/labelBundle";
 
-export default function FormSearch({ isLoading, setSearchKeyword }) {
+export default function FormSearch({ isLoading, setSearchKeyword, query }) {
   const labels = LABELS.PAGES.SEARCH;
   const searchInput = useRef(null);
+  const submit = useSubmit();
+  const searchId = useId();
 
   //search input state
-  const [searchKey, setSearchKey] = useState("");
+  useEffect(() => {
+    document.getElementById(searchId).value = query;
+  }, []);
+
+  //const [searchKey, setSearchKey] = useState(query);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,10 +36,13 @@ export default function FormSearch({ isLoading, setSearchKeyword }) {
   };
 
   const resetSearch = (e) => {
+    console.log(e.currentTarget.form);
     e.preventDefault();
+    document.getElementById(searchId).value = "";
 
     setSearchKeyword("");
-    setSearchKey("");
+    //setSearchKey("");
+    submit(e.currentTarget.form);
     searchInput.current.focus();
   };
 
@@ -46,27 +56,33 @@ export default function FormSearch({ isLoading, setSearchKeyword }) {
 
       {/* Search Form */}
       <div className="relative my-6">
-        <form onSubmit={handleSubmit} className="">
-          <label className="sr-only">Search input</label>
+        <Form className="">
+          <label htmlFor={searchId} className="sr-only">
+            Search input
+          </label>
           <input
             autoFocus
             ref={searchInput}
-            type="text"
-            value={searchKey}
+            type="search"
+            //value={searchKey}
+            id={searchId}
+            name="q"
+            defaultValue={query}
             placeholder={labels.INPUT_PLACEHOLDER}
             className="peer relative h-12 w-full rounded border border-slate-200 px-4 pl-12 text-slate-500 outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-primary-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
-            onChange={(e) => setSearchKey(e.target.value)}
+            //onChange={(e) => setSearchKey(e.target.value)}
           />
           <BiSearch className="transition-colors duration-300 absolute top-3 left-4 h-6 w-6 peer-focus:fill-primary-500 peer-disabled:cursor-not-allowed" />
-          <button
-            type="button"
-            onClick={resetSearch}
-            className={`${
-              !searchKey && "hidden"
-            } absolute top-3 right-24 h-6 w-6 inline-flex items-center justify-center stroke-slate-400 peer-disabled:cursor-not-allowed`}
-          >
-            <BiX className="w-6 h-6 fill-slate-400" />
-          </button>
+          {/* <p>query: {query === "" ? "true" : "false"}</p> */}
+          {searchInput?.current?.value && (
+            <button
+              type="button"
+              onClick={resetSearch}
+              className={`absolute top-3 right-24 h-6 w-6 inline-flex items-center justify-center stroke-slate-400 peer-disabled:cursor-not-allowed`}
+            >
+              <BiX className="w-6 h-6 fill-slate-400" />
+            </button>
+          )}
 
           <button
             type="submit"
@@ -74,7 +90,7 @@ export default function FormSearch({ isLoading, setSearchKeyword }) {
           >
             Search
           </button>
-        </form>
+        </Form>
         <small className="flex justify-between w-full mt-2 py-1 text-xs transition text-slate-400 ">
           <span>{labels.INPUT_HELP_TEXT}</span>
         </small>
@@ -84,6 +100,7 @@ export default function FormSearch({ isLoading, setSearchKeyword }) {
 }
 
 FormSearch.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  setSearchKeyword: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  setSearchKeyword: PropTypes.func,
+  query: PropTypes.string,
 };

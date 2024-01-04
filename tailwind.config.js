@@ -13,6 +13,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
+        "mesh-pattern": "url('src/assets/bg.png')",
         "hero-pattern": "url('src/assets/bg.svg')",
       },
       colors: {

@@ -31,7 +31,7 @@ import RecipeDetail from "components/pages/recipie_detail";
 
 import Missing from "components/pages/404";
 import Favourites from "components/pages/favourites";
-import Search from "components/pages/search";
+import Search, { loader as searchLoader } from "components/pages/search";
 import Contact from "./components/pages/contact";
 import About from "./components/pages/about";
 
@@ -72,7 +72,7 @@ const router = createBrowserRouter(
         <Route path="favourites" element={<Favourites />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
-        <Route path="search" element={<Search />} />
+        <Route path="search" element={<Search />} loader={searchLoader} />
 
         <Route path="blog">
           <Route index element={<Blog />} />

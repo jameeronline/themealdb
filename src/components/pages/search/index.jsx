@@ -4,6 +4,7 @@ import { DataContext } from "src/components/context/DataContext";
 import useSWR from "swr";
 import Select from "react-tailwindcss-select";
 import { matchSorter } from "match-sorter";
+import { useLoaderData } from "react-router-dom";
 
 //components
 import Thumbnail from "components/Thumbnail";
@@ -19,11 +20,19 @@ import { fetcher } from "src/utils/helperFunc";
 //label bundle
 import LABELS from "src/utils/labelBundle";
 
+export function loader({ request }) {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  return q;
+}
+
 export default function Search() {
   const labels = LABELS.PAGES.SEARCH;
+  const q = useLoaderData();
+  console.log(q);
 
   //search state
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState(q);
 
   //category & area filter
   const [selectedCategory, setSelectedCategory] = useState({
@@ -42,7 +51,7 @@ export default function Search() {
   const API_URL = `${import.meta.env.VITE_VERCEL_API_URL}/search.php?s=`;
 
   const { data, error, isLoading } = useSWR(
-    () => (searchKeyword != "" ? `${API_URL}${searchKeyword}` : null),
+    () => (q != "" ? `${API_URL}${q}` : null),
     fetcher
   );
 
@@ -63,7 +72,11 @@ export default function Search() {
   return (
     <>
       <div className="max-w-3xl mx-auto">
-        <FormSearch setSearchKeyword={setSearchKeyword} isLoading={isLoading} />
+        <FormSearch
+          setSearchKeyword={setSearchKeyword}
+          isLoading={isLoading}
+          query={q}
+        />
 
         {/* verify API return(API Errors) & Display error */}
         {error && <Alert message={error.message} />}

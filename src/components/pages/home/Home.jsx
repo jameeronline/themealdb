@@ -10,6 +10,8 @@ import HomeCategoryList from "./HomeCategoryList";
 //public components
 import { Container } from "components/public";
 
+import PrimaryButton from "src/components/PrimaryButton";
+
 //context
 import { DataContext } from "src/components/context/DataContext";
 
@@ -23,6 +25,15 @@ const Home = () => {
         name=""
         img=""
       />
+
+      <PrimaryButton onClick={() => console.log("clicked")} type="primary">
+        Primary Button
+      </PrimaryButton>
+
+      <PrimaryButton onClick={() => console.log("clicked")} type="warning">
+        Warning Button
+      </PrimaryButton>
+
       <header className="text-center max-w-3xl mx-auto">
         <h1 className="text-5xl font-bold leading-snug text-slate-900 mb-6">
           Discover <span className="text-primary-500">Delicious Meals</span>{" "}

@@ -9,7 +9,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_1dfada3c0c7a1f1"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
@@ -54,6 +55,7 @@
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.16",
+    "chromatic": "^10.2.0",
     "eslint": "^8.45.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -65,5 +67,7 @@
     "tailwindcss": "^3.3.5",
     "tw-colors": "^3.3.1",
     "vite": "^4.4.5"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "themealdb@0.0.0"
 }

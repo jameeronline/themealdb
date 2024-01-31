@@ -13,7 +13,7 @@ import ListItemsBody from "./ListItemsBody";
 import { capitalizeString } from "src/utils/helperFunc";
 
 const ListingItems = ({ title, items, itemKey, itemLabel }) => {
-  console.log(items);
+  //console.log(items);
   const navigate = useNavigate();
   const [activeNavLink, setActiveNavLink] = useState("null");
 
@@ -79,12 +79,12 @@ const ListingItems = ({ title, items, itemKey, itemLabel }) => {
           onChange={handleCategoryFilter}
         />
       </div>
-      <ListItemsContainer>
+      {/* <ListItemsContainer>
         <ListItemsTitle title={title} />
         <ListItemsBody>
           <ul className="space-y-1">{listItemsArray}</ul>
         </ListItemsBody>
-      </ListItemsContainer>
+      </ListItemsContainer> */}
     </>
   );
 };

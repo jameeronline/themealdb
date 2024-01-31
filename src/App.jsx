@@ -10,46 +10,46 @@ import {
 } from "react-router-dom";
 
 //Layouts
-import Layout from "components/layouts";
+import Layout from "src/layouts";
 
 //Pages
-import Home from "components/pages/home/Home";
+import Home from "src/pages/home/Home";
 
 import CategoryIndex, {
   loader as categoryLoader,
-} from "src/components/pages/category/Index";
-import CategoryList from "components/pages/category/CategoryList";
-import CategoryDetail from "components/pages/category/CategoryDetail";
+} from "src/pages/category/Index";
+import CategoryList from "src/pages/category/CategoryList";
+import CategoryDetail from "src/pages/category/CategoryDetail";
 
-import AreaIndex, { loader as areaLoader } from "components/pages/area";
-import AreaList from "components/pages/area/AreaList";
-import AreaDetail from "components/pages/area/AreaDetail";
+import AreaIndex, { loader as areaLoader } from "src/pages/area/Index";
+import AreaList from "src/pages/area/AreaList";
+import AreaDetail from "src/pages/area/AreaDetail";
 
-import Ingredients from "components/pages/ingredients";
+import Ingredients from "src/pages/ingredients";
 
-import RecipeDetail from "components/pages/recipie_detail";
+import RecipeDetail from "src/pages/recipie_detail";
 
-import Missing from "components/pages/404";
-import Favourites from "components/pages/favourites";
-import Search, { loader as searchLoader } from "components/pages/search";
-import Contact from "./components/pages/contact";
-import About from "./components/pages/about";
+import Missing from "src/pages/404";
+import Favourites from "src/pages/favourites";
+import Search, { loader as searchLoader } from "src/pages/search";
+import Contact from "./pages/contact";
+import About from "./pages/about";
 
 //Users
-import Login from "components/pages/auth/login";
-import SingUp from "components/pages/auth/signup";
+import Login from "src/pages/auth/login";
+import SingUp from "src/pages/auth/signup";
 
 //CMS - Blog
-import Blog from "components/pages/blog";
-import Post from "components/pages/post";
+import Blog from "src/pages/blog";
+import Post from "src/pages/post";
 
 //CMS - Footer Pages
-import Terms from "components/pages/guidelines/Terms";
-import Privacy from "./components/pages/guidelines/Privacy";
+import Terms from "src/pages/guidelines/Terms";
+import Privacy from "./pages/guidelines/Privacy";
 
 //Import Context
-import ThemeProvider from "components/context/ThemeContext";
-import DataProvider from "components/context/DataContext";
+import ThemeProvider from "src/context/ThemeContext";
+import DataProvider from "src/context/DataContext";
 
 //import useFetch from "use-http";
 

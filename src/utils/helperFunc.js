@@ -90,7 +90,11 @@ export function validateEmail(email) {
 }
 
 //SWR fetcher function
-export const fetcher = (...args) => fetch(...args).then((res) => res.json());
+export const fetcher = (...args) =>
+  fetch(...args).then((res) => {
+    console.log("fetcher called");
+    return res.json();
+  });
 
 //Convert the String to HTML
 export function convertStringToHTML(htmlString) {

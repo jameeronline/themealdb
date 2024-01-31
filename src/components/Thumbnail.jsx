@@ -8,10 +8,10 @@ import classNames from "classnames";
 //import { BiBookmark, BiBookmarkHeart } from "react-icons/bi";
 
 //Icons
-import { BiHeart, BiSolidHeart } from "react-icons/bi";
+import { BiHeart, BiSolidHeart, BiStar, BiSolidStar } from "react-icons/bi";
 
 //content
-import { ThemeContext } from "components/context/ThemeContext";
+import { ThemeContext } from "src/context/ThemeContext";
 
 //import helper functions
 import { formatToUrlString } from "../utils/helperFunc";
@@ -47,25 +47,41 @@ export default function Thumbnail({ item }) {
       <Link
         to={`/recipe-details/${formatToUrlString(item.strMeal)}`}
         state={{ id: item.idMeal }}
-        className="block relative group overflow-hidden transition-all rounded-lg  shadow-xl shadow-slate-200 hover:shadow-2xl dark:shadow-primary-900/0"
+        className="block relative group overflow-hidden transition-all"
+        // className="block relative group overflow-hidden transition-all rounded-lg  shadow-xl shadow-slate-200 hover:shadow-2xl dark:shadow-primary-900/0"
       >
         {/*  <!-- Image --> */}
-        <figure className="overflow-hidden h-80">
+        <figure className="overflow-hidden rounded-md ">
           <LazyLoadImage
             src={item.strMealThumb}
             alt={item.strMeal}
-            height={354}
-            className="aspect-square w-full transition-all duration-300 scale-100 object-cover group-hover:scale-110 group-hover:-translate-y-6"
+            height={null}
+            className="w-full aspect-[4/3] transition-all duration-300 scale-100 object-cover hover:scale-105"
           />
         </figure>
         {/*  <!-- Body--> */}
-        <div className="absolute bottom-0 bg-slate-900/80 w-full transition-all duration-300 ease-in-out group-hover:bg-slate-900/60">
-          <header className="p-6 flex items-center justify-between">
-            <h3 className="text-base font-medium text-white line-clamp-1">
-              {item.strMeal}
-            </h3>
+        <figcaption className="w-full transition-all duration-300 ease-in-out group-hover:text-primary-500">
+          <header className="py-2 flex items-center justify-between">
+            <h3 className="font-medium">{item.strMeal}</h3>
           </header>
-        </div>
+          <ul className="inline-flex gap-2 mt-2">
+            <li>
+              <BiSolidStar className="w-5 h-5 fill-primary-400" />
+            </li>
+            <li>
+              <BiSolidStar className="w-5 h-5 fill-primary-400" />
+            </li>
+            <li>
+              <BiSolidStar className="w-5 h-5 fill-primary-400" />
+            </li>
+            <li>
+              <BiSolidStar className="w-5 h-5 fill-primary-400" />
+            </li>
+            <li>
+              <BiStar className="w-5 h-5 fill-primary-400" />
+            </li>
+          </ul>
+        </figcaption>
       </Link>
     </article>
   );

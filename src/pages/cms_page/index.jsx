@@ -46,14 +46,16 @@ export default function CMSPage({ schemaKey, id }) {
 
   return (
     <>
-      <Container>
-        <article className="prose max-w-4xl pt-12">
-          <header>
-            <h1>{pageContent.pageTitle}</h1>
-          </header>
-          <div>{parse(pageContent.pageDetails)}</div>
-        </article>
-      </Container>
+      <section className="cms-page">
+        <Container>
+          <article className="prose max-w-4xl pt-12">
+            <header>
+              <h1>{pageContent.pageTitle}</h1>
+            </header>
+            <div>{parse(pageContent.pageDetails)}</div>
+          </article>
+        </Container>
+      </section>
     </>
   );
 }

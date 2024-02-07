@@ -19,20 +19,19 @@ export default function Ingredients({ detail }) {
       {ingredientList !== null && ingredientList.length > 0 && (
         <>
           <h4 className="text-3xl font-display font-bold mb-8">Ingredients</h4>
-          <div className="w-full text-left rounded bg-secondary-50 p-4">
-            <ul className="flex flex-col">
+          <div className="w-full text-left rounded bg-stone-50 p-4">
+            <ul className="flex flex-col text-sm">
               {ingredientList.map((item, index) => (
                 <li
                   key={index}
-                  className="flex gap-2 items-center border-b-[1px] h-12 mx-4 transition duration-300 text-slate-500 last:border-none "
+                  className="flex gap-2 items-center justify-between border-b-[1px] h-10 mx-4 transition duration-300 text-slate-500 last:border-none "
                 >
                   {/* <img
                       src={`http://www.themealdb.com/images/ingredients/${capitalizeString(
                         item.strIngredient.replaceAll(" ", "-").toLowerCase()
                       )}-small.png`}
                     /> */}
-                  {item.strMeasure}
-                  {"  "}
+
                   <Link
                     title={`Find other meals using the ingredients ${item.strIngredient}`}
                     to={`/ingredients/${item.strIngredient
@@ -42,6 +41,9 @@ export default function Ingredients({ detail }) {
                   >
                     {capitalizeString(item.strIngredient)}
                   </Link>
+                  <span className="font-mono font-medium text-slate-800">
+                    {item.strMeasure}
+                  </span>
                 </li>
               ))}
             </ul>

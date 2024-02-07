@@ -12,7 +12,13 @@ import ListItemsBody from "./ListItemsBody";
 //Helper functions
 import { capitalizeString } from "src/utils/helperFunc";
 
-const ListingItems = ({ title, items, itemKey, itemLabel }) => {
+const ListingItems = ({
+  title,
+  items,
+  itemKey,
+  itemLabel,
+  setSelectedCategory,
+}) => {
   //console.log(items);
   const navigate = useNavigate();
   const [activeNavLink, setActiveNavLink] = useState("null");
@@ -37,6 +43,7 @@ const ListingItems = ({ title, items, itemKey, itemLabel }) => {
 
   const handleCategoryFilter = (selectedOption) => {
     setSelectdItem(selectedOption);
+    setSelectedCategory(selectedOption.value);
     navigate(`${selectedOption.value.toLowerCase()}`);
   };
 

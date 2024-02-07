@@ -32,8 +32,24 @@ export default function Banner() {
           {data.meals.map((item, index) => (
             <section
               key={index}
-              className="grid w-full overflow-hidden grid-cols-1 my-auto mb-16 bg-secondary-50 md:grid-cols-2 xl:gap-14 md:gap-5"
+              className="grid w-full overflow-hidden grid-cols-1 my-auto mb-16 rounded-2xl bg-secondary-50 md:grid-cols-2 md:gap-6"
             >
+              <div className="items-center justify-end hidden col-span-1 md:flex relative">
+                <LazyLoadImage
+                  className="h-full w-full object-cover aspect-video"
+                  src={item.strMealThumb}
+                  alt="header image"
+                />
+                {/* <button
+                  onClick={getRandomMeals}
+                  className="absolute top-1/2 -mt-7 -left-7 group flex-none inline-flex items-center justify-center w-14 h-14 transition duration-300 rounded-full bg-secondary-500 text-white hover:text-secondary-100 hover:bg-secondary-600 focus:bg-secondary-200 focus:text-secondary-700 "
+                >
+                  <span className="relative">
+                    <span className="sr-only">Button description</span>
+                    <BiRefresh className="w-10 h-10 transition-transform duration-300 group-hover:rotate-45" />
+                  </span>
+                </button> */}
+              </div>
               <div className="flex flex-col justify-center col-span-1 p-16 text-center lg:text-start">
                 <div className="flex items-center justify-center mb-4 lg:justify-normal">
                   <h4 className="ml-2 text-sm text-primary">
@@ -63,22 +79,6 @@ export default function Banner() {
                     Find Meals
                   </Link> */}
                 </div>
-              </div>
-              <div className="items-center justify-end hidden col-span-1 md:flex relative">
-                <LazyLoadImage
-                  className="h-full w-full object-cover aspect-video"
-                  src={item.strMealThumb}
-                  alt="header image"
-                />
-                <button
-                  onClick={getRandomMeals}
-                  className="absolute top-1/2 -mt-7 -left-7 group flex-none inline-flex items-center justify-center w-14 h-14 transition duration-300 rounded-full bg-secondary-500 text-white hover:text-secondary-100 hover:bg-secondary-600 focus:bg-secondary-200 focus:text-secondary-700 "
-                >
-                  <span className="relative">
-                    <span className="sr-only">Button description</span>
-                    <BiRefresh className="w-10 h-10 transition-transform duration-300 group-hover:rotate-45" />
-                  </span>
-                </button>
               </div>
             </section>
           ))}

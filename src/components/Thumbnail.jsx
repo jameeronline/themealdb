@@ -4,8 +4,9 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
-//icons
-//import { BiBookmark, BiBookmarkHeart } from "react-icons/bi";
+//components
+import Rating from "./Rating";
+import Avatar from "./Avatar";
 
 //Icons
 import { BiHeart, BiSolidHeart, BiStar, BiSolidStar } from "react-icons/bi";
@@ -24,7 +25,11 @@ export default function Thumbnail({ item }) {
     setIsFavourite(JSON.stringify(favourites).includes(item.idMeal));
   }, [favourites, item]);
 
-  const activeClasses = classNames([isFavourite ? "secondary" : "primary"]);
+  const activeClasses = classNames([
+    isFavourite
+      ? "bg-pink-500 hover:bg-pink-700"
+      : "bg-slate-800/50 hover:bg-slate-900/50",
+  ]);
 
   return (
     <article className="relative">
@@ -36,7 +41,7 @@ export default function Thumbnail({ item }) {
             strMealThumb: item.strMealThumb,
           })
         }
-        className={`absolute right-4 top-4 flex items-center justify-center z-[1] w-10 h-10 bg-${activeClasses}-500 hover:bg-${activeClasses}-700 rounded-full`}
+        className={`absolute right-4 top-4 flex items-center justify-center z-[1] w-10 h-10 rounded-full ${activeClasses} `}
       >
         {isFavourite ? (
           <BiSolidHeart className="w-6 h-6 text-white" />
@@ -51,36 +56,26 @@ export default function Thumbnail({ item }) {
         // className="block relative group overflow-hidden transition-all rounded-lg  shadow-xl shadow-slate-200 hover:shadow-2xl dark:shadow-primary-900/0"
       >
         {/*  <!-- Image --> */}
-        <figure className="overflow-hidden rounded-md ">
+        <figure className="overflow-hidden rounded-md">
           <LazyLoadImage
             src={item.strMealThumb}
             alt={item.strMeal}
             height={null}
-            className="w-full aspect-[4/3] transition-all duration-300 scale-100 object-cover hover:scale-105"
+            className="w-full aspect-[4/3] transition-all duration-300 shadow-xl scale-100 object-cover hover:scale-105"
           />
         </figure>
         {/*  <!-- Body--> */}
-        <figcaption className="w-full transition-all duration-300 ease-in-out group-hover:text-primary-500">
-          <header className="py-2 flex items-center justify-between">
-            <h3 className="font-medium">{item.strMeal}</h3>
-          </header>
-          <ul className="inline-flex gap-2 mt-2">
-            <li>
-              <BiSolidStar className="w-5 h-5 fill-primary-400" />
-            </li>
-            <li>
-              <BiSolidStar className="w-5 h-5 fill-primary-400" />
-            </li>
-            <li>
-              <BiSolidStar className="w-5 h-5 fill-primary-400" />
-            </li>
-            <li>
-              <BiSolidStar className="w-5 h-5 fill-primary-400" />
-            </li>
-            <li>
-              <BiStar className="w-5 h-5 fill-primary-400" />
-            </li>
-          </ul>
+        <figcaption className="w-full flex items-start gap-4 pt-4 transition-all duration-300 ease-in-out group-hover:text-primary-500">
+          <Avatar
+            className="w-10 h-10"
+            item={Math.floor(Math.random() * 8) + 1}
+          />
+          <div>
+            <header className="flex items-center justify-between">
+              <h3 className="font-medium">{item.strMeal}</h3>
+            </header>
+            <Rating stars={Math.floor(Math.random() * 5) + 1} />
+          </div>
         </figcaption>
       </Link>
     </article>

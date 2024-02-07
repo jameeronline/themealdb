@@ -115,6 +115,7 @@ export default function CategoryDetail() {
         <>
           <PageHeader
             title={capitalizeString(categoryType)}
+            subtitle="category"
             summary={`${data?.meals.length} meals found`}
           />
 
@@ -141,11 +142,11 @@ export default function CategoryDetail() {
               <div className="flex gap-3 ml-auto">
                 <button
                   onClick={handleGridChange}
-                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-gray-50 text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-600 focus:text-typo-700"
+                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-slate-700 text-white border-none hover:bg-slate-950 focus:text-white-700"
                 >
                   {isGird ? (
                     <>
-                      <BiListUl className="w-4 h-4" />
+                      <BiListUl className="w-5 h-5" />
                       <span className="order-2">List</span>
                     </>
                   ) : (
@@ -158,16 +159,16 @@ export default function CategoryDetail() {
 
                 <button
                   onClick={handleSort}
-                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-gray-50 text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-600 focus:text-typo-700"
+                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-slate-700 text-white border-none hover:bg-slate-950 focus:text-white-700"
                 >
                   {isSort ? (
                     <>
-                      <BiSortAZ className="w-6 h-6" />
+                      <BiSortAZ className="w-4 h-4" />
                       <span className="order-2">Ascending</span>
                     </>
                   ) : (
                     <>
-                      <BiSortZA className="w-6 h-6" />
+                      <BiSortZA className="w-4 h-4" />
                       <span className="order-2">Decending</span>
                     </>
                   )}

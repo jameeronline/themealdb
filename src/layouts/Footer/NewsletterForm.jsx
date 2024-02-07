@@ -77,7 +77,7 @@ export default function NewsletterForm() {
 
         <button
           type="submit"
-          className="inline-flex gap-4 cursor-pointer items-center justify-center rounded border-0 border-secondary-500 bg-secondary-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
+          className="inline-flex gap-4 cursor-pointer items-center justify-center rounded border-0 border-primary-500 bg-primary-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
         >
           {loading && <InlineSpinner />}
           {LABELS.BTN_LBL}

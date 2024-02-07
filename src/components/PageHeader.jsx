@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
 
-function PageHeader({ title, summary }) {
+function PageHeader({ title, summary, subtitle }) {
   return (
-    <header className="bg-primary-50 py-16 mb-12">
-      <h1 className="flex flex-col gap-1 text-6xl text-center font-display font-bold">
+    <header className="bg-primary-50 py-20 mb-12">
+      <h1 className="flex flex-col gap-1 text-6xl text-center font-display font-bold text-slate-900">
+        <span className="uppercase font-mono text-sm text-primary-600">
+          {subtitle && subtitle}
+        </span>
         <span className="">{title}</span>
         {summary && (
           <em className="text-base font-mono font-normal not-italic">
@@ -19,5 +22,6 @@ export default PageHeader;
 
 PageHeader.propTypes = {
   title: PropTypes.string,
+  subtitle: PropTypes.string,
   summary: PropTypes.string,
 };

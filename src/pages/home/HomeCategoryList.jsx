@@ -5,9 +5,9 @@ export default function HomeCategoryList({ categoryDetails }) {
     <>
       {Array.isArray(categoryDetails) && categoryDetails.length > 0 && (
         <section>
-          <header className="max-w-5xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-8">Categories</h2>
-            <p className="text-base text-gray-600 text-center">
+          <header className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="text-4xl font-display font-bold mb-8">Categories</h2>
+            <p className="text-lg text-slate-600 text-center">
               Explore our food category for a delightful collection of recipes.
               From savory dishes to sweet treats, discover a variety of culinary
               delights tailored to satisfy every taste. Dive into a world of
@@ -19,7 +19,7 @@ export default function HomeCategoryList({ categoryDetails }) {
               .filter((item, index) => index < 12)
               .map((item, index) => {
                 return (
-                  <div className="col-span-3" key={index}>
+                  <div className="col-span-1 md:col-span-2" key={index}>
                     <Card item={item} key={item.idCategory} />
                   </div>
                 );

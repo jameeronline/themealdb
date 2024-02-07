@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
+    "@headlessui/react": "^1.7.18",
     "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",

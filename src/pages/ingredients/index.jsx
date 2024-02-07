@@ -2,10 +2,15 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 
 //components
+import Container from "components/shared/Container";
 import Spinner from "src/components/common/Spinner";
 import Alert from "src/components/Alert";
 import Empty from "src/components/common/Empty";
 import Thumbnail from "src/components/Thumbnail";
+
+//Page Components
+import PageHeader from "src/components/PageHeader";
+import MealList from "src/components/MealList";
 
 //fetcher function
 import { fetcher, capitalizeString } from "src/utils/helperFunc";
@@ -32,20 +37,15 @@ export default function Ingredients() {
       {isEmpty && <Empty />}
       {!isEmpty && (
         <>
-          <h1 className="text-2xl font-bold mb-6">
-            {id !== "" &&
-              id != undefined &&
-              `Ingredient: "${capitalizeString(id)}"`}
-          </h1>
-          <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-            {data.meals.map((item) => {
-              return (
-                <div className="col-span-4 lg:col-span-3" key={item.idMeal}>
-                  <Thumbnail item={item} />
-                </div>
-              );
-            })}
-          </div>
+          <PageHeader
+            title={capitalizeString(id)}
+            subtitle="ingredient"
+            summary={`${data?.meals.length} meals found`}
+          />
+
+          <Container>
+            <MealList meals={data.meals} />
+          </Container>
         </>
       )}
     </>

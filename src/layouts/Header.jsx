@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-20 w-full after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden dark:bg-primary-950">
+      <header className="bg-white sticky top-0 z-20 w-full after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden dark:bg-primary-950">
         <div className="relative mx-auto max-w-full px-6 xl:container">
           <nav
             aria-label="main navigation"
@@ -94,10 +94,10 @@ export default function Header() {
             <div className="ml-auto flex items-center justify-end px-6 gap-4 lg:ml-0 lg:flex-1 lg:p-0">
               <Link
                 to="search"
-                className="inline-flex items-center justify-center h-12 gap-2 px-6 text-sm font-medium text-white transition duration-300 rounded-full whitespace-nowrap bg-primary-500 hover:bg-primary-600 focus:bg-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 disabled:shadow-none"
+                className="inline-flex items-center justify-center h-12 md:px-6 aspect-square gap-2 text-sm font-medium text-white transition duration-300 rounded-full whitespace-nowrap bg-primary-500 hover:bg-primary-600 focus:bg-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 disabled:shadow-none"
               >
                 <BiSearch className="h-6 w-6" />{" "}
-                <span className="text-base">Search</span>
+                <span className="text-base hidden md:inline">Search</span>
               </Link>
 
               <button

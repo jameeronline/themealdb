@@ -122,7 +122,7 @@ export default function SimpleModal({ show, message, handleModalClose }) {
                 <div className="flex justify-end gap-2">
                   <button
                     onClick={hideModal}
-                    className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded bg-emerald-500 px-5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-emerald-600 focus:bg-emerald-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
+                    className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded bg-primary-500 px-5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-primary-600 focus:bg-primary-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 disabled:shadow-none"
                   >
                     <span>Close</span>
                   </button>

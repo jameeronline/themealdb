@@ -60,7 +60,7 @@ const Home = () => {
         <Banner />
         <HomeCategoryList categoryDetails={categoryDetails} />
       </Container>
-      {/* <Newsletter /> */}
+      <Newsletter />
     </>
   );
 };

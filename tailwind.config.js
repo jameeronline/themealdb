@@ -35,7 +35,7 @@ export default {
         // abbuttons: "var(--color-buttons)",
         // abtypography: "var(--color-typography)",
         primary: colors.orange,
-        secondary: colors.indigo,
+        secondary: colors.sky,
         typo: colors.neutral,
       },
       fontFamily: {

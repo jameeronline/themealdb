@@ -22,6 +22,7 @@ export default function Favourites() {
         <>
           <PageHeader
             title="Favourite List"
+            subtitle=""
             summary={`${favourites.length} meals found`}
           />
           <Container>

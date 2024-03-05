@@ -142,7 +142,7 @@ export default function CategoryDetail() {
               <div className="flex gap-3 ml-auto">
                 <button
                   onClick={handleGridChange}
-                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-slate-700 text-white border-none hover:bg-slate-950 focus:text-white-700"
+                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-slate-800 text-white border-none hover:bg-slate-950 focus:text-white-700"
                 >
                   {isGird ? (
                     <>
@@ -159,7 +159,7 @@ export default function CategoryDetail() {
 
                 <button
                   onClick={handleSort}
-                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-slate-700 text-white border-none hover:bg-slate-950 focus:text-white-700"
+                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-slate-800 text-white border-none hover:bg-slate-950 focus:text-white-700"
                 >
                   {isSort ? (
                     <>

@@ -18,7 +18,7 @@ const Card = ({ item }) => {
         />
       </figure>
       <header className="py-3 text-center">
-        <h3 className="text-xl font-display font-medium line-clamp-1 group-hover:text-primary-500 transition-all duration-300 ">
+        <h3 className="text-lg font-medium line-clamp-1 group-hover:text-primary-500 transition-all duration-300 ">
           {item.strCategory}
         </h3>
       </header>

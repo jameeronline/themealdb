@@ -31,6 +31,7 @@ import {
   BiArrowBack,
   BiSolidStar,
   BiStar,
+  BiPlayCircle,
 } from "react-icons/bi";
 
 //Page level components
@@ -38,6 +39,7 @@ import Share from "./Share";
 import Instructions from "./Instructions";
 import Ingredients from "./Ingredients";
 import Video from "./Video";
+import Rating from "src/components/Rating";
 //import ShareDropdown from "./ShareDropdown";
 //import DropdownBasic from "./DropdownBasic";
 
@@ -103,42 +105,44 @@ export default function RecipeDetail() {
                 hashtags={["meals", "recipies"]}
               /> */}
 
-              <header className="pt-16 pb-12">
+              <header className="pt-8 pb-6 md:pt-16 md:pb-12">
                 {/* Beck button */}
 
                 <button
                   onClick={() => navigate(-1)}
-                  className="group inline-flex gap-2 h-10 rounded mb-6 text-sm items-center justify-center transition-all duration-300 hover:text-primary-400"
+                  className="group inline-flex gap-2 h-10 rounded mb-2 md:mb-6 text-sm items-center justify-center transition-all duration-300 hover:text-primary-400"
                 >
-                  <BiArrowBack className="w-6 h-6 group-hover:fill-primary-400" />
+                  <BiArrowBack className="w-6 h-6" />
                   <span className="order-2">Back to listing</span>
                 </button>
                 {/* Heading */}
                 <div className="w-full flex flex-col gap-2 items-center justify-between md:flex-row ">
-                  <h1 className="text-2xl  text-typo-950 font-display font-bold md:text-5xl">
+                  <h1 className="w-full text-2xl md:text-4xl lg:text-5xl flex-1 text-typo-950 font-display font-bold ">
                     <span className="leading-tight">{item.strMeal}</span>
                   </h1>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full my-4 md:my-0 md:w-auto">
                     <button
                       onClick={() => window.print()}
-                      className="inline-flex items-center p-4 gap-2 aspect-square text-typo-950 transition-colors duration-300 rounded-md hover:text-primary-500 hover:bg-primary-50"
+                      className="flex flex-1 items-center justify-center p-4 gap-2 md:aspect-square bg-slate-50 md:bg-transparent text-typo-950 transition-colors duration-300 rounded-md hover:text-primary-500 hover:bg-primary-50"
                     >
-                      <BiPrinter className="w-8 h-8" />
+                      <BiPrinter className="w-6 h-6 md:w-8 md:h-8" />
+                      <span className="md:hidden">Print</span>
                     </button>
 
                     {/* Share - native */}
                     {navigator.share && (
                       <button
                         onClick={handleShare}
-                        className="inline-flex items-center p-4 gap-2 aspect-square text-typo-950 transition-colors duration-300 rounded-md hover:text-primary-500 hover:bg-primary-50"
+                        className="flex flex-1 items-center justify-center p-4 gap-2 md:aspect-square bg-slate-50 md:bg-transparent text-typo-950 transition-colors duration-300 rounded-md hover:text-primary-500 hover:bg-primary-50"
                       >
-                        <BiShareAlt className="w-8 h-8" />
+                        <BiShareAlt className="w-6 h-6 md:w-8 md:h-8" />
+                        <span className="md:hidden">Share</span>
                       </button>
                     )}
 
                     {/* Share - custom */}
-                    {!navigator.share && (
+                    {/* {!navigator.share && (
                       <div className="mb-6">
                         <Share
                           title={item.strMeal}
@@ -146,12 +150,12 @@ export default function RecipeDetail() {
                           hashtags={["meals", "recipies"]}
                         />
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
 
-                <div className="my-8">
-                  <ul className="flex items-center justify-start gap-10 text-sm">
+                <div className="my-4 md:my-8">
+                  <ul className="flex flex-wrap items-center justify-start gap-y-2 gap-x-4 md:gap-10 text-sm">
                     {/* Category */}
                     {item.strCategory !== null && item.strCategory != "" && (
                       <li className="">
@@ -159,7 +163,7 @@ export default function RecipeDetail() {
                           to={`/category/${item.strCategory.toLowerCase()}`}
                           className="inline-flex items-center gap-2 text-primary-400 hover:underline transition-colors duration-300  hover:text-slate-800"
                         >
-                          <BiCategoryAlt className="w-4 h-4" />
+                          <BiCategoryAlt className="w-5 h-5" />
                           {item.strCategory}
                         </Link>
                       </li>
@@ -172,7 +176,7 @@ export default function RecipeDetail() {
                           to={`/area/${item.strArea.toLowerCase()}`}
                           className="inline-flex items-center gap-2 text-primary-400 hover:underline transition-colors duration-300  hover:text-slate-800"
                         >
-                          <BiMap className="w-4 h-4" />
+                          <BiMap className="w-5 h-5" />
                           {item.strArea}
                         </Link>
                       </li>
@@ -190,40 +194,24 @@ export default function RecipeDetail() {
                         }
                         className={`inline-flex items-center gap-2 ${
                           isFavourite
-                            ? "text-secondary-600"
+                            ? "text-pink-500"
                             : "text-primary-400 hover:underline hover:text-slate-800"
                         }  transition-colors duration-300`}
                       >
                         {isFavourite ? (
                           <>
-                            <BiSolidHeart className="w-4 h-4" /> Remove from
+                            <BiSolidHeart className="w-5 h-5" /> Added to
                             Favourite
                           </>
                         ) : (
                           <>
-                            <BiBookmark className="w-4 h-4" /> Add To Favourite
+                            <BiBookmark className="w-5 h-5" /> Add To Favourite
                           </>
                         )}
                       </button>
                     </li>
                     <li>
-                      <ul className="inline-flex gap-2">
-                        <li>
-                          <BiSolidStar className="w-5 h-5 fill-primary-400" />
-                        </li>
-                        <li>
-                          <BiSolidStar className="w-5 h-5 fill-primary-400" />
-                        </li>
-                        <li>
-                          <BiSolidStar className="w-5 h-5 fill-primary-400" />
-                        </li>
-                        <li>
-                          <BiSolidStar className="w-5 h-5 fill-primary-400" />
-                        </li>
-                        <li>
-                          <BiStar className="w-5 h-5 fill-typo-400" />
-                        </li>
-                      </ul>
+                      <Rating stars={3} />
                     </li>
                   </ul>
                 </div>
@@ -248,7 +236,8 @@ export default function RecipeDetail() {
 
               <div className="">
                 {/* Thimbnail - Big Image */}
-                <div className="mb-14 relative">
+                <div className="mb-8 md:mb-14 relative">
+                  <BiPlayCircle className="w-16 h-16 md:w-32 md:h-32 left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 absolute fill-white hover:opacity-50 drop-shadow-lg" />
                   <LazyLoadImage
                     src={item.strMealThumb}
                     alt={item.strMeal}
@@ -258,13 +247,13 @@ export default function RecipeDetail() {
                 </div>
 
                 <div className="grid grid-cols-4 gap-6 md:grid-cols-8 md:gap-8 lg:grid-cols-12 lg:gap-24">
-                  <div className="col-span-4 lg:col-span-8">
-                    {/* Instructions List */}
-                    <Instructions instructions={item.strInstructions} />
-                  </div>
-                  <div className="col-span-4 lg:col-span-4 ">
+                  <div className="col-span-4 lg:col-span-4 md:order-2">
                     {/* Ingredients Table */}
                     <Ingredients detail={JSON.stringify(data)} />
+                  </div>
+                  <div className="col-span-4 lg:col-span-8 md:order-1">
+                    {/* Instructions List */}
+                    <Instructions instructions={item.strInstructions} />
                   </div>
                 </div>
                 {/* Youtube Preview */}

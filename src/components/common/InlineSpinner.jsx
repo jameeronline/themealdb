@@ -1,7 +1,15 @@
-export default function InlineSpinner() {
+import { twMerge } from "tailwind-merge";
+
+export default function InlineSpinner({ className, ...props }) {
   return (
     <>
-      <div className="w-6 h-6">
+      <div
+        className={twMerge(
+          `w-6 h-6 inline-flex justify-center items-center stroke-primary-500`,
+          className
+        )}
+        {...props}
+      >
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -22,7 +30,7 @@ export default function InlineSpinner() {
           />
           <path
             d="M12 22C14.6522 22 17.1957 20.9464 19.0711 19.0711C20.9464 17.1957 22 14.6522 22 12C22 9.34784 20.9464 6.8043 19.0711 4.92893C17.1957 3.05357 14.6522 2 12 2"
-            className="stroke-primary-500"
+            className="stroke-inherit"
             strokeWidth="4"
           />
         </svg>

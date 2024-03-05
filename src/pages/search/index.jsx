@@ -73,7 +73,7 @@ export default function Search() {
 
   return (
     <>
-      <div className="max-w-3xl mx-auto">
+      <div className="">
         <FormSearch
           setSearchKeyword={setSearchKeyword}
           isLoading={isLoading}
@@ -95,39 +95,38 @@ export default function Search() {
 
       {/* Display Results Grid */}
       {data?.meals && (
-        <div className="mt-10">
-          {/* Result Heading */}
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold inline-flex items-baseline gap-2">
-              Search Results
-              {filterResults(data.meals).length > 0 && (
-                <span className="text-sm font-normal">
-                  ({filterResults(data.meals).length} meals found)
-                </span>
-              )}
-            </h1>
-            <div className="w-44">
-              <Select
-                placeholder="Select to filter"
-                primaryColor={"emerald"}
-                className="w-44 border-primary-500 text-sm"
-                options={options}
-                value={selectedCategory}
-                defaultValue={selectedCategory}
-                onChange={handleCategoryFilter}
-              />
+        <Container>
+          <div className="mt-10">
+            {/* Result Heading */}
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-3xl font-bold inline-flex items-baseline gap-2">
+                Search Results
+                {filterResults(data.meals).length > 0 && (
+                  <span className="text-sm font-normal">
+                    ({filterResults(data.meals).length} meals found)
+                  </span>
+                )}
+              </h1>
+              <div className="w-44">
+                <Select
+                  placeholder="Select to filter"
+                  primaryColor={"emerald"}
+                  className="w-44 border-primary-500 text-sm"
+                  options={options}
+                  value={selectedCategory}
+                  defaultValue={selectedCategory}
+                  onChange={handleCategoryFilter}
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Result filtering */}
-          {filterResults(data.meals).length < 1 && <Empty />}
+            {/* Result filtering */}
+            {filterResults(data.meals).length < 1 && <Empty />}
 
-          <Container>
             <MealList meals={filterResults(data.meals)} />
-          </Container>
 
-          {/* final Result Display */}
-          {/* <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
+            {/* final Result Display */}
+            {/* <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
             {filterResults(data.meals).length > 0 &&
               filterResults(data.meals).map((item) => {
                 return (
@@ -137,7 +136,8 @@ export default function Search() {
                 );
               })}
           </div> */}
-        </div>
+          </div>
+        </Container>
       )}
     </>
   );

@@ -7,7 +7,7 @@ function Rating({ stars }) {
   const maxStarValue = 5;
 
   return (
-    <div className="flex items-center gap-1 mt-1">
+    <div className="flex items-center gap-1">
       <ul className="inline-flex gap-1">
         {new Array(maxStarValue).fill().map((item, index) => (
           <li key={index}>
@@ -31,3 +31,24 @@ export default Rating;
 Rating.propTypes = {
   stars: PropTypes.number.isRequired,
 };
+
+const axios = require("axios");
+
+const options = {
+  method: "GET",
+  url: "https://historical-events-by-api-ninjas.p.rapidapi.com/v1/historicalevents",
+  params: {
+    text: "roman empire",
+  },
+  headers: {
+    "X-RapidAPI-Key": "bcd6d3e9d7mshce591031afe2639p1525c8jsn2ae581bda33e",
+    "X-RapidAPI-Host": "historical-events-by-api-ninjas.p.rapidapi.com",
+  },
+};
+
+try {
+  const response = await axios.request(options);
+  console.log(response.data);
+} catch (error) {
+  console.error(error);
+}

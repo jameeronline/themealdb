@@ -24,9 +24,7 @@ import CategoryDetail from "src/pages/category/CategoryDetail";
 import AreaIndex, { loader as areaLoader } from "src/pages/area/Index";
 import AreaList from "src/pages/area/AreaList";
 import AreaDetail from "src/pages/area/AreaDetail";
-
 import Ingredients from "src/pages/ingredients";
-
 import RecipeDetail from "src/pages/recipie_detail";
 
 import Missing from "src/pages/404";

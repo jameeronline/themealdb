@@ -8,6 +8,7 @@ import clsx from "clsx";
 import ListItemsContainer from "./ListItemsContainer";
 import ListItemsTitle from "./ListItemsTitle";
 import ListItemsBody from "./ListItemsBody";
+import PageHeader from "./PageHeader";
 
 //Helper functions
 import { capitalizeString } from "src/utils/helperFunc";
@@ -17,22 +18,20 @@ const ListingItems = ({
   items,
   itemKey,
   itemLabel,
+  selectedCategory = "dummy",
   setSelectedCategory,
 }) => {
   //console.log(items);
   const navigate = useNavigate();
   const [activeNavLink, setActiveNavLink] = useState("null");
 
-  //category & area filter
-  const [selectedItem, setSelectdItem] = useState({
-    value: null,
-    label: "Select",
-  });
-
   const options = items.map((item) => ({
     value: item[itemKey],
     label: item[itemKey],
   }));
+
+  //category & area filter
+  const [selectedItem, setSelectdItem] = useState(options[0]);
 
   useEffect(() => {
     setSelectdItem({
@@ -60,9 +59,9 @@ const ListingItems = ({
           onClick={() => handleClick(item[itemKey])}
           className={({ isActive }) =>
             clsx(
-              "flex p-2 px-4 transition-all duration-300 ",
+              "flex py-2 px-6 transition-all duration-300 rounded-full",
               isActive
-                ? "rounded bg-primary-500 text-white"
+                ? "bg-primary-500 text-white"
                 : "hover:text-primary-500 hover:bg-primary-50"
             )
           }
@@ -76,21 +75,25 @@ const ListingItems = ({
   return (
     <>
       <div className="">
+        {/* <PageHeader
+          title={capitalizeString(selectedCategory)}
+          subtitle="listing"
+          summary="25"
+        /> */}
         <Select
           placeholder="Select to filter"
           primaryColor={"emerald"}
           className="w-44 border-primary-500 text-sm"
           options={options}
           value={selectedItem}
-          defaultValue={selectedItem}
+          // defaultValue={selectedItem}
           onChange={handleCategoryFilter}
         />
       </div>
+      <ul className="flex gap-2">{listItemsArray}</ul>
       {/* <ListItemsContainer>
         <ListItemsTitle title={title} />
-        <ListItemsBody>
-          <ul className="space-y-1">{listItemsArray}</ul>
-        </ListItemsBody>
+        <ListItemsBody></ListItemsBody>
       </ListItemsContainer> */}
     </>
   );

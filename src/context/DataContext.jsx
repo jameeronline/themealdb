@@ -20,13 +20,12 @@ const DataProvider = ({ children }) => {
           axios.get("https://www.themealdb.com/api/json/v1/1/list.php?i=list"),
           axios.get("https://www.themealdb.com/api/json/v1/1/categories.php"),
         ]);
-
         setAreas(response[0]?.data?.meals);
         setCategories(response[1]?.data?.meals);
         setIngredients(response[2]?.data?.meals);
         setCategoryDetails(response[3]?.data?.categories);
       } catch (e) {
-        console.log(e?.message);
+        console.log(e.message);
       }
     };
 

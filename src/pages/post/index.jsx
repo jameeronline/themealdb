@@ -1,4 +1,9 @@
 import { useNavigate, useLocation } from "react-router";
+
+//Theme Components
+import { Container } from "src/components/shared";
+
+//Parse CMS content
 import parse from "html-react-parser";
 
 export default function Post() {
@@ -9,10 +14,14 @@ export default function Post() {
   const post = state.details;
 
   return (
-    <article className="prose">
-      <h1>{post.title}</h1>
-      <div>{parse(post.content)}</div>
-      <button onClick={() => navigate(-1)}>Back</button>
-    </article>
+    <Container>
+      <article className="prose">
+        <h1>{post.title}</h1>
+        <div>{parse(post.content)}</div>
+        <a className="text-primary-500" onClick={() => navigate(-1)}>
+          Back
+        </a>
+      </article>
+    </Container>
   );
 }

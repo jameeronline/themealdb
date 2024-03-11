@@ -1,5 +1,8 @@
 import "./App.css";
 import { HelmetProvider } from "react-helmet-async";
+import { Suspense } from "react";
+
+import InlineSpinner from "components/common/InlineSpinner";
 
 //Router imports
 import {
@@ -13,27 +16,26 @@ import {
 import Layout from "src/layouts";
 
 //Pages
-import Home from "src/pages/home/Home";
+import Home from "src/pages/home";
 
-import CategoryIndex, {
-  loader as categoryLoader,
-} from "src/pages/category/Index";
+import CategoryIndex, { loader as categoryLoader } from "src/pages/category";
 import CategoryList from "src/pages/category/CategoryList";
 import CategoryDetail from "src/pages/category/CategoryDetail";
 
-import AreaIndex, { loader as areaLoader } from "src/pages/area/Index";
+import AreaIndex, { loader as areaLoader } from "src/pages/area";
 import AreaList from "src/pages/area/AreaList";
 import AreaDetail from "src/pages/area/AreaDetail";
 import Ingredients from "src/pages/ingredients";
 import RecipeDetail from "src/pages/recipie_detail";
 
-import Missing from "src/pages/404";
 import Favourites from "src/pages/favourites";
 import Search, { loader as searchLoader } from "src/pages/search";
-import Contact from "./pages/contact";
-import About from "./pages/about";
+import Contact from "src/pages/contact";
+import About from "src/pages/about";
 
-//Users
+import Missing from "src/pages/404";
+
+//Auth
 import Login from "src/pages/auth/login";
 import SingUp from "src/pages/auth/signup";
 
@@ -43,13 +45,11 @@ import Post from "src/pages/post";
 
 //CMS - Footer Pages
 import Terms from "src/pages/guidelines/Terms";
-import Privacy from "./pages/guidelines/Privacy";
+import Privacy from "src/pages/guidelines/Privacy";
 
-//Import Context
+//Context
 import ThemeProvider from "src/context/ThemeContext";
 import DataProvider from "src/context/DataContext";
-
-//import useFetch from "use-http";
 
 //router
 const router = createBrowserRouter(
@@ -77,9 +77,10 @@ const router = createBrowserRouter(
           <Route path=":postID" element={<Post />} />
         </Route>
 
-        <Route path="*" element={<Missing />} />
         <Route path="terms" element={<Terms />} />
         <Route path="privacy" element={<Privacy />} />
+
+        <Route path="*" element={<Missing />} />
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SingUp />} />
@@ -91,11 +92,13 @@ export default function App() {
   return (
     <>
       <HelmetProvider>
-        <ThemeProvider>
-          <DataProvider>
-            <RouterProvider router={router} />
-          </DataProvider>
-        </ThemeProvider>
+        <Suspense fallback={<InlineSpinner />}>
+          <ThemeProvider>
+            <DataProvider>
+              <RouterProvider router={router} />
+            </DataProvider>
+          </ThemeProvider>
+        </Suspense>
       </HelmetProvider>
     </>
   );

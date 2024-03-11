@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { format, formatRelative } from "date-fns";
 
+//Theme Components
 import { Container } from "src/components/shared";
-import Alerts from "src/components/Alerts";
 
 //Firebase
 import appFlamelink from "src/server/firebaseDB";
 import Spinner from "src/components/common/Spinner";
+
+//Article
+import Article from "./article";
 
 export default function Blog() {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,28 +56,9 @@ export default function Blog() {
 
   return (
     <>
-      <Alerts>Error messages shown here</Alerts>
-      <Alerts type="info">Error messages shown here</Alerts>
-      <Alerts type="warning">Error messages shown here</Alerts>
-      <Alerts type="success">Error messages shown here</Alerts>
       <Container>
-        {postRender.map((item) => (
-          <article className="prose max-w-5xl mb-16" key={item.id}>
-            <header>
-              <h1>{item.title}</h1>
-              <p className="mb-0">Author: {item.author}</p>
-              <p className="mt-0">
-                Published Date: {format(new Date(item.date), "MM/dd/yyyy")}
-              </p>
-              <p>
-                Relative Date: {formatRelative(new Date(item.date), new Date())}
-              </p>
-            </header>
-            <p>{item.summary}</p>
-            <Link to={item.slug} state={{ details: item }}>
-              Read More
-            </Link>
-          </article>
+        {postRender.map((item, index) => (
+          <Article key={index} item={item} />
         ))}
       </Container>
     </>

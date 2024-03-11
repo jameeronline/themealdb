@@ -8,7 +8,6 @@ import { useLoaderData } from "react-router-dom";
 
 //components
 import Alert from "components/Alert";
-import Thumbnail from "components/Thumbnail";
 import Empty from "src/components/common/Empty";
 
 //Search Form
@@ -31,7 +30,6 @@ export function loader({ request }) {
 export default function Search() {
   const labels = LABELS.PAGES.SEARCH;
   const q = useLoaderData();
-  console.log(q);
 
   //search state
   const [searchKeyword, setSearchKeyword] = useState(q);

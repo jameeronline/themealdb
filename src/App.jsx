@@ -18,11 +18,13 @@ import Layout from "src/layouts";
 //Pages
 import Home from "src/pages/home";
 
-import CategoryIndex, { loader as categoryLoader } from "src/pages/category";
+import CategoryIndex, {
+  loader as categoryLoader,
+} from "src/pages/category/CategoryIndex";
 import CategoryList from "src/pages/category/CategoryList";
 import CategoryDetail from "src/pages/category/CategoryDetail";
 
-import AreaIndex, { loader as areaLoader } from "src/pages/area";
+import AreaIndex, { loader as areaLoader } from "src/pages/area/AreaIndex";
 import AreaList from "src/pages/area/AreaList";
 import AreaDetail from "src/pages/area/AreaDetail";
 

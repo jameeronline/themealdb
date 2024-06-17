@@ -18,15 +18,14 @@ import Layout from "src/layouts";
 //Pages
 import Home from "src/pages/home";
 
-import CategoryIndex, {
-  loader as categoryLoader,
-} from "src/pages/category/index";
+import CategoryIndex, { loader as categoryLoader } from "src/pages/category";
 import CategoryList from "src/pages/category/CategoryList";
 import CategoryDetail from "src/pages/category/CategoryDetail";
 
 import AreaIndex, { loader as areaLoader } from "src/pages/area";
-import AreaList from "src/pages/area/AreaList/index";
+import AreaList from "src/pages/area/AreaList";
 import AreaDetail from "src/pages/area/AreaDetail";
+
 import Ingredients from "src/pages/ingredients";
 import RecipeDetail from "src/pages/recipie_detail";
 

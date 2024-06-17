@@ -1,34 +1,45 @@
+import PropTypes from "prop-types";
 import Card from "components/Card";
 
 export default function HomeCategoryList({ categoryDetails }) {
+  if (!Array.isArray(categoryDetails) || categoryDetails.length === 0) {
+    return null;
+  }
+
+  const filteredCategoryDetails = categoryDetails.slice(0, 12);
+
   return (
-    <>
-      {Array.isArray(categoryDetails) && categoryDetails.length > 0 && (
-        <section>
-          <header className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-4xl text-slate-800 font-display font-bold mb-8">
-              Popular Categories
-            </h2>
-            <p className="text-lg text-slate-600 text-center">
-              Explore our food category for a delightful collection of recipes.
-              From savory dishes to sweet treats, discover a variety of culinary
-              delights tailored to satisfy every taste. Dive into a world of
-              simple and clean flavors that make every meal a joyous experience.
-            </p>
-          </header>
-          <div className="grid grid-cols-4 gap-6 md:grid-cols-8 md:gap-16 lg:grid-cols-12">
-            {categoryDetails
-              .filter((item, index) => index < 12)
-              .map((item, index) => {
-                return (
-                  <div className="col-span-1 md:col-span-2" key={index}>
-                    <Card item={item} key={item.idCategory} />
-                  </div>
-                );
-              })}
+    <section className="my-32">
+      <header className="max-w-3xl mx-auto text-center mb-16">
+        <h2 className="text-4xl text-slate-800 font-display font-bold mb-2">
+          Discover Culinary Variety
+        </h2>
+        <h6 className="text-typo-600 mb-8">
+          Explore Different Meal Categories
+        </h6>
+        <p className="text-sm md:text-base text-slate-400 leading-relaxed text-center">
+          Explore our food category for a delightful collection of recipes. From
+          savory dishes to sweet treats, discover a variety of culinary delights
+          tailored to satisfy every taste. Dive into a world of simple and clean
+          flavors that make every meal a joyous experience.
+        </p>
+      </header>
+      <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-y-16 gap-x-12">
+        {filteredCategoryDetails.map((item) => (
+          <div className="col-span-2 md:col-span-2" key={item.idCategory}>
+            <Card item={item} />
           </div>
-        </section>
-      )}
-    </>
+        ))}
+      </div>
+    </section>
   );
 }
+
+HomeCategoryList.propTypes = {
+  categoryDetails: PropTypes.arrayOf(
+    PropTypes.shape({
+      idCategory: PropTypes.string.isRequired,
+      // Add more prop types if necessary
+    })
+  ),
+};

@@ -1,46 +1,46 @@
-import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import { cn } from "src/utils/helperFunctions";
 
-export default function Button({ children, ...props }) {
-  console.log(props.type);
-  const btnType = classNames(
-    {
-      red: props.type == "danger" ? true : false,
-    },
-    {
-      yellow: props.type == "warning" ? true : false,
-    },
-    {
-      blue: props.type == "info" ? true : false,
-    },
-    {
-      green: props.type == "success" ? true : false,
-    },
-    {
-      primary: props.type == "default" ? true : false,
-    }
-  );
+export default function Button({ children, type, ...props }) {
+  const typeClasses = {
+    primary: "bg-primary-500 hover:bg-primary-600 focus:bg-primary-700",
+    secondary: "bg-secondary-500 hover:bg-secondary-600 focus:bg-secondary-700",
+    danger: "bg-error-500 hover:bg-error-600 focus:bg-error-700",
+    success: "bg-success-500 hover:bg-success-600 focus:bg-success-700",
+    info: "bg-info-500 hover:bg-info-600 focus:bg-info-700",
+    warning: "bg-warning-500 hover:bg-warning-600 focus:bg-warning-700",
+    light:
+      "bg-neutral-100 hover:bg-neutral-200 focus:bg-neutral-200 text-neutral-800",
+    dark: "bg-neutral-800 hover:bg-neutral-900 focus:bg-neutral-600",
+  };
 
   return (
-    <>
-      <button
-        {...props}
-        className={`inline-flex items-center justify-center h-12 gap-2 px-6 text-sm font-medium tracking-wide text-white transition duration-300 rounded whitespace-nowrap bg-${btnType}-500 hover:bg-${btnType}-600 focus:bg-${btnType}-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-${btnType}-300 disabled:bg-${btnType}-300 disabled:shadow-none`}
-      >
-        {children}
-      </button>
-    </>
+    <button
+      className={cn(
+        "inline-flex items-center justify-center h-12 gap-2 px-6 text-sm font-medium tracking-wide text-white transition duration-300 rounded whitespace-nowrap focus-visible:outline-none disabled:cursor-not-allowed disabled:border-typo-300 disabled:bg-typo-300 disabled:shadow-none",
+        typeClasses[type]
+      )}
+      {...props}
+    >
+      {children}
+    </button>
   );
 }
 
 Button.defaultProps = {
-  type: "default",
-  size: "default",
+  type: "primary",
 };
 
 Button.propTypes = {
-  children: PropTypes.element,
-  type: PropTypes.string,
-  size: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  type: PropTypes.oneOf([
+    "primary",
+    "secondary",
+    "danger",
+    "success",
+    "info",
+    "warning",
+    "light",
+    "dark",
+  ]),
 };

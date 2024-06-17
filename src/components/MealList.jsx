@@ -1,5 +1,7 @@
-import Thumbnail from "components/Thumbnail";
+import Thumbnail, { MemoizedThumbnail } from "components/Thumbnail";
 import PropTypes from "prop-types";
+
+//import
 
 function MealList({ meals }) {
   return (
@@ -7,7 +9,8 @@ function MealList({ meals }) {
       {meals.map((item) => {
         return (
           <div className="col-span-4 lg:col-span-3" key={item.idMeal}>
-            <Thumbnail item={item} />
+            {/* <Thumbnail item={item} /> */}
+            <MemoizedThumbnail item={item} />
           </div>
         );
       })}

@@ -50,6 +50,7 @@ import Privacy from "src/pages/guidelines/Privacy";
 //Context
 import ThemeProvider from "src/context/ThemeContext";
 import DataProvider from "src/context/DataContext";
+import SiteConfigProvider from "src/context/SiteConfigContext";
 
 //router
 const router = createBrowserRouter(
@@ -66,7 +67,7 @@ const router = createBrowserRouter(
           <Route path=":cuisineType" element={<AreaDetail />} />
         </Route>
         <Route path="ingredients/:id" element={<Ingredients />} />
-        <Route path="recipe-details/:id" element={<RecipeDetail />} />
+        <Route path="details/:id" element={<RecipeDetail />} />
         <Route path="favourites" element={<Favourites />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
@@ -93,11 +94,13 @@ export default function App() {
     <>
       <HelmetProvider>
         <Suspense fallback={<InlineSpinner />}>
-          <ThemeProvider>
-            <DataProvider>
-              <RouterProvider router={router} />
-            </DataProvider>
-          </ThemeProvider>
+          <SiteConfigProvider>
+            <ThemeProvider>
+              <DataProvider>
+                <RouterProvider router={router} />
+              </DataProvider>
+            </ThemeProvider>
+          </SiteConfigProvider>
         </Suspense>
       </HelmetProvider>
     </>

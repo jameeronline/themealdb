@@ -9,12 +9,19 @@ import { useLoaderData } from "react-router-dom";
 //components
 import Alert from "components/Alert";
 import Empty from "src/components/common/Empty";
+import Button from "src/components/Button";
+
+//label bundle
+import PageHeader from "src/components/PageHeader";
 
 //Search Form
 import FormSearch from "./FormSearch";
 
 //Helper functions
-import { fetcher } from "src/utils/helperFunc";
+import { fetcher, hasData } from "src/utils/helperFunctions";
+
+//React Query
+import { useSearchMeals } from "src/api-services/queries";
 
 //label bundle
 import LABELS from "src/utils/labelBundle";
@@ -48,11 +55,8 @@ export default function Search() {
 
   options.unshift({ value: null, label: "Select All" });
 
-  const API_URL = `${import.meta.env.VITE_VERCEL_API_URL}/search.php?s=`;
-
-  const { data, error, isLoading } = useSWR(
-    () => (q != "" ? `${API_URL}${q}` : null),
-    fetcher
+  const { data, error, isLoading, isError, isSuccess } = useSearchMeals(
+    q != "" ? q : null
   );
 
   const handleCategoryFilter = (selectedOption) => {
@@ -69,31 +73,32 @@ export default function Search() {
     }
   };
 
+  //is empty
+  const isEmpty = hasData(data?.meals);
+
   return (
     <>
       <div className="">
-        <FormSearch
-          setSearchKeyword={setSearchKeyword}
-          isLoading={isLoading}
-          query={q}
-        />
-
-        {/* verify API return(API Errors) & Display error */}
-        {error && <Alert message={error.message} />}
-
-        {/* There is no results & Display Error */}
-        {data && data.meals === null && (
-          <Alert
-            message={
-              "There is no recipies available in this search key. Please refine your search"
-            }
+        <PageHeader title={labels.TITLE} />
+        <div className="max-w-3xl mx-auto">
+          <FormSearch
+            setSearchKeyword={setSearchKeyword}
+            isLoading={isLoading}
+            query={q}
           />
-        )}
-      </div>
 
-      {/* Display Results Grid */}
-      {data?.meals && (
-        <Container>
+          {/* verify API return(API Errors) & Display error */}
+          {isError && <Alert message={error.message} />}
+
+          {/* There is no results & Display Error */}
+          {!isEmpty && isSuccess && q != "" && (
+            <Alert message="No recipes match your search criteria. Please refine your search and try again." />
+          )}
+        </div>
+      </div>
+      <Container>
+        {/* Display Results Grid */}
+        {data?.meals && (
           <div className="mt-10">
             {/* Result Heading */}
             <div className="flex justify-between items-center mb-6">
@@ -120,23 +125,10 @@ export default function Search() {
 
             {/* Result filtering */}
             {filterResults(data.meals).length < 1 && <Empty />}
-
             <MealList meals={filterResults(data.meals)} />
-
-            {/* final Result Display */}
-            {/* <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-            {filterResults(data.meals).length > 0 &&
-              filterResults(data.meals).map((item) => {
-                return (
-                  <div className="col-span-4 lg:col-span-3" key={item.idMeal}>
-                    <Thumbnail item={item} />
-                  </div>
-                );
-              })}
-          </div> */}
           </div>
-        </Container>
-      )}
+        )}
+      </Container>
     </>
   );
 }

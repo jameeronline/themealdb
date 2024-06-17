@@ -5,13 +5,16 @@ import Select from "react-tailwindcss-select";
 
 import clsx from "clsx";
 
+//utilities
+import { cn } from "src/utils/helperFunctions";
+
 import ListItemsContainer from "./ListItemsContainer";
 import ListItemsTitle from "./ListItemsTitle";
 import ListItemsBody from "./ListItemsBody";
 import PageHeader from "./PageHeader";
 
 //Helper functions
-import { capitalizeString } from "src/utils/helperFunc";
+import { capitalizeString } from "src/utils/helperFunctions";
 
 const ListingItems = ({
   title,
@@ -48,7 +51,7 @@ const ListingItems = ({
 
   const handleClick = (name) => {
     setActiveNavLink(name);
-    console.log("clicked", name);
+    //console.log("clicked", name);
   };
 
   const listItemsArray = items.map((item, index) => {
@@ -58,11 +61,10 @@ const ListingItems = ({
           to={`/${itemLabel}/${item[itemKey].toLowerCase()}`}
           onClick={() => handleClick(item[itemKey])}
           className={({ isActive }) =>
-            clsx(
-              "flex py-2 px-6 transition-all duration-300 rounded-full",
-              isActive
-                ? "bg-primary-500 text-white"
-                : "hover:text-primary-500 hover:bg-primary-50"
+            cn(
+              "flex py-2 px-6 transition-all duration-300 rounded-full hover:text-primary-500 hover:bg-primary-50",
+              isActive &&
+                "bg-primary-500 text-white hover:bg-primary-500 hover:text-white"
             )
           }
         >
@@ -93,7 +95,7 @@ const ListingItems = ({
       <ul className="flex gap-2">{listItemsArray}</ul>
       {/* <ListItemsContainer>
         <ListItemsTitle title={title} />
-        <ListItemsBody></ListItemsBody>
+        <ListItemsBody>{listItemsArray}</ListItemsBody>
       </ListItemsContainer> */}
     </>
   );

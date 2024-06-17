@@ -5,7 +5,7 @@ import InlineSpinner from "src/components/common/InlineSpinner";
 import SimpleModal from "src/components/SimpleModal";
 
 //help functions
-import { validateEmail } from "src/utils/helperFunc";
+import { validateEmail } from "src/utils/helperFunctions";
 
 //Lables
 import { FOOTER_LBL } from "src/labels";

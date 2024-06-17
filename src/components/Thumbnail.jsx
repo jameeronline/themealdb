@@ -1,23 +1,45 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback, memo } from "react";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+
+//config
+import configs from "src/configuration/config";
 
 //components
 import Rating from "./Rating";
 import Avatar from "./Avatar";
 
 //Icons
-import { BiHeart, BiSolidHeart, BiStar, BiSolidStar } from "react-icons/bi";
+import { BiHeart, BiSolidHeart } from "react-icons/bi";
 
 //content
 import { ThemeContext } from "src/context/ThemeContext";
 
 //import helper functions
-import { formatToUrlString } from "../utils/helperFunc";
+import { formatToUrlString, cn } from "../utils/helperFunctions";
 
-export default function Thumbnail({ item }) {
+// FavouriteButton Component
+const FavouriteButton = ({ isFavourite, handleFavouriteClick }) => {
+  return (
+    <button
+      onClick={handleFavouriteClick}
+      className={cn(
+        `absolute right-4 top-4 flex items-center justify-center z-[1] w-10 h-10 rounded-full bg-slate-800/50 hover:bg-slate-900/50`,
+        isFavourite && "bg-primary-500 hover:bg-primary-700"
+      )}
+    >
+      {isFavourite ? (
+        <BiSolidHeart className="w-6 h-6 text-white" />
+      ) : (
+        <BiHeart className="w-6 h-6 text-white" />
+      )}
+    </button>
+  );
+};
+
+const Thumbnail = ({ item }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const { favourites, handleFavourite } = useContext(ThemeContext);
 
@@ -25,35 +47,25 @@ export default function Thumbnail({ item }) {
     setIsFavourite(JSON.stringify(favourites).includes(item.idMeal));
   }, [favourites, item]);
 
-  const activeClasses = classNames([
-    isFavourite
-      ? "bg-pink-500 hover:bg-pink-700"
-      : "bg-slate-800/50 hover:bg-slate-900/50",
-  ]);
+  const handleFavouriteClick = useCallback(() => {
+    handleFavourite({
+      idMeal: item.idMeal,
+      strMeal: item.strMeal,
+      strMealThumb: item.strMealThumb,
+    });
+  }, [handleFavourite, item]);
 
   return (
     <article className="relative">
-      <button
-        onClick={() =>
-          handleFavourite({
-            idMeal: item.idMeal,
-            strMeal: item.strMeal,
-            strMealThumb: item.strMealThumb,
-          })
-        }
-        className={`absolute right-4 top-4 flex items-center justify-center z-[1] w-10 h-10 rounded-full ${activeClasses} `}
-      >
-        {isFavourite ? (
-          <BiSolidHeart className="w-6 h-6 text-white" />
-        ) : (
-          <BiHeart className="w-6 h-6 text-white" />
-        )}
-      </button>
+      <FavouriteButton
+        isFavourite={isFavourite}
+        handleFavouriteClick={handleFavouriteClick}
+      />
       <Link
-        to={`/recipe-details/${formatToUrlString(item.strMeal)}`}
+        to={`${configs.details}/${formatToUrlString(item.strMeal)}`}
         state={{ id: item.idMeal }}
         className="block relative group overflow-hidden transition-all"
-        // className="block relative group overflow-hidden transition-all rounded-lg  shadow-xl shadow-slate-200 hover:shadow-2xl dark:shadow-primary-900/0"
+        title={item.strMeal}
       >
         {/*  <!-- Image --> */}
         <figure className="overflow-hidden rounded-md">
@@ -65,23 +77,26 @@ export default function Thumbnail({ item }) {
           />
         </figure>
         {/*  <!-- Body--> */}
-        <figcaption className="w-full flex items-start gap-4 pt-4 transition-all duration-300 ease-in-out group-hover:text-primary-500">
+        <figcaption className="w-full flex items-center gap-4 pt-4 transition-all duration-300 ease-in-out group-hover:text-primary-500">
           <Avatar
             className="w-10 h-10"
             item={Math.floor(Math.random() * 8) + 1}
           />
-          <div>
-            <header className="flex items-center justify-between">
-              <h3 className="font-medium">{item.strMeal}</h3>
-            </header>
+          <div className="flex flex-col gap-2">
+            <h3 className="font-medium line-clamp-1">{item.strMeal}</h3>
             <Rating stars={Math.floor(Math.random() * 5) + 1} />
           </div>
         </figcaption>
       </Link>
     </article>
   );
-}
+};
+
+// Memoize Thumbnail to avoid unnecessary re-renders
+export const MemoizedThumbnail = memo(Thumbnail);
 
 Thumbnail.propTypes = {
   item: PropTypes.object.isRequired,
 };
+
+export default Thumbnail;

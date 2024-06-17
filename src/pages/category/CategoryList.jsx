@@ -7,13 +7,16 @@ import ListingItems from "components/ListingItems";
 //context
 import { DataContext } from "src/context/DataContext";
 
+//utility function
+import { hasData } from "src/utils/helperFunctions";
+
 const CategoryList = () => {
   const { categories } = useContext(DataContext);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   return (
     <>
-      {Array.isArray(categories) && categories.length > 0 && (
+      {hasData(categories) && (
         <ListingItems
           title="Category"
           items={categories}

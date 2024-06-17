@@ -37,6 +37,10 @@ export default {
         primary: colors.orange,
         secondary: colors.sky,
         typo: colors.neutral,
+        error: colors.rose,
+        success: colors.green,
+        warning: colors.amber,
+        info: colors.sky,
       },
       fontFamily: {
         sans: ['"Inter"', ...defaultTheme.fontFamily.sans],

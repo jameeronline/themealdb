@@ -6,22 +6,22 @@ import PropTypes from "prop-types";
 import {
   mapIngredientsAndMeasures,
   capitalizeString,
-} from "src/utils/helperFunc";
+  hasData,
+} from "src/utils/helperFunctions";
 
 export default function Ingredients({ detail }) {
-  const [ingredientList, setIngredientList] = useState(null);
-  useEffect(() => {
-    setIngredientList(mapIngredientsAndMeasures(detail));
-  }, [detail]);
+  const ingredientListData = mapIngredientsAndMeasures(detail);
+
+  const isNotEmpty = hasData(ingredientListData ?? []);
 
   return (
     <>
-      {ingredientList !== null && ingredientList.length > 0 && (
+      {isNotEmpty && (
         <>
           <h4 className="text-3xl font-display font-bold mb-8">Ingredients</h4>
           <div className="w-full text-left rounded bg-stone-50 p-4">
             <ul className="flex flex-col text-sm">
-              {ingredientList.map((item, index) => (
+              {ingredientListData?.map((item, index) => (
                 <li
                   key={index}
                   className="flex gap-2 items-center justify-between border-b-[1px] h-10 mx-4 transition duration-300 text-slate-500 last:border-none "

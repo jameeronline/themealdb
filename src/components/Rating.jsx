@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 //Icons
 import { BiStar, BiSolidStar } from "react-icons/bi";
 
+//utilities
+import { cn } from "src/utils/helperFunctions";
+
 function Rating({ stars }) {
   const maxStarValue = 5;
 
@@ -12,9 +15,9 @@ function Rating({ stars }) {
         {new Array(maxStarValue).fill().map((item, index) => (
           <li key={index}>
             {index < stars ? (
-              <BiSolidStar className={"w-5 h-5 fill-primary-400"} />
+              <BiSolidStar className={"w-5 h-5 fill-primary-500"} />
             ) : (
-              <BiStar className="w-5 h-5 fill-primary-400" />
+              <BiSolidStar className="w-5 h-5 fill-primary-200 hover:fill-primary-500" />
             )}
           </li>
         ))}

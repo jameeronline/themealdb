@@ -2,7 +2,7 @@ import useSWR from "swr";
 import axios from "axios";
 
 //Helper functions
-//import { fetcher } from "src/utils/helperFunc";
+//import { fetcher } from "src/utils/helperFunctions";
 //const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const axiosInstance = axios.create({

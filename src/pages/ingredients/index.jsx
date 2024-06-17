@@ -13,7 +13,7 @@ import PageHeader from "src/components/PageHeader";
 import MealList from "src/components/MealList";
 
 //fetcher function
-import { fetcher, capitalizeString } from "src/utils/helperFunc";
+import { fetcher, capitalizeString } from "src/utils/helperFunctions";
 
 export default function Ingredients() {
   const { id } = useParams();

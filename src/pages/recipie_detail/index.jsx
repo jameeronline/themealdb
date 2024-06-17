@@ -4,15 +4,14 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { motion } from "framer-motion";
 
-import useSWR from "swr";
-import { fetcher } from "src/utils/helperFunc";
+//react query
+import { useMealDetails } from "src/api-services/queries";
 
 import Spinner from "src/components/common/Spinner";
 import Alert from "components/Alert";
 import Missing from "src/pages/404";
 import SEO from "components/common/SEO";
-
-//import { fetchMealDetails } from "src/utils/dataLayer";
+import DetailSlider from "./DetailSlider";
 
 //consume contextAPI
 import { ThemeContext } from "src/context/ThemeContext";
@@ -40,6 +39,7 @@ import Instructions from "./Instructions";
 import Ingredients from "./Ingredients";
 import Video from "./Video";
 import Rating from "src/components/Rating";
+import { hasData } from "src/utils/helperFunctions";
 //import ShareDropdown from "./ShareDropdown";
 //import DropdownBasic from "./DropdownBasic";
 
@@ -53,13 +53,9 @@ export default function RecipeDetail() {
 
   const { favourites, handleFavourite } = useContext(ThemeContext);
 
-  const API_URL = `${import.meta.env.VITE_VERCEL_API_URL}/lookup.php?i=${
+  const { data, isLoading, isError, error, isFetching } = useMealDetails(
     state?.id
-  }`;
-
-  const { data, error, isLoading } = useSWR(API_URL, fetcher, {
-    revalidateOnFocus: true,
-  });
+  );
 
   useEffect(() => {
     if (state === null) {
@@ -73,20 +69,21 @@ export default function RecipeDetail() {
     console.log("share");
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Spinner />;
   }
 
-  if (error) {
-    return <Alert />;
+  if (isError) {
+    return <Alert message={error.message} />;
   }
 
-  const isEmpty = !Array.isArray(data.meals) || data.meals.length < 1;
+  const isEmpty = hasData(data.meals);
+  const isNativeShare = navigator.share;
 
   return (
     <>
-      {isEmpty && <Alert message="There is no recipies available." />}
-      {!isEmpty && (
+      {!isEmpty && <Alert />}
+      {isEmpty && (
         <>
           {data.meals.map((item, index) => (
             <article key={index} className="xl:container mx-auto px-6">
@@ -131,7 +128,7 @@ export default function RecipeDetail() {
                     </button>
 
                     {/* Share - native */}
-                    {navigator.share && (
+                    {isNativeShare && (
                       <button
                         onClick={handleShare}
                         className="flex flex-1 items-center justify-center p-4 gap-2 md:aspect-square bg-slate-50 md:bg-transparent text-typo-950 transition-colors duration-300 rounded-md hover:text-primary-500 hover:bg-primary-50"
@@ -142,7 +139,7 @@ export default function RecipeDetail() {
                     )}
 
                     {/* Share - custom */}
-                    {/* {!navigator.share && (
+                    {!navigator.share && (
                       <div className="mb-6">
                         <Share
                           title={item.strMeal}
@@ -150,7 +147,7 @@ export default function RecipeDetail() {
                           hashtags={["meals", "recipies"]}
                         />
                       </div>
-                    )} */}
+                    )}
                   </div>
                 </div>
 
@@ -235,8 +232,11 @@ export default function RecipeDetail() {
               )} */}
 
               <div className="">
-                {/* Thimbnail - Big Image */}
-                <div className="mb-8 md:mb-14 relative">
+                {/* Meal Detail Slider */}
+                <DetailSlider item={item.strMealThumb} alt={item.strMeal} />
+
+                {/* Thumbnail - Big Image */}
+                {/* <div className="mb-8 md:mb-14 relative">
                   <BiPlayCircle className="w-16 h-16 md:w-32 md:h-32 left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 absolute fill-white hover:opacity-50 drop-shadow-lg" />
                   <LazyLoadImage
                     src={item.strMealThumb}
@@ -244,7 +244,7 @@ export default function RecipeDetail() {
                     // className="rounded-tl-[120px] rounded-br-[120px] shadow-2xl"
                     className="shadow-2xl w-full rounded-xl aspect-[16/8] object-cover"
                   />
-                </div>
+                </div> */}
 
                 <div className="grid grid-cols-4 gap-6 md:grid-cols-8 md:gap-8 lg:grid-cols-12 lg:gap-24">
                   <div className="col-span-4 lg:col-span-4 md:order-2">

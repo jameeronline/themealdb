@@ -84,7 +84,7 @@ const LABELS = {
   WIDGET_CATEGORY_TITLE: "Categories",
   PAGES: {
     SEARCH: {
-      TITLE: "Find the Meal you like",
+      TITLE: "Discover Your Perfect Meal",
       INPUT_PLACEHOLDER: "Discover recipes...",
       INPUT_HELP_TEXT:
         "Please input your search term/key and ENTER key to continue the search",

@@ -1,4 +1,14 @@
 //-------------------------------------------------------------------------
+// Tailwind Merge
+//-------------------------------------------------------------------------
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...args) {
+  return twMerge(clsx(args));
+}
+
+//-------------------------------------------------------------------------
 // String Capitalize
 //-------------------------------------------------------------------------
 export function capitalizeString(str) {
@@ -31,6 +41,7 @@ export function formatToUrlString(inputString) {
 //Filter Ingredients And Measures and return result array in A-Z
 //-------------------------------------------------------------------------
 export function mapIngredientsAndMeasures(recipeJSON) {
+  console.log(recipeJSON);
   const resultArray = [];
 
   // Parse the JSON string
@@ -102,3 +113,20 @@ export function convertStringToHTML(htmlString) {
   const parsedDocument = parser.parseFromString(htmlString, "text/html");
   return parsedDocument.body;
 }
+
+// Utility function to check if data has more than zero elements
+export const hasData = (data) => {
+  if (Array.isArray(data)) {
+    return data.length > 0;
+  }
+
+  if (typeof data === "object" && data !== null) {
+    for (const key in data) {
+      if (Array.isArray(data[key])) {
+        return data[key].length > 0;
+      }
+    }
+  }
+
+  return false;
+};

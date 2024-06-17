@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 //shared components
 import Alert from "components/Alert";
-import Thumbnail from "components/Thumbnail";
 import Spinner from "components/common/Spinner";
 import Container from "src/components/shared/Container";
 
@@ -25,11 +24,14 @@ import {
 //context
 import { DataContext } from "src/context/DataContext";
 
+//react query
+import { useCategoryMeals } from "src/api-services/queries";
+
 //vendor
 import sortBy from "sort-by";
 
 //Helper functions
-import { capitalizeString } from "src/utils/helperFunc";
+import { capitalizeString, hasData } from "src/utils/helperFunctions";
 
 //custom Hooks
 import useMealsAPI from "src/hooks/useMealAPI";
@@ -55,9 +57,15 @@ export default function CategoryDetail() {
   //   label: item["strCategory"],
   // }));
 
-  const url = `filter.php?c=${categoryType}`;
+  //const url = `filter.php?c=${categoryType}`;
 
-  const { data, error, isLoading } = useMealsAPI(url);
+  const { data, isLoading, isError, error } = useCategoryMeals(
+    categoryType ?? ""
+  );
+
+  //console.log(data);
+
+  //const { data, error, isLoading } = useMealsAPI(url);
 
   useEffect(() => {
     if (data && data.meals) {
@@ -87,7 +95,7 @@ export default function CategoryDetail() {
   }
 
   //error
-  if (error) {
+  if (isError) {
     return (
       <Alert
         message={error?.message ? error.code + " : " + error.message : null}
@@ -103,15 +111,15 @@ export default function CategoryDetail() {
     setIsSort((prevSort) => !prevSort);
   };
 
-  //check data is empty
-  const isEmpty = !Array.isArray(data.meals) || data.meals.length < 1;
+  //is empty
+  const isNotEmpty = hasData(data?.meals);
 
   return (
     <>
-      {isEmpty && (
+      {!isNotEmpty && (
         <Alert message="There is no meals available on this category" />
       )}
-      {!isEmpty && (
+      {isNotEmpty && (
         <>
           <PageHeader
             title={capitalizeString(categoryType)}
@@ -180,23 +188,6 @@ export default function CategoryDetail() {
           <Container>
             <MealList meals={sortedData} />
           </Container>
-
-          {/* <div className="xl:container mx-auto grid grid-cols-4 gap-x-6 gap-y-12 md:grid-cols-8 lg:grid-cols-12">
-            {sortedData.map((item) => {
-              return (
-                <div
-                  className={`${
-                    isGird
-                      ? "col-span-4 md:col-span-4 lg:col-span-3"
-                      : "col-span-4 md:col-span-8 lg:col-span-6"
-                  } `}
-                  key={item.idMeal}
-                >
-                  <Thumbnail item={item} />
-                </div>
-              );
-            })}
-          </div> */}
         </>
       )}
     </>

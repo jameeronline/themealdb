@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import sortBy from "sort-by";
 
-import Spinner from "src/components/common/Spinner";
+import Spinner from "components/common/Spinner";
 import Thumbnail from "components/Thumbnail";
 import Alert from "components/Alert";
-import Alerts from "src/components/Alerts";
+import Alerts from "components/Alerts";
 
 // Icons
 import {
@@ -17,10 +17,10 @@ import {
 } from "react-icons/bi";
 
 //Helper functions
-import { capitalizeString } from "src/utils/helperFunc";
+import { capitalizeString, hasData } from "src/utils/helperFunctions";
 
-//custom Hooks
-import useMealsAPI from "src/hooks/useMealAPI";
+//react query
+import { useAreaMeals } from "src/api-services/queries";
 
 export default function AreaDetail() {
   const navigate = useNavigate();
@@ -29,15 +29,16 @@ export default function AreaDetail() {
   const [isGird, setIsGrid] = useState(true);
   const [isSort, setIsSort] = useState(true);
 
-  const url = `filter.php?a=${cuisineType}`;
+  //const url = `filter.php?a=${cuisineType}`;
 
-  const { data, error, isLoading } = useMealsAPI(url);
+  //const { data, error, isLoading } = useMealsAPI(url);
+  const { data, error, isLoading, isError } = useAreaMeals(cuisineType ?? "");
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  if (error) {
+  if (isError) {
     return (
       <Alerts type="danger">
         <span>
@@ -63,7 +64,7 @@ export default function AreaDetail() {
     }
   };
 
-  const isEmpty = !Array.isArray(data.meals) || data.meals.length < 1;
+  const isEmpty = !hasData(data?.meals);
 
   return (
     <>

@@ -2,35 +2,20 @@ import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
+import { useLists, useDetailedCategories } from "src/api-services/queries";
+
 export const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
-  const [areas, setAreas] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [categoryDetails, setCategoryDetails] = useState([]);
+  const { data: categoryList } = useLists("c");
+  const { data: areaList } = useLists("a");
+  const { data: ingredientList } = useLists("i");
+  const { data: detailedCategories } = useDetailedCategories();
 
-  useEffect(() => {
-    //Load Data List categories and areas from API
-    const getAPIData = async () => {
-      try {
-        const response = await axios.all([
-          axios.get("https://www.themealdb.com/api/json/v1/1/list.php?a=list"),
-          axios.get("https://www.themealdb.com/api/json/v1/1/list.php?c=list"),
-          axios.get("https://www.themealdb.com/api/json/v1/1/list.php?i=list"),
-          axios.get("https://www.themealdb.com/api/json/v1/1/categories.php"),
-        ]);
-        setAreas(response[0]?.data?.meals);
-        setCategories(response[1]?.data?.meals);
-        setIngredients(response[2]?.data?.meals);
-        setCategoryDetails(response[3]?.data?.categories);
-      } catch (e) {
-        console.log(e.message);
-      }
-    };
-
-    getAPIData();
-  }, []);
+  const areas = areaList?.meals;
+  const categories = categoryList?.meals;
+  const ingredients = ingredientList?.meals;
+  const categoryDetails = detailedCategories?.categories;
 
   return (
     <DataContext.Provider

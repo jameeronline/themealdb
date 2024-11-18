@@ -9,7 +9,7 @@ const Card = ({ item }) => {
       className="relative group overflow-hidden"
       to={`/category/${formatToUrlString(item.strCategory)}`}
     >
-      <figure className="overflow-hidden aspect-square rounded-full bg-typo-50 flex items-center justify-center bg-gradient-to-b from-primary-50 to-typo-50">
+      <figure className="overflow-hidden aspect-square rounded-full bg-typo-50 flex items-center justify-center bg-gradient-to-b from-secondary-50 to-typo-50">
         <LazyLoadImage
           src={item.strCategoryThumb}
           alt={item.strCategory}

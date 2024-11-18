@@ -1,6 +1,4 @@
-import { createContext, useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
+import { createContext, useContext } from "react";
 
 import { useLists, useDetailedCategories } from "src/api-services/queries";
 
@@ -26,8 +24,13 @@ const DataProvider = ({ children }) => {
   );
 };
 
-DataProvider.propTypes = {
-  children: PropTypes.object.isRequired,
-};
-
 export default DataProvider;
+
+//custom hook
+export const useDataContext = () => {
+  const context = useContext(DataContext);
+  if (!context) {
+    throw new Error("useDataContext must be used within a DataProvider");
+  }
+  return context;
+};

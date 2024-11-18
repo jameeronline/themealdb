@@ -50,6 +50,7 @@ export default {
   },
   plugins: [
     require("@tailwindcss/typography"),
+    require("@tailwindcss/forms"),
     // createThemes({
     //   theme1: {
     //     abprimary: "66 133 244",

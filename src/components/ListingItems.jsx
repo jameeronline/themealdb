@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { NavLink, useNavigate } from "react-router-dom";
 import Select from "react-tailwindcss-select";
 
-import clsx from "clsx";
+import PropTypes from "prop-types";
 
 //utilities
 import { cn } from "src/utils/helperFunctions";
-
-import ListItemsContainer from "./ListItemsContainer";
-import ListItemsTitle from "./ListItemsTitle";
-import ListItemsBody from "./ListItemsBody";
-import PageHeader from "./PageHeader";
 
 //Helper functions
 import { capitalizeString } from "src/utils/helperFunctions";
@@ -21,8 +15,8 @@ const ListingItems = ({
   items,
   itemKey,
   itemLabel,
-  selectedCategory = "dummy",
-  setSelectedCategory,
+  selectedItem = "",
+  setSelectdItem,
 }) => {
   //console.log(items);
   const navigate = useNavigate();
@@ -34,18 +28,18 @@ const ListingItems = ({
   }));
 
   //category & area filter
-  const [selectedItem, setSelectdItem] = useState(options[0]);
+  //const [selectedItem, setSelectdItem] = useState(options[0]);
 
-  useEffect(() => {
-    setSelectdItem({
-      value: capitalizeString(activeNavLink),
-      label: capitalizeString(activeNavLink),
-    });
-  }, [activeNavLink]);
+  // useEffect(() => {
+  //   setSelectdItem({
+  //     value: capitalizeString(activeNavLink),
+  //     label: capitalizeString(activeNavLink),
+  //   });
+  // }, [activeNavLink]);
 
   const handleCategoryFilter = (selectedOption) => {
     setSelectdItem(selectedOption);
-    setSelectedCategory(selectedOption.value);
+    setSelectdItem(selectedOption.value);
     navigate(`${selectedOption.value.toLowerCase()}`);
   };
 
@@ -62,7 +56,7 @@ const ListingItems = ({
           onClick={() => handleClick(item[itemKey])}
           className={({ isActive }) =>
             cn(
-              "flex py-2 px-6 transition-all duration-300 rounded-full hover:text-primary-500 hover:bg-primary-50",
+              "flex py-2 px-6 transition-all duration-300 rounded hover:text-primary-500 hover:bg-primary-50",
               isActive &&
                 "bg-primary-500 text-white hover:bg-primary-500 hover:text-white"
             )
@@ -76,23 +70,21 @@ const ListingItems = ({
 
   return (
     <>
-      <div className="">
-        {/* <PageHeader
-          title={capitalizeString(selectedCategory)}
+      {/* <PageHeader
+          title={capitalizeString(selectedItem)}
           subtitle="listing"
           summary="25"
         /> */}
-        <Select
-          placeholder="Select to filter"
-          primaryColor={"emerald"}
-          className="w-44 border-primary-500 text-sm"
-          options={options}
-          value={selectedItem}
-          // defaultValue={selectedItem}
-          onChange={handleCategoryFilter}
-        />
-      </div>
-      <ul className="flex gap-2">{listItemsArray}</ul>
+      {/* <Select
+        placeholder="Select to filter"
+        primaryColor={"emerald"}
+        className="w-44 border-primary-500 text-sm"
+        options={options}
+        value={selectedItem}
+        // defaultValue={selectedItem}
+        onChange={handleCategoryFilter}
+      /> */}
+      <ul className="flex flex-wrap gap-2">{listItemsArray}</ul>
       {/* <ListItemsContainer>
         <ListItemsTitle title={title} />
         <ListItemsBody>{listItemsArray}</ListItemsBody>

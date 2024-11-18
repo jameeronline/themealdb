@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import sortBy from "sort-by";
 
-import Spinner from "components/common/Spinner";
-import Thumbnail from "components/Thumbnail";
+//shared components
 import Alert from "components/Alert";
-import Alerts from "components/Alerts";
+import Spinner from "components/common/Spinner";
+import Container from "src/components/shared/Container";
+
+//Page Components
+import PageHeader from "src/components/PageHeader";
+import MealList from "src/components/MealList";
 
 // Icons
 import {
@@ -16,35 +19,70 @@ import {
   BiSortZA,
 } from "react-icons/bi";
 
-//Helper functions
-import { capitalizeString, hasData } from "src/utils/helperFunctions";
+//context
+import { useDataContext } from "src/context/DataContext";
 
 //react query
 import { useAreaMeals } from "src/api-services/queries";
 
+//vendor
+import sortBy from "sort-by";
+
+//Helper functions
+import { capitalizeString, hasData } from "src/utils/helperFunctions";
+
 export default function AreaDetail() {
   const navigate = useNavigate();
   const { cuisineType } = useParams();
+  const { areas } = useDataContext();
 
   const [isGird, setIsGrid] = useState(true);
   const [isSort, setIsSort] = useState(true);
+  const [sortedData, setSortedData] = useState([]);
+
+  //category & area filter
+  const [selectedItem, setSelectdItem] = useState();
 
   //const url = `filter.php?a=${cuisineType}`;
 
   //const { data, error, isLoading } = useMealsAPI(url);
   const { data, error, isLoading, isError } = useAreaMeals(cuisineType ?? "");
 
+  useEffect(() => {
+    if (data && data.meals) {
+      const sortedMeals = [...data.meals].sort(
+        sortBy(isSort ? "strMeal" : "-strMeal")
+      );
+      setSortedData(sortedMeals);
+    }
+  }, [data, isSort]);
+
+  // useEffect(() => {
+  //   setSelectdItem({
+  //     value: capitalizeString(activeNavLink),
+  //     label: capitalizeString(activeNavLink),
+  //   });
+  // }, [activeNavLink]);
+
+  const handleCategoryFilter = (e) => {
+    console.log(e.target.value);
+    const selectedOption = e.target.value;
+    console.log(selectedOption);
+    setSelectdItem(selectedOption);
+    navigate(`/area/${selectedOption.toLowerCase()}`);
+  };
+
+  //loading
   if (isLoading) {
     return <Spinner />;
   }
 
+  //error
   if (isError) {
     return (
-      <Alerts type="danger">
-        <span>
-          {error?.message ? error.code + " : " + error.message : null}
-        </span>
-      </Alerts>
+      <Alert
+        message={error?.message ? error.code + " : " + error.message : null}
+      />
     );
   }
 
@@ -54,97 +92,110 @@ export default function AreaDetail() {
 
   const handleSort = () => {
     setIsSort((prevSort) => !prevSort);
-
-    if (isSort) {
-      console.log("z-a" + isSort);
-      data.meals.sort(sortBy("-strMeal"));
-    } else {
-      console.log("a-z" + isSort);
-      data.meals.sort(sortBy("strMeal"));
-    }
   };
-
-  const isEmpty = !hasData(data?.meals);
 
   return (
     <>
-      {isEmpty && (
-        <Alerts>
-          <p>There is no meals available on this category</p>
-        </Alerts>
-      )}
-      {!isEmpty && (
+      {hasData(data?.meals) ? (
         <>
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between mb-6">
-            <h1 className="text-3xl font-bold inline-flex items-baseline gap-2">
-              <button
-                onClick={() => navigate(-1)}
-                className="group inline-flex w-10 h-10 items-center justify-center rounded-full transition-colors duration-300 hover:bg-primary-50"
-              >
-                <BiArrowBack className="w-6 h-6 transition-colors duration-300 group-hover:fill-primary-500" />
-              </button>
-              {data?.meals?.length && (
-                <span className="flex flex-col lg:flex-row items-baseline lg:gap-2">
-                  {capitalizeString(cuisineType)}
-                  <em className="text-sm font-normal not-italic">
-                    ({data.meals.length} meals found)
-                  </em>
-                </span>
-              )}
-            </h1>
+          <PageHeader
+            title={capitalizeString(cuisineType)}
+            subtitle="cusine"
+            summary={`${data?.meals.length} meals found`}
+          />
 
-            <div className="flex justify-between md:inline-flex gap-4 items-center">
-              <button
-                onClick={handleGridChange}
-                className="flex flex-1 items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 hover:border-primary-600 hover:text-primary-600 focus:border-primary-700 focus:text-primary-700"
-              >
-                {isGird ? (
-                  <>
-                    <span className="order-2">List</span>
-                    <BiListUl className="w-6 h-6" />
-                  </>
-                ) : (
-                  <>
-                    <span className="order-2">Grid</span>
-                    <BiGridAlt className="w-6 h-6" />
-                  </>
-                )}
-              </button>
+          {/* <Select
+            placeholder="Select to filter"
+            primaryColor={"emerald"}
+            className="w-44 border-primary-500 text-sm"
+            options={options}
+            value={selectedItem}
+            defaultValue={selectedItem}
+            onChange={handleCategoryFilter}
+          /> */}
 
-              <button
-                onClick={handleSort}
-                className="flex flex-1 items-center justify-center h-10 gap-2 px-5 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 hover:border-primary-600 hover:text-primary-600 focus:border-primary-700 focus:text-primary-700"
-              >
-                <span className="order-2">Sort</span>
-                <span className="relative only:-mx-5">
-                  {isSort ? (
-                    <BiSortAZ className="w-6 h-6" />
+          <div className="xl:container mx-auto px-4 mb-10">
+            <div className="flex justify-between gap-4 items-center">
+              <div className="flex items-center gap-3">
+                {/* <button
+                  onClick={() => navigate(-1)}
+                  className="group inline-flex gap-2 h-10 items-center justify-center transition-all duration-300 hover:text-primary-400"
+                >
+                  <BiArrowBack className="w-6 h-6 group-hover:fill-primary-400" />
+                  <span className="order-2">Back</span>
+                </button> */}
+                <label htmlFor="change-category" className="font-bold">
+                  Change Cusine
+                </label>
+                <select
+                  name=""
+                  id="change-category"
+                  onChange={handleCategoryFilter}
+                  value={selectedItem}
+                >
+                  {areas.map((item, index) => (
+                    <option key={index}>{item.strArea}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex gap-3 ml-auto">
+                <button
+                  onClick={handleGridChange}
+                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-slate-800 text-white border-none hover:bg-slate-950 focus:text-white-700"
+                >
+                  {isGird ? (
+                    <>
+                      <BiListUl className="w-6 h-6" />
+                      <span className="order-2">List</span>
+                    </>
                   ) : (
-                    <BiSortZA className="w-6 h-6" />
+                    <>
+                      <BiGridAlt className="w-6 h-6" />
+                      <span className="order-2">Grid</span>
+                    </>
                   )}
-                </span>
-              </button>
+                </button>
+
+                <button
+                  onClick={handleSort}
+                  className="flex items-center justify-center h-10 gap-2 px-4 text-sm font-medium tracking-wide transition duration-300 rounded whitespace-nowrap bg-slate-800 text-white border-none hover:bg-slate-950 focus:text-white-700"
+                >
+                  {isSort ? (
+                    <>
+                      <BiSortAZ className="w-6 h-6" />
+                      <span className="order-2">Ascending</span>
+                    </>
+                  ) : (
+                    <>
+                      <BiSortZA className="w-6 h-6" />
+                      <span className="order-2">Decending</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-            {data.meals.map((item) => {
-              return (
-                <div
-                  className={`${
-                    isGird
-                      ? "col-span-4 md:col-span-4 lg:col-span-3"
-                      : "col-span-4 md:col-span-8 lg:col-span-6"
-                  } `}
-                  key={item.idMeal}
-                >
-                  <Thumbnail item={item} />
-                </div>
-              );
-            })}
-          </div>
+          <Container>
+            <MealList meals={sortedData} />
+          </Container>
         </>
+      ) : (
+        <Alert message="There is no meals available on this category" />
       )}
     </>
   );
 }
+
+// export const categoryDetailLoader = async ({ params }) => {
+//   const { cuisineType } = params;
+//   try {
+//     const response = await fetch(
+//       `www.themealdb.com/api/json/v1/1/filter.php?c=${cuisineType}`
+//     );
+//     return await response.json();
+//   } catch (e) {
+//     console.log(e.message);
+//   }
+// };

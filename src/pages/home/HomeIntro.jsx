@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import Button from "src/components/Button";
+
 function HomeIntro() {
   return (
     <header className="text-center max-w-3xl mx-auto my-16 md:my-32">
@@ -11,7 +13,7 @@ function HomeIntro() {
         with Our Diverse Meal Collection
       </h1>
 
-      <p className="text-sm md:text-base leading-relaxed text-slate-400 mb-12">
+      <p className="text-sm md:text-base leading-relaxed text-typo-500 mb-12">
         Welcome to TheMealDb – your ultimate destination for culinary
         inspiration! Dive into a world of diverse dishes, discover detailed
         ingredient lists and preparation methods, and ignite your passion for
@@ -20,17 +22,13 @@ function HomeIntro() {
       </p>
 
       <div className="flex items-center justify-center gap-4 lg:flex-row">
-        <Link
-          to="/search"
-          className="flex items-center py-4 text-md font-medium text-white px-12 bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:ring-primary-100 transition duration-300 rounded"
-        >
-          Explore
+        <Link to="/search">
+          <Button size="lg">Explore</Button>
         </Link>
-        <Link
-          to="/login"
-          className="flex items-center py-4 text-md font-medium px-12 bg-typo-100 text-typo-600 hover:text-typo-500 transition duration-300 rounded"
-        >
-          Sign Up
+        <Link to="/login">
+          <Button size="lg" type="light">
+            Sign Up
+          </Button>
         </Link>
       </div>
     </header>

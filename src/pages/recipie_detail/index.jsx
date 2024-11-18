@@ -16,6 +16,9 @@ import DetailSlider from "./DetailSlider";
 //consume contextAPI
 import { ThemeContext } from "src/context/ThemeContext";
 
+//store
+import { useFavouriteStore } from "src/store/favourite-store";
+
 //Icons
 import {
   BiCategoryAlt,
@@ -51,7 +54,9 @@ export default function RecipeDetail() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { favourites, handleFavourite } = useContext(ThemeContext);
+  //const { favourites, handleFavourite } = useContext(ThemeContext);
+  const favourites = useFavouriteStore((state) => state.favourites);
+  const setFavourite = useFavouriteStore((state) => state.addFavourites);
 
   const { data, isLoading, isError, error, isFetching } = useMealDetails(
     state?.id
@@ -183,7 +188,7 @@ export default function RecipeDetail() {
                     <li>
                       <button
                         onClick={() =>
-                          handleFavourite({
+                          setFavourite({
                             idMeal: item.idMeal,
                             strMeal: item.strMeal,
                             strMealThumb: item.strMealThumb,

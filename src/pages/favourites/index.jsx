@@ -11,8 +11,13 @@ import PageHeader from "src/components/PageHeader";
 //Context
 import { ThemeContext } from "src/context/ThemeContext";
 
+//store
+import { useFavouriteStore } from "src/store/favourite-store";
+
 export default function Favourites() {
-  const { favourites } = useContext(ThemeContext);
+  //const { favourites } = useContext(ThemeContext);
+  const favourites = useFavouriteStore((state) => state.favourites);
+  console.log(favourites);
 
   return (
     <>

@@ -10,10 +10,15 @@ import {
   getDetailedCategories,
 } from "./api";
 
+//contentful
+import { getSingleEntry, getBlogEntries } from "./cms";
+
 export const useRandomMeal = () => {
   return useQuery({
     queryKey: ["random"],
     queryFn: () => getRandomMeal(),
+    staleTime: 5 * (60 * 1000),
+    cacheTime: 10 * (60 * 1000),
   });
 };
 
@@ -28,6 +33,8 @@ export const useLists = (option) => {
   return useQuery({
     queryKey: ["lists", option],
     queryFn: () => getList(option),
+    staleTime: 5 * (60 * 1000),
+    cacheTime: 10 * (60 * 1000),
   });
 };
 
@@ -63,5 +70,25 @@ export const useMealDetails = (id) => {
   return useQuery({
     queryKey: ["details", id],
     queryFn: () => getMealDetails(id),
+  });
+};
+
+// CONTENTFUL CMS QUERIES
+export const useSingleEntry = (id) => {
+  return useQuery({
+    queryKey: ["entry", id],
+    queryFn: () => getSingleEntry(id),
+    staleTime: 15 * (60 * 1000),
+    cacheTime: 20 * (60 * 1000),
+  });
+};
+
+// get All blog entries
+export const useBlogEntries = () => {
+  return useQuery({
+    queryKey: ["entries-blog"],
+    queryFn: getBlogEntries,
+    staleTime: 15 * (60 * 1000),
+    cacheTime: 20 * (60 * 1000),
   });
 };

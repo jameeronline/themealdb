@@ -1,4 +1,4 @@
-import { createContext, useEffect } from "react";
+import { createContext } from "react";
 import PropTypes from "prop-types";
 
 //Hooks
@@ -7,22 +7,7 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 export const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-  const [darkMode, setDarkMode] = useLocalStorage("darkMode", false);
   const [favourites, setFavourites] = useLocalStorage("favList", []);
-
-  //Restore dark mode
-  useEffect(() => {
-    if (JSON.parse(darkMode)) {
-      document.documentElement.classList.add("dark");
-      setDarkMode(true);
-    }
-  }, []);
-
-  const handleDarkMode = () => {
-    console.log("theme mode changes");
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
-  };
 
   const handleFavourite = (obj) => {
     console.log("favorite changes");
@@ -37,9 +22,7 @@ const ThemeProvider = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider
-      value={{ darkMode, handleDarkMode, favourites, handleFavourite }}
-    >
+    <ThemeContext.Provider value={{ favourites, handleFavourite }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useCallback, memo } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import PropTypes from "prop-types";
@@ -7,15 +7,19 @@ import classNames from "classnames";
 //config
 import configs from "src/configuration/config";
 
+//store
+import { useFavouriteStore } from "src/store/favourite-store";
+
 //components
 import Rating from "./Rating";
 import Avatar from "./Avatar";
+import { ToastContainer, toast } from "react-toastify";
 
 //Icons
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 
 //content
-import { ThemeContext } from "src/context/ThemeContext";
+//import { ThemeContext } from "src/context/ThemeContext";
 
 //import helper functions
 import { formatToUrlString, cn } from "../utils/helperFunctions";
@@ -41,19 +45,22 @@ const FavouriteButton = ({ isFavourite, handleFavouriteClick }) => {
 
 const Thumbnail = ({ item }) => {
   const [isFavourite, setIsFavourite] = useState(false);
-  const { favourites, handleFavourite } = useContext(ThemeContext);
+
+  const favouritesList = useFavouriteStore((state) => state.favourites);
+  const setFavourite = useFavouriteStore((state) => state.addFavourites);
 
   useEffect(() => {
-    setIsFavourite(JSON.stringify(favourites).includes(item.idMeal));
-  }, [favourites, item]);
+    setIsFavourite(JSON.stringify(favouritesList).includes(item.idMeal));
+  }, [favouritesList, item]);
 
-  const handleFavouriteClick = useCallback(() => {
-    handleFavourite({
+  const handleFavouriteClick = () => {
+    setFavourite({
       idMeal: item.idMeal,
       strMeal: item.strMeal,
       strMealThumb: item.strMealThumb,
     });
-  }, [handleFavourite, item]);
+    //toast("Added to favourites");
+  };
 
   return (
     <article className="relative">
@@ -80,20 +87,20 @@ const Thumbnail = ({ item }) => {
         <figcaption className="w-full flex items-center gap-4 pt-4 transition-all duration-300 ease-in-out group-hover:text-primary-500">
           <Avatar
             className="w-10 h-10"
-            item={Math.floor(Math.random() * 8) + 1}
+            // item={Math.floor(Math.random() * 8) + 1}
+            item={6}
           />
           <div className="flex flex-col gap-2">
             <h3 className="font-medium line-clamp-1">{item.strMeal}</h3>
-            <Rating stars={Math.floor(Math.random() * 5) + 1} />
+            {/* <Rating stars={Math.floor(Math.random() * 5) + 1} /> */}
+            <Rating stars={3} />
           </div>
         </figcaption>
       </Link>
+      <ToastContainer />
     </article>
   );
 };
-
-// Memoize Thumbnail to avoid unnecessary re-renders
-export const MemoizedThumbnail = memo(Thumbnail);
 
 Thumbnail.propTypes = {
   item: PropTypes.object.isRequired,

@@ -18,13 +18,11 @@ import Layout from "src/layouts";
 //Pages
 import Home from "src/pages/home";
 
-import CategoryIndex, {
-  loader as categoryLoader,
-} from "src/pages/category/CategoryIndex";
+import CategoryIndex from "src/pages/category/CategoryIndex";
 import CategoryList from "src/pages/category/CategoryList";
 import CategoryDetail from "src/pages/category/CategoryDetail";
 
-import AreaIndex, { loader as areaLoader } from "src/pages/area/AreaIndex";
+import AreaIndex from "src/pages/area/AreaIndex";
 import AreaList from "src/pages/area/AreaList";
 import AreaDetail from "src/pages/area/AreaDetail";
 
@@ -51,7 +49,7 @@ import Terms from "src/pages/guidelines/Terms";
 import Privacy from "src/pages/guidelines/Privacy";
 
 //Context
-import ThemeProvider from "src/context/ThemeContext";
+//import ThemeProvider from "src/context/ThemeContext";
 import DataProvider from "src/context/DataContext";
 import SiteConfigProvider from "src/context/SiteConfigContext";
 
@@ -62,11 +60,11 @@ const router = createBrowserRouter(
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="category" element={<CategoryList />}>
-          <Route index element={<CategoryIndex />} loader={categoryLoader} />
+          <Route index element={<CategoryIndex />} />
           <Route path=":categoryType" element={<CategoryDetail />} />
         </Route>
         <Route path="area" element={<AreaList />}>
-          <Route index element={<AreaIndex />} loader={areaLoader} />
+          <Route index element={<AreaIndex />} />
           <Route path=":cuisineType" element={<AreaDetail />} />
         </Route>
         <Route path="ingredients/:id" element={<Ingredients />} />
@@ -98,11 +96,9 @@ export default function App() {
       <HelmetProvider>
         <Suspense fallback={<InlineSpinner />}>
           <SiteConfigProvider>
-            <ThemeProvider>
-              <DataProvider>
-                <RouterProvider router={router} />
-              </DataProvider>
-            </ThemeProvider>
+            <DataProvider>
+              <RouterProvider router={router} />
+            </DataProvider>
           </SiteConfigProvider>
         </Suspense>
       </HelmetProvider>

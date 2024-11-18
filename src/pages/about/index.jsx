@@ -1,5 +1,12 @@
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Container } from "src/components/shared";
+
+//Contentful
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+
+//RQ
+import { useSingleEntry, useBlogEntries } from "src/api-services/queries";
 
 export default function About() {
   const {
@@ -15,6 +22,22 @@ export default function About() {
     },
   });
 
+  const { data, isLoading, isError, error, isFetching } = useSingleEntry(
+    "JxMBxxvylws47EZPPfrVU"
+  );
+
+  //const { data: blogEntries } = useBlogEntries();
+
+  //console.log(blogEntries);
+
+  if (isLoading || isFetching) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
+
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -22,6 +45,15 @@ export default function About() {
   return (
     <>
       <section className="about-page">
+        {/* {JSON.stringify(data)} */}
+        <Container>
+          <article className="prose max-w-4xl pt-12">
+            <header>
+              <h1>{data?.fields.pageTitle}</h1>
+            </header>
+            <div>{documentToReactComponents(data?.fields.pageContent)}</div>
+          </article>
+        </Container>
         <Container>
           <h1>About{import.meta.env.VITE_VERCEL_GIT_PROVIDER}</h1>
           <form onSubmit={handleSubmit(onSubmit)}>

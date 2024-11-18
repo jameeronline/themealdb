@@ -1,17 +1,27 @@
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BiMoon, BiSun, BiSearch } from "react-icons/bi";
 import { clsx } from "clsx";
 
+//store
+import { useThemeStore } from "src/store/theme-store";
+
 //Labels
 import { GLOBAL_LBL, HEADER_LBL } from "src/labels";
 
-//Theme
-import { ThemeContext } from "src/context/ThemeContext";
-
 export default function Header() {
+  const isDarkMode = useThemeStore((state) => state.darkMode);
+  const toggleDarkMode = useThemeStore((state) => state.setDarkMode);
+
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-  const { darkMode, handleDarkMode } = useContext(ThemeContext);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   const LOGO = GLOBAL_LBL.LOGO;
   const NAV = HEADER_LBL.NAV;
@@ -102,9 +112,9 @@ export default function Header() {
 
               <button
                 className="relative inline-flex h-10 items-center justify-center rounded-full text-lg text-primary-500"
-                onClick={handleDarkMode}
+                onClick={toggleDarkMode}
               >
-                {darkMode ? (
+                {isDarkMode ? (
                   <>
                     <BiSun className="h-6 w-6" />
                   </>

@@ -1,7 +1,7 @@
-import { useState, useContext, useEffect } from "react";
-import { DataContext } from "src/context/DataContext";
+import { useState, useEffect } from "react";
+import { useDataContext } from "src/context/DataContext";
 
-import useSWR from "swr";
+//import useSWR from "swr";
 import Select from "react-tailwindcss-select";
 import { matchSorter } from "match-sorter";
 import { useLoaderData } from "react-router-dom";
@@ -36,45 +36,57 @@ export function loader({ request }) {
 
 export default function Search() {
   const labels = LABELS.PAGES.SEARCH;
-  const q = useLoaderData();
+  const q = useLoaderData() || "";
+  console.log(q);
 
   //search state
   const [searchKeyword, setSearchKeyword] = useState(q);
 
   //category & area filter
-  const [selectedCategory, setSelectedCategory] = useState({
-    value: null,
-    label: "Select",
-  });
+  // const [selectedCategory, setSelectedCategory] = useState({
+  //   value: null,
+  //   label: "Select",
+  // });
 
-  const { categories } = useContext(DataContext);
-  const options = categories.map((item) => ({
-    value: item.strCategory,
-    label: item.strCategory,
-  }));
+  //const { categories } = useDataContext();
+  //console.log(categories);
 
-  options.unshift({ value: null, label: "Select All" });
+  //const { categories } = useContext(DataContext);
 
-  const { data, error, isLoading, isError, isSuccess } = useSearchMeals(
-    q != "" ? q : null
-  );
+  // const options = categories?.map((item) => ({
+  //   value: item.strCategory,
+  //   label: item.strCategory,
+  // }));
 
-  const handleCategoryFilter = (selectedOption) => {
-    setSelectedCategory(selectedOption);
-  };
+  //options.unshift({ value: null, label: "Select All" });
 
-  const filterResults = (data) => {
-    if (selectedCategory.value) {
-      return matchSorter(data, selectedCategory.value, {
-        keys: ["strCategory"],
-      });
-    } else {
-      return data;
-    }
-  };
+  const { data, error, isLoading, isError, isSuccess } =
+    useSearchMeals(searchKeyword);
+
+  console.log("to check is array", Array.isArray(data?.meals));
+
+  // const handleCategoryFilter = (selectedOption) => {
+  //   setSelectedCategory(selectedOption);
+  // };
+
+  // const filterResults = (data) => {
+  //   // if (selectedCategory.value) {
+  //   //   return matchSorter(data, selectedCategory.value, {
+  //   //     keys: ["strCategory"],
+  //   //   });
+  //   // } else {
+  //   return data;
+  //   //}
+  // };
 
   //is empty
-  const isEmpty = hasData(data?.meals);
+  const isEmpty = Array.isArray(data?.meals) ? hasData(data?.meals) : false;
+  console.log(isEmpty);
+
+  console.log(data);
+  // if (isEmpty) {
+  //   return "<div>Its Empty</div>";
+  // }
 
   return (
     <>
@@ -91,26 +103,26 @@ export default function Search() {
           {isError && <Alert message={error.message} />}
 
           {/* There is no results & Display Error */}
-          {!isEmpty && isSuccess && q != "" && (
+          {!isEmpty && isSuccess && searchKeyword != "" && (
             <Alert message="No recipes match your search criteria. Please refine your search and try again." />
           )}
         </div>
       </div>
       <Container>
         {/* Display Results Grid */}
-        {data?.meals && (
+        {Array.isArray(data?.meals) && data?.meals.length > 0 && (
           <div className="mt-10">
             {/* Result Heading */}
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-3xl font-bold inline-flex items-baseline gap-2">
                 Search Results
-                {filterResults(data.meals).length > 0 && (
+                {data?.meals.length > 0 && (
                   <span className="text-sm font-normal">
-                    ({filterResults(data.meals).length} meals found)
+                    ({data?.meals.length} meals found)
                   </span>
                 )}
               </h1>
-              <div className="w-44">
+              {/* <div className="w-44">
                 <Select
                   placeholder="Select to filter"
                   primaryColor={"emerald"}
@@ -120,12 +132,12 @@ export default function Search() {
                   defaultValue={selectedCategory}
                   onChange={handleCategoryFilter}
                 />
-              </div>
+              </div> */}
             </div>
 
             {/* Result filtering */}
-            {filterResults(data.meals).length < 1 && <Empty />}
-            <MealList meals={filterResults(data.meals)} />
+            {data?.meals.length < 1 && <Empty />}
+            <MealList meals={data?.meals || []} />
           </div>
         )}
       </Container>

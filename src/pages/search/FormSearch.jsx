@@ -9,6 +9,7 @@ export default function FormSearch({ setSearchKeyword, query }) {
   const searchInput = useRef(null);
   const submit = useSubmit();
   const searchId = useId();
+  console.log(query);
 
   useEffect(() => {
     // Set input value on mount
@@ -24,7 +25,6 @@ export default function FormSearch({ setSearchKeyword, query }) {
     if (searchValue === "") {
       return;
     }
-
     setSearchKeyword(searchValue);
   };
 

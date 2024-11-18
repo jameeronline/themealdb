@@ -15,7 +15,7 @@ function CusineList() {
           <h6 className="text-typo-600 mb-8">
             Discover Cuisine from Around the World
           </h6>
-          <p className="text-slate-400 leading-relaxed text-center">
+          <p className="text-sm md:text-base leading-relaxed text-typo-500 mb-12">
             Explore our food category for a delightful collection of recipes.
             From savory dishes to sweet treats, discover a variety of culinary
             delights tailored to satisfy every taste. Dive into a world of

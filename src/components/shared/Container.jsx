@@ -9,11 +9,11 @@ export default function Container({ children, className, ...props }) {
   );
 }
 
-Container.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-};
+// Container.propTypes = {
+//   children: PropTypes.node.isRequired,
+//   className: PropTypes.string,
+// };
 
-Container.defaultProps = {
-  className: "",
-};
+// Container.defaultProps = {
+//   className: "",
+// };

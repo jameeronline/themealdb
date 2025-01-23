@@ -2,7 +2,13 @@ import PropTypes from "prop-types";
 import { cn } from "src/utils/helperFunctions";
 import { tv } from "tailwind-variants";
 
-export default function Button({ children, className, type, size, ...props }) {
+export default function Button({
+  children,
+  className,
+  type = "primary",
+  size,
+  ...props
+}) {
   const typeClasses = {
     primary: "bg-primary-500 hover:bg-primary-600 focus:bg-primary-700",
     secondary: "bg-secondary-500 hover:bg-secondary-600 focus:bg-secondary-700",
@@ -36,10 +42,6 @@ export default function Button({ children, className, type, size, ...props }) {
     </button>
   );
 }
-
-Button.defaultProps = {
-  type: "primary",
-};
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,

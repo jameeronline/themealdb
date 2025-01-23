@@ -6,8 +6,10 @@ import InlineSpinner from "components/common/InlineSpinner";
 
 //Router imports
 import {
+  BrowserRouter,
   Route,
   RouterProvider,
+  Routes,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
@@ -87,7 +89,10 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SingUp />} />
     </>
-  )
+  ),
+  {
+    basename: "/themealdb/",
+  }
 );
 
 export default function App() {

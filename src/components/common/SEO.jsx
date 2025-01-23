@@ -1,7 +1,14 @@
 import { Helmet } from "react-helmet-async";
 import PropTypes from "prop-types";
 
-export default function SEO({ title, description, name, type, img, url }) {
+export default function SEO({
+  title,
+  description,
+  name,
+  type = "website",
+  img = "",
+  url = "",
+}) {
   return (
     <Helmet>
       {/* Standard metadata tags */}
@@ -40,11 +47,4 @@ SEO.propTypes = {
   img: PropTypes.string,
   url: PropTypes.string,
   lang: PropTypes.string,
-};
-
-SEO.defaultProps = {
-  type: "website",
-  img: "",
-  url: "",
-  lang: "en",
 };

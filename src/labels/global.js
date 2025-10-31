@@ -1,5 +1,5 @@
 const GLOBAL = {
-  LOGO: "The Meal DB",
+  LOGO: "The Meals DB",
 };
 
 Object.freeze(GLOBAL);

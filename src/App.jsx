@@ -89,10 +89,10 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SingUp />} />
     </>
-  ),
-  {
-    basename: "/themealdb/",
-  }
+  )
+  // {
+  //   basename: "/themealdb/",
+  // }
 );
 
 export default function App() {
